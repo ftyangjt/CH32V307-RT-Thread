@@ -4,7 +4,7 @@
 			"path": "."
 		},
 		{
-			"name": "CH32V307-RT-Thread",
+			"name": "CH32V307-RT-Thread-LED",
 			"path": "../"
 		}
 	],
