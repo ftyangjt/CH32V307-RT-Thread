@@ -28,7 +28,6 @@ Debug \
 Peripheral/src \
 Startup \
 User \
-User/ws2812b \
 drivers \
 rtthread \
 rtthread/components/drivers/misc \

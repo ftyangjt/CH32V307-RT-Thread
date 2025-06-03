@@ -1,8 +1,6 @@
 {
     "files.associations": {
-        "ch32v30x.h": "c",
-        "rtthread.h": "c",
-        "pin.h": "c",
-        "rainbow.h": "c"
+        "string.h": "c",
+        "pin.h": "c"
     }
 }

@@ -1,5 +1,3 @@
-
-
 /*
  * File      : drv_usart.c
  * This file is part of RT-Thread RTOS
@@ -106,6 +104,25 @@ static rt_err_t ch32_configure(struct rt_serial_device *serial, struct serial_co
         USART_Cmd(uart->USARTx, ENABLE);
     }
 
+    /* USART2 configuration */
+    if(uart->USARTx == USART2)
+    {
+        GPIO_InitTypeDef GPIO_InitStructure;
+        RCC_APB1PeriphClockCmd(RCC_APB1Periph_USART2, ENABLE);
+        RCC_APB2PeriphClockCmd(RCC_APB2Periph_GPIOA, ENABLE);
+
+        GPIO_InitStructure.GPIO_Pin = GPIO_Pin_2;
+        GPIO_InitStructure.GPIO_Speed = GPIO_Speed_50MHz;
+        GPIO_InitStructure.GPIO_Mode = GPIO_Mode_AF_PP;
+        GPIO_Init(GPIOA, &GPIO_InitStructure);
+        GPIO_InitStructure.GPIO_Pin = GPIO_Pin_3;
+        GPIO_InitStructure.GPIO_Speed = GPIO_Speed_50MHz;
+        GPIO_InitStructure.GPIO_Mode = GPIO_Mode_IN_FLOATING;
+        GPIO_Init(GPIOA, &GPIO_InitStructure);
+        USART_Init(uart->USARTx, &uart->huart);
+        USART_Cmd(uart->USARTx, ENABLE);
+    }
+
     return RT_EOK;
 }
 
@@ -195,7 +212,13 @@ static const struct rt_uart_ops ch32_uart_ops =
 /* UART1 device driver structure */
 struct ch32_uart uart1;
 struct rt_serial_device serial1;
+#endif /* RT_USING_UART1 */
 
+/* 增加UART2结构体 */
+#if defined(RT_USING_UART2)
+struct ch32_uart uart2;
+struct rt_serial_device serial2;
+#endif /* RT_USING_UART2 */
 
 
 void USART1_IRQHandler(void) __attribute__((interrupt("WCH-Interrupt-fast")));
@@ -211,21 +234,26 @@ void USART1_IRQHandler(void)
 
     FREE_INT_SP();
 }
-#endif /* RT_USING_UART1 */
 
-
+/* 增加UART2中断处理函数 */
+#if defined(RT_USING_UART2)
+void USART2_IRQHandler(void) __attribute__((interrupt("WCH-Interrupt-fast")));
+void USART2_IRQHandler(void)
+{
+    
+    GET_INT_SP();
+    rt_interrupt_enter();
+    uart_isr(&serial2);
+    rt_interrupt_leave();
+    FREE_INT_SP();
+}
+#endif /* RT_USING_UART2 */
 
 
 int rt_hw_usart_init(void)
 {
     struct ch32_uart *uart;
     struct serial_configure config = RT_SERIAL_CONFIG_DEFAULT;
-
-//    ch32_uart_ops.configure   = ch32_configure;
-//    ch32_uart_ops.control     = ch32_control;
-//    ch32_uart_ops.putc        = ch32_putc;
-//    ch32_uart_ops.getc        = ch32_getc;
-//    ch32_uart_ops.dma_transmit= ch32dma_transmit;
 
 #if defined(RT_USING_UART1)
     uart=&uart1;
@@ -236,7 +264,6 @@ int rt_hw_usart_init(void)
     serial1.ops      =  &ch32_uart_ops;
     serial1.config   =  config;
 
-
     uart->huart.USART_BaudRate             = 115200;
     uart->huart.USART_HardwareFlowControl  = USART_HardwareFlowControl_None;
     uart->huart.USART_Mode                 = USART_Mode_Rx|USART_Mode_Tx;
@@ -246,27 +273,65 @@ int rt_hw_usart_init(void)
 
     if(uart->USARTx == USART1)
     {
-            GPIO_InitTypeDef GPIO_InitStructure;
-            RCC_APB2PeriphClockCmd(RCC_APB2Periph_USART1|RCC_APB2Periph_GPIOA, ENABLE);
+        GPIO_InitTypeDef GPIO_InitStructure;
+        RCC_APB2PeriphClockCmd(RCC_APB2Periph_USART1|RCC_APB2Periph_GPIOA, ENABLE);
 
-    //        uart->irq=USART1_IRQn;
-            GPIO_InitStructure.GPIO_Pin = GPIO_Pin_9;
-            GPIO_InitStructure.GPIO_Speed = GPIO_Speed_50MHz;
-            GPIO_InitStructure.GPIO_Mode = GPIO_Mode_AF_PP;
-            GPIO_Init(GPIOA, &GPIO_InitStructure);
-            GPIO_InitStructure.GPIO_Pin = GPIO_Pin_10;
-            GPIO_InitStructure.GPIO_Speed = GPIO_Speed_50MHz;
-            GPIO_InitStructure.GPIO_Mode = GPIO_Mode_IN_FLOATING;
-            GPIO_Init(GPIOA, &GPIO_InitStructure);
-            USART_Init(uart->USARTx,&uart->huart);
-            USART_Cmd(uart->USARTx, ENABLE);
-   }
+        GPIO_InitStructure.GPIO_Pin = GPIO_Pin_9;
+        GPIO_InitStructure.GPIO_Speed = GPIO_Speed_50MHz;
+        GPIO_InitStructure.GPIO_Mode = GPIO_Mode_AF_PP;
+        GPIO_Init(GPIOA, &GPIO_InitStructure);
+        GPIO_InitStructure.GPIO_Pin = GPIO_Pin_10;
+        GPIO_InitStructure.GPIO_Speed = GPIO_Speed_50MHz;
+        GPIO_InitStructure.GPIO_Mode = GPIO_Mode_IN_FLOATING;
+        GPIO_Init(GPIOA, &GPIO_InitStructure);
+        USART_Init(uart->USARTx,&uart->huart);
+        USART_Cmd(uart->USARTx, ENABLE);
+    }
 
-    /* register UART1 device */
     rt_hw_serial_register(&serial1, "uart1",
                           RT_DEVICE_FLAG_RDWR | RT_DEVICE_FLAG_INT_RX,
                           uart);
 #endif /* RT_USING_UART1 */
+
+/* 增加UART2初始化和注册 */
+#if defined(RT_USING_UART2)
+    uart = &uart2;
+    uart->irq = USART2_IRQn;
+    uart->USARTx = USART2;
+
+    config.baud_rate = BAUD_RATE_115200;
+    serial2.ops      = &ch32_uart_ops;
+    serial2.config   = config;
+
+    uart->huart.USART_BaudRate             = 115200;
+    uart->huart.USART_HardwareFlowControl  = USART_HardwareFlowControl_None;
+    uart->huart.USART_Mode                 = USART_Mode_Rx|USART_Mode_Tx;
+    uart->huart.USART_WordLength           = USART_WordLength_8b;
+    uart->huart.USART_StopBits             = USART_StopBits_1;
+    uart->huart.USART_Parity               = USART_Parity_No;
+
+    if(uart->USARTx == USART2)
+    {
+        GPIO_InitTypeDef GPIO_InitStructure;
+        RCC_APB1PeriphClockCmd(RCC_APB1Periph_USART2, ENABLE);
+        RCC_APB2PeriphClockCmd(RCC_APB2Periph_GPIOA, ENABLE);
+
+        GPIO_InitStructure.GPIO_Pin = GPIO_Pin_2;
+        GPIO_InitStructure.GPIO_Speed = GPIO_Speed_50MHz;
+        GPIO_InitStructure.GPIO_Mode = GPIO_Mode_AF_PP;
+        GPIO_Init(GPIOA, &GPIO_InitStructure);
+        GPIO_InitStructure.GPIO_Pin = GPIO_Pin_3;
+        GPIO_InitStructure.GPIO_Speed = GPIO_Speed_50MHz;
+        GPIO_InitStructure.GPIO_Mode = GPIO_Mode_IN_FLOATING;
+        GPIO_Init(GPIOA, &GPIO_InitStructure);
+        USART_Init(uart->USARTx, &uart->huart);
+        USART_Cmd(uart->USARTx, ENABLE);
+    }
+
+    rt_hw_serial_register(&serial2, "uart2",
+                          RT_DEVICE_FLAG_RDWR | RT_DEVICE_FLAG_INT_RX,
+                          uart);
+#endif /* RT_USING_UART2 */
 
     return 0;
 }
