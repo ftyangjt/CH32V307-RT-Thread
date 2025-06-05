@@ -64,15 +64,19 @@ static void wifi_parse_json(const char *json)
 {
     float interval = 0, amount = 0;
     int blink = 0;
+    rt_bool_t set_flag = RT_FALSE;
+    rt_bool_t calibrate_flag = RT_FALSE;
+    char time_str[32] = {0};
 
     //%f不可用 ！！！才出此下策
     //目前返回值状如{"interval":12.5,"amount":1.0,"blink":3}
-   char buf[32];
+    char buf[32];
 
     // interval
     char *p = strstr(json, "\"interval\":");
     if (p)
     {
+        set_flag = RT_TRUE;
         p += strlen("\"interval\":");
         sscanf(p, "%31[^,}]", buf);
         interval = (float)atof(buf);
@@ -82,6 +86,7 @@ static void wifi_parse_json(const char *json)
     p = strstr(json, "\"amount\":");
     if (p)
     {
+        set_flag = RT_TRUE;
         p += strlen("\"amount\":");
         sscanf(p, "%31[^,}]", buf);
         amount = (float)atof(buf);
@@ -91,20 +96,43 @@ static void wifi_parse_json(const char *json)
     p = strstr(json, "\"blink\":");
     if (p)
     {
+        set_flag = RT_TRUE;
         p += strlen("\"blink\":");
         sscanf(p, "%31[^,}]", buf);
         blink = atoi(buf);
     }
 
-    g_wifi_param.interval = interval;
-    g_wifi_param.amount = amount;
-    g_wifi_param.blink = blink;
-    wifi_param_save();
-    //%f不可用！！！
-    rt_kprintf("WiFi参数更新: interval=%d.%d, amount=%d.%d, blink=%d\n",
-        (int)interval, (int)(interval*100)%100,
-        (int)amount, (int)(amount*100)%100,
-        blink);
+    // time
+    p = strstr(json, "\"time\":");
+    if (p)
+    {
+        calibrate_flag = RT_TRUE;
+        p += strlen("\"time\":");
+        // 跳过可能的空格和引号
+        while (*p == ' ' || *p == '\"') p++;
+        sscanf(p, "%31[^\"]", time_str);
+    }
+
+    if (set_flag)
+    {
+        g_wifi_param.interval = interval;
+        g_wifi_param.amount = amount;
+        g_wifi_param.blink = blink;
+        wifi_param_save();
+        //注意%f不可用
+        rt_kprintf("WiFi参数更新: interval=%d.%d, amount=%d.%d, blink=%d\n",
+            (int)interval, (int)(interval*100)%100,
+            (int)amount, (int)(amount*100)%100,
+            blink);
+    }
+    if (calibrate_flag)
+    {
+        rt_kprintf("收到时间校准: time=%s\n", time_str);
+    }
+    if (!set_flag && !calibrate_flag)
+    {
+        rt_kprintf("收到未知JSON: %s\n", json);
+    }
 }
 
 static rt_err_t wifi_uart_rx_callback(rt_device_t dev, rt_size_t size)
