@@ -1,6 +1,8 @@
 {
     "files.associations": {
         "string.h": "c",
-        "pin.h": "c"
+        "pin.h": "c",
+        "rtdevice.h": "c",
+        "stdlib.h": "c"
     }
 }

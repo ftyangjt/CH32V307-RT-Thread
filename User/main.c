@@ -20,6 +20,8 @@
 #include "ATK.h"
 #include <stdlib.h>
 #include "WIFI.h"
+#include "PWM.h"   // 新增，包含PWM头文件
+#include "drv_pwm.h"
 
 
 /* Global typedef */
@@ -132,6 +134,8 @@ int main(void)
 
     // atk8266_wifi_ap_web_init();  //旧WiFi模块初始化
     wifi_module_init();             
+    pwm_module_init();   
+       
 
     while (1)
     {

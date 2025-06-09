@@ -6,14 +6,17 @@
 # Add inputs and outputs from these tool invocations to the build variables 
 C_SRCS += \
 ../drivers/drv_gpio.c \
+../drivers/drv_pwm.c \
 ../drivers/drv_usart.c 
 
 C_DEPS += \
 ./drivers/drv_gpio.d \
+./drivers/drv_pwm.d \
 ./drivers/drv_usart.d 
 
 OBJS += \
 ./drivers/drv_gpio.o \
+./drivers/drv_pwm.o \
 ./drivers/drv_usart.o 
 
 

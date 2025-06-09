@@ -6,6 +6,7 @@
 # Add inputs and outputs from these tool invocations to the build variables 
 C_SRCS += \
 ../User/ATK.c \
+../User/PWM.c \
 ../User/WIFI.c \
 ../User/ch32v30x_it.c \
 ../User/dht11.c \
@@ -14,6 +15,7 @@ C_SRCS += \
 
 C_DEPS += \
 ./User/ATK.d \
+./User/PWM.d \
 ./User/WIFI.d \
 ./User/ch32v30x_it.d \
 ./User/dht11.d \
@@ -22,6 +24,7 @@ C_DEPS += \
 
 OBJS += \
 ./User/ATK.o \
+./User/PWM.o \
 ./User/WIFI.o \
 ./User/ch32v30x_it.o \
 ./User/dht11.o \

@@ -120,7 +120,7 @@ static void wifi_parse_json(const char *json)
         g_wifi_param.blink = blink;
         wifi_param_save();
         //注意%f不可用
-        rt_kprintf("WiFi参数更新: interval=%d.%d, amount=%d.%d, blink=%d\n",
+        rt_kprintf("收到设置调整: interval=%d.%d, amount=%d.%d, blink=%d\n",
             (int)interval, (int)(interval*100)%100,
             (int)amount, (int)(amount*100)%100,
             blink);

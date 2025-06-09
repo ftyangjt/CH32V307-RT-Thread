@@ -133,7 +133,7 @@
     #define FINSH_USING_MSH_ONLY
     #define FINSH_THREAD_NAME "tshell"
 
-    #define __FINSH_THREAD_PRIORITY     5
+    #define __FINSH_THREAD_PRIORITY     10
     #define FINSH_THREAD_PRIORITY       (RT_THREAD_PRIORITY_MAX / 8 * __FINSH_THREAD_PRIORITY + 1)
     // <o>the stack of finsh thread <1-4096>
     //  <i>the stack of finsh thread
