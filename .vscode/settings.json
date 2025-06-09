@@ -3,6 +3,8 @@
         "string.h": "c",
         "pin.h": "c",
         "rtdevice.h": "c",
-        "stdlib.h": "c"
+        "stdlib.h": "c",
+        "finsh.h": "c",
+        "drv_pwm.h": "c"
     }
 }

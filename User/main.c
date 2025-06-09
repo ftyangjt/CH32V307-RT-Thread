@@ -22,7 +22,7 @@
 #include "WIFI.h"
 #include "PWM.h"   // 新增，包含PWM头文件
 #include "drv_pwm.h"
-
+#include "shell.h"
 
 /* Global typedef */
 
@@ -126,12 +126,26 @@ MSH_CMD_EXPORT(send_at_cmd, 发送 AT 指令到 WiFi 模块);
 
 int main(void)
 {
+    // 初始化 Finsh Shell
+    finsh_system_init();
+    finsh_set_device(RT_CONSOLE_DEVICE_NAME);
+
+    rt_device_t console = rt_device_find(RT_CONSOLE_DEVICE_NAME);
+    if (console)
+    {
+        rt_device_open(console, RT_DEVICE_OFLAG_RDWR | RT_DEVICE_FLAG_INT_RX);
+    }
+
+    #ifdef RT_USING_COMPONENTS_INIT
+        rt_components_init();
+    #endif
+
+
     rt_kprintf("\r\n MCU: CH32V307\r\n");
     SystemCoreClockUpdate();
     rt_kprintf(" SysClk: %dHz\r\n", SystemCoreClock);
     rt_kprintf(" ChipID: %08x\r\n", DBGMCU_GetCHIPID());
     rt_kprintf(" www.wch.cn\r\n");
-
     // atk8266_wifi_ap_web_init();  //旧WiFi模块初始化
     wifi_module_init();             
     pwm_module_init();   
@@ -140,6 +154,7 @@ int main(void)
     while (1)
     {
         rt_kprintf("主循环运行中...\n");
+        
         rt_thread_mdelay(3000);
     }
 }

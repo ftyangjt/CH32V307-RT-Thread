@@ -50,7 +50,10 @@ User/main.o: ../User/main.c \
  ../User/dht11.h \
  c:/Users/wydnm/mounriver-studio-projects/CH32V307-RT-Thread/drivers/drv_gpio.h \
  ../User/ATK.h ../User/WIFI.h ../User/PWM.h \
- c:/Users/wydnm/mounriver-studio-projects/CH32V307-RT-Thread/drivers/drv_pwm.h
+ c:/Users/wydnm/mounriver-studio-projects/CH32V307-RT-Thread/drivers/drv_pwm.h \
+ c:/Users/wydnm/mounriver-studio-projects/CH32V307-RT-Thread/rtthread/components/finsh/shell.h \
+ c:/Users/wydnm/mounriver-studio-projects/CH32V307-RT-Thread/rtthread/components/finsh/finsh.h \
+ c:/Users/wydnm/mounriver-studio-projects/CH32V307-RT-Thread/rtthread/components/finsh/finsh_api.h
 
 c:/Users/wydnm/mounriver-studio-projects/CH32V307-RT-Thread/Peripheral/inc/ch32v30x.h:
 
@@ -159,3 +162,9 @@ c:/Users/wydnm/mounriver-studio-projects/CH32V307-RT-Thread/drivers/drv_gpio.h:
 ../User/PWM.h:
 
 c:/Users/wydnm/mounriver-studio-projects/CH32V307-RT-Thread/drivers/drv_pwm.h:
+
+c:/Users/wydnm/mounriver-studio-projects/CH32V307-RT-Thread/rtthread/components/finsh/shell.h:
+
+c:/Users/wydnm/mounriver-studio-projects/CH32V307-RT-Thread/rtthread/components/finsh/finsh.h:
+
+c:/Users/wydnm/mounriver-studio-projects/CH32V307-RT-Thread/rtthread/components/finsh/finsh_api.h:
