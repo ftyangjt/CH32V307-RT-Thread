@@ -7,7 +7,8 @@
 // 舵机参数结构体声明
 typedef struct
 {
-    float angle; // 舵机角度（0~180）
+    int speed;          // 舵机转速
+    int duration_sec;   // 持续时间（秒）
 } servo_param_t;
 
 // 全局舵机参数变量声明

@@ -16,6 +16,7 @@ User/WIFI.o: ../User/WIFI.c ../User/WIFI.h \
  c:/Users/wydnm/mounriver-studio-projects/CH32V307-RT-Thread/rtthread/components/drivers/include/ipc/poll.h \
  c:/Users/wydnm/mounriver-studio-projects/CH32V307-RT-Thread/rtthread/components/drivers/include/drivers/serial.h \
  c:/Users/wydnm/mounriver-studio-projects/CH32V307-RT-Thread/rtthread/components/drivers/include/drivers/pin.h \
+ ../User/PWM.h \
  c:/Users/wydnm/mounriver-studio-projects/CH32V307-RT-Thread/rtthread/components/finsh/finsh.h \
  c:/Users/wydnm/mounriver-studio-projects/CH32V307-RT-Thread/rtthread/components/finsh/finsh_api.h \
  c:/Users/wydnm/mounriver-studio-projects/CH32V307-RT-Thread/rtthread/components/drivers/include/drivers/pin.h
@@ -55,6 +56,8 @@ c:/Users/wydnm/mounriver-studio-projects/CH32V307-RT-Thread/rtthread/components/
 c:/Users/wydnm/mounriver-studio-projects/CH32V307-RT-Thread/rtthread/components/drivers/include/drivers/serial.h:
 
 c:/Users/wydnm/mounriver-studio-projects/CH32V307-RT-Thread/rtthread/components/drivers/include/drivers/pin.h:
+
+../User/PWM.h:
 
 c:/Users/wydnm/mounriver-studio-projects/CH32V307-RT-Thread/rtthread/components/finsh/finsh.h:
 

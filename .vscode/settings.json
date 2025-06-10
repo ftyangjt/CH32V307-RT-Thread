@@ -5,6 +5,7 @@
         "rtdevice.h": "c",
         "stdlib.h": "c",
         "finsh.h": "c",
-        "drv_pwm.h": "c"
+        "drv_pwm.h": "c",
+        "rtthread.h": "c"
     }
 }

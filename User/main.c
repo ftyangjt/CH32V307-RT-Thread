@@ -126,6 +126,24 @@ MSH_CMD_EXPORT(send_at_cmd, 发送 AT 指令到 WiFi 模块);
 
 int main(void)
 {
+
+
+
+    rt_kprintf("\r\n MCU: CH32V307\r\n");
+    SystemCoreClockUpdate();
+    rt_kprintf(" SysClk: %dHz\r\n", SystemCoreClock);
+    rt_kprintf(" ChipID: %08x\r\n", DBGMCU_GetCHIPID());
+    rt_kprintf(" www.wch.cn\r\n");
+    // atk8266_wifi_ap_web_init();  //旧WiFi模块初始化            
+    pwm_module_init();  
+    wifi_module_init(); 
+
+    // 单元测试 
+    // SystemCoreClockUpdate();      // 更新系统核心频率（72MHz）
+    // printf("SystemCoreClock: %d Hz\n", SystemCoreClock);
+    // pwm_gpio_init_10();              // 初始化 PC6 为复用推挽输出
+    // pwm_tim10_init(20000, 1300);   // 输出 20ms 周期，1300us 脉宽（略微反转）
+
     // 初始化 Finsh Shell
     finsh_system_init();
     finsh_set_device(RT_CONSOLE_DEVICE_NAME);
@@ -139,18 +157,6 @@ int main(void)
     #ifdef RT_USING_COMPONENTS_INIT
         rt_components_init();
     #endif
-
-
-    rt_kprintf("\r\n MCU: CH32V307\r\n");
-    SystemCoreClockUpdate();
-    rt_kprintf(" SysClk: %dHz\r\n", SystemCoreClock);
-    rt_kprintf(" ChipID: %08x\r\n", DBGMCU_GetCHIPID());
-    rt_kprintf(" www.wch.cn\r\n");
-    // atk8266_wifi_ap_web_init();  //旧WiFi模块初始化
-    wifi_module_init();             
-    pwm_module_init();   
-       
-
     while (1)
     {
         rt_kprintf("主循环运行中...\n");

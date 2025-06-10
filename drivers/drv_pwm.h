@@ -9,4 +9,10 @@ void pwm_gpio_init(void);
 // 初始化TIM8为PWM输出，period为周期（us），pulse为高电平脉宽（us）
 void pwm_tim8_init(uint16_t period, uint16_t pulse);
 
+// 初始化TIM10相关GPIO
+void pwm_gpio_init_10(void);
+
+// 初始化TIM10为PWM输出，period为周期（us），pulse为高电平脉宽（us）
+void pwm_tim10_init(uint16_t period, uint16_t pulse);
+
 #endif // __DRV_PWM_H__

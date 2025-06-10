@@ -1,4 +1,5 @@
 #include "WIFI.h"
+#include "PWM.h"
 #include <rtthread.h>
 #include <rtdevice.h>
 #include <string.h>
@@ -119,6 +120,11 @@ static void wifi_parse_json(const char *json)
         g_wifi_param.amount = amount;
         g_wifi_param.blink = blink;
         wifi_param_save();
+
+        //调试：据amount调整PWM速度
+        extern servo_param_t g_servo_param;
+        g_servo_param.speed = (int)(10 * amount);
+
         //注意%f不可用
         rt_kprintf("收到设置调整: interval=%d.%d, amount=%d.%d, blink=%d\n",
             (int)interval, (int)(interval*100)%100,
