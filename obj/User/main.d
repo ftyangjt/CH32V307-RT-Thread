@@ -47,6 +47,10 @@ User/main.o: ../User/main.c \
  c:/Users/lhxsy/mounriver-studio-projects/CH32V307-RT-Thread/rtthread/components/drivers/include/ipc/poll.h \
  c:/Users/lhxsy/mounriver-studio-projects/CH32V307-RT-Thread/rtthread/components/drivers/include/drivers/serial.h \
  c:/Users/lhxsy/mounriver-studio-projects/CH32V307-RT-Thread/rtthread/components/drivers/include/drivers/pin.h \
+ c:\users\lhxsy\mounriver-studio-projects\ch32v307-rt-thread\drivers\system\sys\sys.h \
+ c:\users\lhxsy\mounriver-studio-projects\ch32v307-rt-thread\drivers\system\delay\delay.h \
+ c:\users\lhxsy\mounriver-studio-projects\ch32v307-rt-thread\drivers\bsp\led\led.h \
+ c:\users\lhxsy\mounriver-studio-projects\ch32v307-rt-thread\drivers\bsp\lcd\lcd.h \
  ../User/ws2812b/ws2812.h ../User/ws2812b/rainbow.h
 
 c:/Users/lhxsy/mounriver-studio-projects/CH32V307-RT-Thread/Peripheral/inc/ch32v30x.h:
@@ -144,6 +148,14 @@ c:/Users/lhxsy/mounriver-studio-projects/CH32V307-RT-Thread/rtthread/components/
 c:/Users/lhxsy/mounriver-studio-projects/CH32V307-RT-Thread/rtthread/components/drivers/include/drivers/serial.h:
 
 c:/Users/lhxsy/mounriver-studio-projects/CH32V307-RT-Thread/rtthread/components/drivers/include/drivers/pin.h:
+
+c:\users\lhxsy\mounriver-studio-projects\ch32v307-rt-thread\drivers\system\sys\sys.h:
+
+c:\users\lhxsy\mounriver-studio-projects\ch32v307-rt-thread\drivers\system\delay\delay.h:
+
+c:\users\lhxsy\mounriver-studio-projects\ch32v307-rt-thread\drivers\bsp\led\led.h:
+
+c:\users\lhxsy\mounriver-studio-projects\ch32v307-rt-thread\drivers\bsp\lcd\lcd.h:
 
 ../User/ws2812b/ws2812.h:
 

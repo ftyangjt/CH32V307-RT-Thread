@@ -14,6 +14,10 @@ RM := rm -rf
 -include rtthread/components/drivers/serial/subdir.mk
 -include rtthread/components/drivers/misc/subdir.mk
 -include rtthread/subdir.mk
+-include drivers/SYSTEM/sys/subdir.mk
+-include drivers/SYSTEM/delay/subdir.mk
+-include drivers/BSP/LED/subdir.mk
+-include drivers/BSP/LCD/subdir.mk
 -include drivers/subdir.mk
 -include User/ws2812b/subdir.mk
 -include User/subdir.mk
@@ -21,6 +25,7 @@ RM := rm -rf
 -include Peripheral/src/subdir.mk
 -include Debug/subdir.mk
 -include Core/subdir.mk
+-include /subdir.mk
 -include subdir.mk
 -include objects.mk
 

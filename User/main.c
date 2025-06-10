@@ -11,9 +11,16 @@
 #include <rthw.h>
 #include "drivers/pin.h"
 
+#include "./SYSTEM/sys/sys.h"
+#include "./SYSTEM/delay/delay.h"
+#include "./BSP/LED/led.h"
+#include "./BSP/LCD/lcd.h"
+
 // 包含模块头文件
 #include "ws2812b/ws2812.h"
 #include "ws2812b/rainbow.h"
+
+extern const unsigned short gImage_240x160[240*160];
 
 // 自定义字符串转整数函数
 static int str_to_int(const char* str)
@@ -76,6 +83,8 @@ static int cmd_brightness(int argc, char **argv)
 }
 MSH_CMD_EXPORT(cmd_brightness, set rainbow brightness [0-100]);
 
+// ...existing code...
+
 int main(void)
 {
     rt_kprintf("\r\n");
@@ -95,11 +104,26 @@ int main(void)
     
     // 启动彩虹效果
     rainbow_start(3);  // 速度级别3
-    
-    // 主循环
+
+    lcd_init(); // 初始化LCD
+
+    // 显示内容
+    lcd_clear(WHITE);
+    lcd_show_string(10, 40, 240, 32, 32, "CH32", RED);
+    lcd_show_string(10, 80, 240, 24, 24, "TFTLCD TEST", RED);
+    lcd_show_string(10, 110, 240, 16, 16, "ATOM@ALIENTEK", RED);
+
+    // 获取并显示LCD ID
+    char lcd_id[12];
+    sprintf(lcd_id, "LCD ID:%04X", lcddev.id);
+    lcd_show_string(10, 130, 240, 16, 16, lcd_id, RED);
+
+    lcd_color_fill(0, 0, 239, 159, (uint16_t*)gImage_240x160);
+
+    // 主循环保持空闲
     while(1)
     {
         rt_thread_mdelay(1000);
-        // 主循环保持空闲，工作由线程完成
     }
 }
+// ...existing code...

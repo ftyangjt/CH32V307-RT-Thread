@@ -18,6 +18,21 @@
 				"parentLogicPath": "",
 				"type": "file",
 				"name": "*.wvproj"
+			},
+			{
+				"parentLogicPath": "drivers",
+				"type": "file",
+				"name": "lcd_ex.c"
+			},
+			{
+				"parentLogicPath": "drivers",
+				"type": "folder",
+				"name": "CH32V30x_Driver"
+			},
+			{
+				"parentLogicPath": "User",
+				"type": "file",
+				"name": "gImage_480x320.c"
 			}
 		],
 		"projectName": "CH32V307-RT-Thread",
@@ -737,10 +752,8 @@
 			"ATTR_BUILD_BEFORE_LAUNCH_ATTR": 2,
 			"GdbServerAllocateConsole": true,
 			"GdbServerAllocateTelnetConsole": false,
-			"SkipDownloadBeforeDebug": false,
 			"StartGdbCLient": true,
-			"UPDATE_THREADLIST_ON_SUSPEND": false,
-			"DebugInRam": false
+			"UPDATE_THREADLIST_ON_SUSPEND": false
 		}
 	}
 }

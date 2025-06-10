@@ -30,5 +30,29 @@
         <arguments>1.0-name-matches-false-false-*.wvproj</arguments>
       </matcher>
     </filter>
+    <filter>
+      <name>drivers</name>
+      <type>6</type>
+      <matcher>
+        <id>org.eclipse.ui.ide.multiFilter</id>
+        <arguments>1.0-name-matches-false-false-lcd_ex.c</arguments>
+      </matcher>
+    </filter>
+    <filter>
+      <name>drivers</name>
+      <type>10</type>
+      <matcher>
+        <id>org.eclipse.ui.ide.multiFilter</id>
+        <arguments>1.0-name-matches-false-false-CH32V30x_Driver</arguments>
+      </matcher>
+    </filter>
+    <filter>
+      <name>User</name>
+      <type>6</type>
+      <matcher>
+        <id>org.eclipse.ui.ide.multiFilter</id>
+        <arguments>1.0-name-matches-false-false-gImage_480x320.c</arguments>
+      </matcher>
+    </filter>
   </filteredResources>
 </projectDescription>

@@ -23,6 +23,7 @@ SECONDARY_SIZE :=
 
 # Every subdirectory with source files must be described here
 SUBDIRS := \
+ \
 Core \
 Debug \
 Peripheral/src \
@@ -30,6 +31,10 @@ Startup \
 User \
 User/ws2812b \
 drivers \
+drivers/BSP/LCD \
+drivers/BSP/LED \
+drivers/SYSTEM/delay \
+drivers/SYSTEM/sys \
 rtthread \
 rtthread/components/drivers/misc \
 rtthread/components/drivers/serial \

@@ -3,6 +3,8 @@
         "ch32v30x.h": "c",
         "rtthread.h": "c",
         "pin.h": "c",
-        "rainbow.h": "c"
+        "rainbow.h": "c",
+        "lcd.h": "c",
+        "usart.h": "c"
     }
 }
