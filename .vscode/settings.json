@@ -5,6 +5,8 @@
         "pin.h": "c",
         "rainbow.h": "c",
         "lcd.h": "c",
-        "usart.h": "c"
+        "usart.h": "c",
+        "stdlib.h": "c",
+        "lcd_rtt.h": "c"
     }
 }

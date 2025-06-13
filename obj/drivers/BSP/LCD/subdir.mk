@@ -6,15 +6,18 @@
 # Add inputs and outputs from these tool invocations to the build variables 
 C_SRCS += \
 ../drivers/BSP/LCD/lcd.c \
-../drivers/BSP/LCD/lcd_ex.c 
+../drivers/BSP/LCD/lcd_ex.c \
+../drivers/BSP/LCD/lcd_rtt.c 
 
 C_DEPS += \
 ./drivers/BSP/LCD/lcd.d \
-./drivers/BSP/LCD/lcd_ex.d 
+./drivers/BSP/LCD/lcd_ex.d \
+./drivers/BSP/LCD/lcd_rtt.d 
 
 OBJS += \
 ./drivers/BSP/LCD/lcd.o \
-./drivers/BSP/LCD/lcd_ex.o 
+./drivers/BSP/LCD/lcd_ex.o \
+./drivers/BSP/LCD/lcd_rtt.o 
 
 
 

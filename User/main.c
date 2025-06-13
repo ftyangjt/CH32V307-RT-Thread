@@ -13,7 +13,6 @@
 
 #include "./SYSTEM/sys/sys.h"
 #include "./SYSTEM/delay/delay.h"
-#include "./BSP/LED/led.h"
 #include "./BSP/LCD/lcd.h"
 
 // 包含模块头文件

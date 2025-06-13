@@ -622,7 +622,7 @@ void lcd_init(void)
 
     fsmc_sram_handle.FSMC_Bank = FSMC_Bank1_NORSRAM1;                               /* 使用NE1 */
     fsmc_sram_handle.FSMC_MemoryType = FSMC_MemoryType_SRAM;                        /* 作为SRAM使用 */
-    //fsmc_sram_handle.FSMC_WrapMode = FSMC_WrapMode_Disable;                         /* 禁用Wrapped burst访问模式  */
+    fsmc_sram_handle.FSMC_WrapMode = FSMC_WrapMode_Disable;                         /* 禁用Wrapped burst访问模式  */
     fsmc_sram_handle.FSMC_DataAddressMux = FSMC_DataAddressMux_Disable;             /* 地址/数据线不复用 */
     fsmc_sram_handle.FSMC_MemoryDataWidth = FSMC_MemoryDataWidth_16b;               /* 16位数据宽度 */
     fsmc_sram_handle.FSMC_BurstAccessMode = FSMC_BurstAccessMode_Disable;           /* 是否使能突发访问,仅对同步突发存储器有效,此处未用到 */
@@ -747,7 +747,7 @@ void lcd_init(void)
      * 里面(卡死在f_putc函数), 所以, 必须初始化串口1, 或者屏蔽掉下面
      * 这行 printf 语句 !!!!!!!
      */
-    printf("LCD ID:%x\r\n", lcddev.id); /* 打印LCD ID */
+    // printf("LCD ID:%x\r\n", lcddev.id); /* 打印LCD ID */
 
     if (lcddev.id == 0x7789)
     {
