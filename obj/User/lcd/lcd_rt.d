@@ -1,4 +1,21 @@
-drivers/BSP/LCD/lcd.o: ../drivers/BSP/LCD/lcd.c \
+User/lcd/lcd_rt.o: ../User/lcd/lcd_rt.c \
+ c:/Users/lhxsy/mounriver-studio-projects/CH32V307-RT-Thread/rtthread/include/rtthread.h \
+ c:/Users/lhxsy/mounriver-studio-projects/CH32V307-RT-Thread/rtthread/rtconfig.h \
+ c:/Users/lhxsy/mounriver-studio-projects/CH32V307-RT-Thread/rtthread/include/rtdebug.h \
+ c:/Users/lhxsy/mounriver-studio-projects/CH32V307-RT-Thread/rtthread/include/rtdef.h \
+ c:/Users/lhxsy/mounriver-studio-projects/CH32V307-RT-Thread/rtthread/include/rtservice.h \
+ c:/Users/lhxsy/mounriver-studio-projects/CH32V307-RT-Thread/rtthread/include/rtm.h \
+ c:/Users/lhxsy/mounriver-studio-projects/CH32V307-RT-Thread/rtthread/components/finsh/finsh_api.h \
+ c:/Users/lhxsy/mounriver-studio-projects/CH32V307-RT-Thread/rtthread/components/drivers/include/rtdevice.h \
+ c:/Users/lhxsy/mounriver-studio-projects/CH32V307-RT-Thread/rtthread/components/drivers/include/ipc/ringbuffer.h \
+ c:/Users/lhxsy/mounriver-studio-projects/CH32V307-RT-Thread/rtthread/components/drivers/include/ipc/completion.h \
+ c:/Users/lhxsy/mounriver-studio-projects/CH32V307-RT-Thread/rtthread/components/drivers/include/ipc/dataqueue.h \
+ c:/Users/lhxsy/mounriver-studio-projects/CH32V307-RT-Thread/rtthread/components/drivers/include/ipc/workqueue.h \
+ c:/Users/lhxsy/mounriver-studio-projects/CH32V307-RT-Thread/rtthread/components/drivers/include/ipc/waitqueue.h \
+ c:/Users/lhxsy/mounriver-studio-projects/CH32V307-RT-Thread/rtthread/components/drivers/include/ipc/pipe.h \
+ c:/Users/lhxsy/mounriver-studio-projects/CH32V307-RT-Thread/rtthread/components/drivers/include/ipc/poll.h \
+ c:/Users/lhxsy/mounriver-studio-projects/CH32V307-RT-Thread/rtthread/components/drivers/include/drivers/serial.h \
+ c:/Users/lhxsy/mounriver-studio-projects/CH32V307-RT-Thread/rtthread/components/drivers/include/drivers/pin.h \
  c:\users\lhxsy\mounriver-studio-projects\ch32v307-rt-thread\drivers\bsp\lcd\lcd.h \
  c:\users\lhxsy\mounriver-studio-projects\ch32v307-rt-thread\drivers\system\sys\sys.h \
  c:/Users/lhxsy/mounriver-studio-projects/CH32V307-RT-Thread/Peripheral/inc/ch32v30x.h \
@@ -30,17 +47,41 @@ drivers/BSP/LCD/lcd.o: ../drivers/BSP/LCD/lcd.c \
  c:/Users/lhxsy/mounriver-studio-projects/CH32V307-RT-Thread/User/ch32v30x_it.h \
  c:/Users/lhxsy/mounriver-studio-projects/CH32V307-RT-Thread/Debug/debug.h \
  c:/Users/lhxsy/mounriver-studio-projects/CH32V307-RT-Thread/Peripheral/inc/ch32v30x_misc.h \
- c:\users\lhxsy\mounriver-studio-projects\ch32v307-rt-thread\drivers\bsp\lcd\lcd_ex.h \
- c:\users\lhxsy\mounriver-studio-projects\ch32v307-rt-thread\drivers\bsp\lcd\lcdfont.h \
- c:\users\lhxsy\mounriver-studio-projects\ch32v307-rt-thread\drivers\system\usart\usart.h \
- c:\users\lhxsy\mounriver-studio-projects\ch32v307-rt-thread\drivers\system\delay\delay.h \
- c:/Users/lhxsy/mounriver-studio-projects/CH32V307-RT-Thread/rtthread/include/rtthread.h \
- c:/Users/lhxsy/mounriver-studio-projects/CH32V307-RT-Thread/rtthread/rtconfig.h \
- c:/Users/lhxsy/mounriver-studio-projects/CH32V307-RT-Thread/rtthread/include/rtdebug.h \
- c:/Users/lhxsy/mounriver-studio-projects/CH32V307-RT-Thread/rtthread/include/rtdef.h \
- c:/Users/lhxsy/mounriver-studio-projects/CH32V307-RT-Thread/rtthread/include/rtservice.h \
- c:/Users/lhxsy/mounriver-studio-projects/CH32V307-RT-Thread/rtthread/include/rtm.h \
- c:/Users/lhxsy/mounriver-studio-projects/CH32V307-RT-Thread/rtthread/components/finsh/finsh_api.h
+ ../User/lcd/lcd_rt.h
+
+c:/Users/lhxsy/mounriver-studio-projects/CH32V307-RT-Thread/rtthread/include/rtthread.h:
+
+c:/Users/lhxsy/mounriver-studio-projects/CH32V307-RT-Thread/rtthread/rtconfig.h:
+
+c:/Users/lhxsy/mounriver-studio-projects/CH32V307-RT-Thread/rtthread/include/rtdebug.h:
+
+c:/Users/lhxsy/mounriver-studio-projects/CH32V307-RT-Thread/rtthread/include/rtdef.h:
+
+c:/Users/lhxsy/mounriver-studio-projects/CH32V307-RT-Thread/rtthread/include/rtservice.h:
+
+c:/Users/lhxsy/mounriver-studio-projects/CH32V307-RT-Thread/rtthread/include/rtm.h:
+
+c:/Users/lhxsy/mounriver-studio-projects/CH32V307-RT-Thread/rtthread/components/finsh/finsh_api.h:
+
+c:/Users/lhxsy/mounriver-studio-projects/CH32V307-RT-Thread/rtthread/components/drivers/include/rtdevice.h:
+
+c:/Users/lhxsy/mounriver-studio-projects/CH32V307-RT-Thread/rtthread/components/drivers/include/ipc/ringbuffer.h:
+
+c:/Users/lhxsy/mounriver-studio-projects/CH32V307-RT-Thread/rtthread/components/drivers/include/ipc/completion.h:
+
+c:/Users/lhxsy/mounriver-studio-projects/CH32V307-RT-Thread/rtthread/components/drivers/include/ipc/dataqueue.h:
+
+c:/Users/lhxsy/mounriver-studio-projects/CH32V307-RT-Thread/rtthread/components/drivers/include/ipc/workqueue.h:
+
+c:/Users/lhxsy/mounriver-studio-projects/CH32V307-RT-Thread/rtthread/components/drivers/include/ipc/waitqueue.h:
+
+c:/Users/lhxsy/mounriver-studio-projects/CH32V307-RT-Thread/rtthread/components/drivers/include/ipc/pipe.h:
+
+c:/Users/lhxsy/mounriver-studio-projects/CH32V307-RT-Thread/rtthread/components/drivers/include/ipc/poll.h:
+
+c:/Users/lhxsy/mounriver-studio-projects/CH32V307-RT-Thread/rtthread/components/drivers/include/drivers/serial.h:
+
+c:/Users/lhxsy/mounriver-studio-projects/CH32V307-RT-Thread/rtthread/components/drivers/include/drivers/pin.h:
 
 c:\users\lhxsy\mounriver-studio-projects\ch32v307-rt-thread\drivers\bsp\lcd\lcd.h:
 
@@ -104,24 +145,4 @@ c:/Users/lhxsy/mounriver-studio-projects/CH32V307-RT-Thread/Debug/debug.h:
 
 c:/Users/lhxsy/mounriver-studio-projects/CH32V307-RT-Thread/Peripheral/inc/ch32v30x_misc.h:
 
-c:\users\lhxsy\mounriver-studio-projects\ch32v307-rt-thread\drivers\bsp\lcd\lcd_ex.h:
-
-c:\users\lhxsy\mounriver-studio-projects\ch32v307-rt-thread\drivers\bsp\lcd\lcdfont.h:
-
-c:\users\lhxsy\mounriver-studio-projects\ch32v307-rt-thread\drivers\system\usart\usart.h:
-
-c:\users\lhxsy\mounriver-studio-projects\ch32v307-rt-thread\drivers\system\delay\delay.h:
-
-c:/Users/lhxsy/mounriver-studio-projects/CH32V307-RT-Thread/rtthread/include/rtthread.h:
-
-c:/Users/lhxsy/mounriver-studio-projects/CH32V307-RT-Thread/rtthread/rtconfig.h:
-
-c:/Users/lhxsy/mounriver-studio-projects/CH32V307-RT-Thread/rtthread/include/rtdebug.h:
-
-c:/Users/lhxsy/mounriver-studio-projects/CH32V307-RT-Thread/rtthread/include/rtdef.h:
-
-c:/Users/lhxsy/mounriver-studio-projects/CH32V307-RT-Thread/rtthread/include/rtservice.h:
-
-c:/Users/lhxsy/mounriver-studio-projects/CH32V307-RT-Thread/rtthread/include/rtm.h:
-
-c:/Users/lhxsy/mounriver-studio-projects/CH32V307-RT-Thread/rtthread/components/finsh/finsh_api.h:
+../User/lcd/lcd_rt.h:

@@ -25,15 +25,10 @@ SECONDARY_SIZE :=
 SUBDIRS := \
 Core \
 Debug \
-Middlewares/FATFS/exfuns \
-Middlewares/FATFS/source \
-Middlewares/MALLOC \
-Middlewares/PICTURE \
-Middlewares/TEXT \
-Middlewares/USMART \
 Peripheral/src \
 Startup \
 User \
+User/lcd \
 User/ws2812b \
 drivers \
 drivers/BSP/KEY \

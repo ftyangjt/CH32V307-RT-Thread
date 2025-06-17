@@ -21,7 +21,7 @@ static void rainbow_thread_entry(void* parameter)
     ws2812_hsv_t hsv;
     hsv.s = 1.0f;
     float hue = 0.0f;
-    
+    rt_kprintf("rainbow init\n");
     while(1) {
         if(!rainbow_ctrl.running) {
             rt_thread_mdelay(100);  // 不运行时降低CPU负担
@@ -68,12 +68,14 @@ void rainbow_init(void)
     rainbow_thread = rt_thread_create("rainbow", 
                                        rainbow_thread_entry, 
                                        RT_NULL, 
-                                       1024, 
+                                       512, 
                                        10, 
                                        10);
     if(rainbow_thread != RT_NULL) {
         rt_thread_startup(rainbow_thread);
         rt_kprintf("彩虹效果线程已初始化\n");
+    }else {
+    rt_kprintf("彩虹效果线程初始化失败！！！\n");
     }
 }
 

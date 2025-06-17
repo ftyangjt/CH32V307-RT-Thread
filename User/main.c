@@ -16,18 +16,7 @@
 #include "ws2812b/rainbow.h"
 
 // 包含屏幕头文件
-#include "./SYSTEM/sys/sys.h"
-#include "./SYSTEM/delay/delay.h"
-#include "./SYSTEM/usart/usart.h"
-#include "./BSP/LED/led.h"
-#include "./BSP/LCD/lcd.h"
-#include "./BSP/KEY/key.h"
-#include "./BSP/SDIO/sdio_sdcard.h"
-#include "./BSP/NORFLASH/norflash.h"
-#include "./FATFS/exfuns/exfuns.h"
-#include "./MALLOC/malloc.h"
-#include "./USMART/usmart.h"
-#include "./TEXT/text.h"
+#include "lcd/lcd_rt.h"
 
 // 自定义字符串转整数函数
 static int str_to_int(const char* str)
@@ -90,6 +79,21 @@ static int cmd_brightness(int argc, char **argv)
 }
 MSH_CMD_EXPORT(cmd_brightness, set rainbow brightness [0-100]);
 
+// LCD显示线程
+static void lcd_show_entry(void *parameter)
+{
+     lcd_hw_init();
+    // rt_kprintf("lcd_show_entry run!\n");
+    // lcd_hw_clear(0xFFFF); // 白色清屏
+    // lcd_hw_show_string(10, 10, "Hello RT-Thread!", 0xF800); // 红色
+    // lcd_hw_show_string(10, 40, "LCD Test", 0x001F);         // 蓝色
+    // lcd_hw_show_string(10, 70, "正点原子", 0x07E0);          // 绿色
+
+    // 线程任务完成后挂起自己
+    rt_thread_suspend(rt_thread_self());
+    rt_schedule();
+}
+
 int main(void)
 {
     rt_kprintf("\r\n");
@@ -103,16 +107,26 @@ int main(void)
     rt_kprintf("SysClk: %dHz\r\n", SystemCoreClock);
     rt_kprintf("ChipID: %08x\r\n", DBGMCU_GetCHIPID());
     
+
+
+    // 创建LCD显示线程
+    rt_thread_t tid = rt_thread_create("lcd_show",
+                                       lcd_show_entry,
+                                       RT_NULL,
+                                       1024,
+                                       10,
+                                       10);
+    if (tid != RT_NULL)
+        rt_thread_startup(tid);
+    else
+        rt_kprintf("RT_NULL!!");
+    
     // 初始化各模块
     ws2812_init();
     rainbow_init();
-    lcd_init();
-    
     // 启动彩虹效果
     rainbow_start(3);  // 速度级别3
 
-    lcd_clear(WHITE);
-    
     // 主循环
     while(1)
     {

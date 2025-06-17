@@ -30,6 +30,7 @@
 #include "./BSP/LCD/lcdfont.h"
 #include "./SYSTEM/usart/usart.h"
 #include "./SYSTEM/delay/delay.h"
+#include <rtthread.h>
 
 /* LCD的画笔颜色和背景色 */
 uint32_t g_point_color = 0XF800;    /* 画笔颜色 */
@@ -658,7 +659,7 @@ void lcd_init(void)
     FSMC_NORSRAMInit(&fsmc_sram_handle);                      /* 初始化FSMC配置 */
     FSMC_NORSRAMCmd(FSMC_Bank1_NORSRAM1, ENABLE);             /* 使能BANK1 */
 
-    delay_ms(50);
+    rt_thread_mdelay(50);
 
     /* 尝试9341 ID的读取 */
     lcd_wr_regno(0xD3);
@@ -716,7 +717,7 @@ void lcd_init(void)
                     lcd_wr_regno(0xC501);       /* 读取ID高八位 */
                     lcddev.id |= lcd_rd_data(); /* 读回0x00 */
 
-                    delay_ms(5);                /* 等待5ms, 因为0XC501指令对1963来说就是软件复位指令, 等待5ms让1963复位完成再操作 */
+                    rt_thread_mdelay(5);;                /* 等待5ms, 因为0XC501指令对1963来说就是软件复位指令, 等待5ms让1963复位完成再操作 */
 
                     if (lcddev.id != 0x5510)    /* 也不是NT5510,尝试看看是不是ILI9806 */
                     {
@@ -747,7 +748,7 @@ void lcd_init(void)
      * 里面(卡死在f_putc函数), 所以, 必须初始化串口1, 或者屏蔽掉下面
      * 这行 printf 语句 !!!!!!!
      */
-    // printf("LCD ID:%x\r\n", lcddev.id); /* 打印LCD ID */
+    // rt_kprintf("LCD ID:%x\r\n", lcddev.id); /* 打印LCD ID */
 
     if (lcddev.id == 0x7789)
     {

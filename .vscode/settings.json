@@ -9,6 +9,12 @@
         "malloc.h": "c",
         "sdio_sdcard.h": "c",
         "exfuns.h": "c",
-        "usmart.h": "c"
+        "usmart.h": "c",
+        "delay.h": "c",
+        "lcd_ex.h": "c",
+        "lcdfont.h": "c",
+        "usart.h": "c",
+        "ws2812.h": "c",
+        "compare": "c"
     }
 }
