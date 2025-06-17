@@ -162,7 +162,7 @@ void SDI_Printf_Enable(void)
 }
 
 /*********************************************************************
- * @fn      _write
+ * @fn      __write
  *
  * @brief   Support Printf Function
  *
@@ -171,7 +171,7 @@ void SDI_Printf_Enable(void)
  *
  * @return  size: Data length
  */
-__attribute__((used)) int _write(int fd, char *buf, int size)
+__attribute__((used)) int __write(int fd, char *buf, int size)
 {
     int i = 0;
 

@@ -15,6 +15,20 @@
 #include "ws2812b/ws2812.h"
 #include "ws2812b/rainbow.h"
 
+// 包含屏幕头文件
+#include "./SYSTEM/sys/sys.h"
+#include "./SYSTEM/delay/delay.h"
+#include "./SYSTEM/usart/usart.h"
+#include "./BSP/LED/led.h"
+#include "./BSP/LCD/lcd.h"
+#include "./BSP/KEY/key.h"
+#include "./BSP/SDIO/sdio_sdcard.h"
+#include "./BSP/NORFLASH/norflash.h"
+#include "./FATFS/exfuns/exfuns.h"
+#include "./MALLOC/malloc.h"
+#include "./USMART/usmart.h"
+#include "./TEXT/text.h"
+
 // 自定义字符串转整数函数
 static int str_to_int(const char* str)
 {
@@ -92,9 +106,12 @@ int main(void)
     // 初始化各模块
     ws2812_init();
     rainbow_init();
+    lcd_init();
     
     // 启动彩虹效果
     rainbow_start(3);  // 速度级别3
+
+    lcd_clear(WHITE);
     
     // 主循环
     while(1)

@@ -25,11 +25,26 @@ SECONDARY_SIZE :=
 SUBDIRS := \
 Core \
 Debug \
+Middlewares/FATFS/exfuns \
+Middlewares/FATFS/source \
+Middlewares/MALLOC \
+Middlewares/PICTURE \
+Middlewares/TEXT \
+Middlewares/USMART \
 Peripheral/src \
 Startup \
 User \
 User/ws2812b \
 drivers \
+drivers/BSP/KEY \
+drivers/BSP/LCD \
+drivers/BSP/LED \
+drivers/BSP/NORFLASH \
+drivers/BSP/SDIO \
+drivers/BSP/SPI \
+drivers/SYSTEM/delay \
+drivers/SYSTEM/sys \
+drivers/SYSTEM/usart \
 rtthread \
 rtthread/components/drivers/misc \
 rtthread/components/drivers/serial \

@@ -129,7 +129,9 @@
 							"${project}/rtthread/components/drivers/misc",
 							"${project}/rtthread/components/drivers/serial",
 							"${project}/rtthread/components/finsh",
-							"${project}/rtthread"
+							"${project}/rtthread",
+							"${project}/Middlewares",
+							"${project}/Middlewares/FATFS"
 						],
 						"include_system_paths": [],
 						"include_files": []
@@ -167,7 +169,8 @@
 							"${project}/rtthread/components/drivers/include",
 							"${project}/rtthread/components/drivers/misc",
 							"${project}/rtthread/components/drivers/serial",
-							"${project}/rtthread/components/finsh"
+							"${project}/rtthread/components/finsh",
+							"${project}/Middlewares"
 						],
 						"include_system_paths": [],
 						"include_files": []
@@ -737,10 +740,8 @@
 			"ATTR_BUILD_BEFORE_LAUNCH_ATTR": 2,
 			"GdbServerAllocateConsole": true,
 			"GdbServerAllocateTelnetConsole": false,
-			"SkipDownloadBeforeDebug": false,
 			"StartGdbCLient": true,
-			"UPDATE_THREADLIST_ON_SUSPEND": false,
-			"DebugInRam": false
+			"UPDATE_THREADLIST_ON_SUSPEND": false
 		}
 	}
 }
