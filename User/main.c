@@ -82,7 +82,7 @@ MSH_CMD_EXPORT(cmd_brightness, set rainbow brightness [0-100]);
 // LCD显示线程
 static void lcd_show_entry(void *parameter)
 {
-     lcd_hw_init();
+    lcd_hw_init();
     // rt_kprintf("lcd_show_entry run!\n");
     // lcd_hw_clear(0xFFFF); // 白色清屏
     // lcd_hw_show_string(10, 10, "Hello RT-Thread!", 0xF800); // 红色
@@ -107,8 +107,6 @@ int main(void)
     rt_kprintf("SysClk: %dHz\r\n", SystemCoreClock);
     rt_kprintf("ChipID: %08x\r\n", DBGMCU_GetCHIPID());
     
-
-
     // 创建LCD显示线程
     rt_thread_t tid = rt_thread_create("lcd_show",
                                        lcd_show_entry,
@@ -120,10 +118,13 @@ int main(void)
         rt_thread_startup(tid);
     else
         rt_kprintf("RT_NULL!!");
-    
+
+
     // 初始化各模块
+    // lcd_hw_init();
     ws2812_init();
     rainbow_init();
+
     // 启动彩虹效果
     rainbow_start(3);  // 速度级别3
 

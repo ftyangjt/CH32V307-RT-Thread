@@ -15,6 +15,7 @@
         "lcdfont.h": "c",
         "usart.h": "c",
         "ws2812.h": "c",
-        "compare": "c"
+        "compare": "c",
+        "math.h": "c"
     }
 }

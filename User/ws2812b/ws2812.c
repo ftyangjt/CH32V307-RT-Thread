@@ -167,7 +167,6 @@ void ws2812_init(void)
     for(int i = 0; i < WS2812_LED_NUM * 3; i++) {
         led_rgb_data[i] = 0;
     }
-    
     // 发送初始化数据
     ws2812_update(led_rgb_data);
 }
@@ -185,7 +184,9 @@ void ws2812_update(uint8_t *rgb_data)
     DMA_Cmd(DMA1_Channel5, ENABLE);
     
     // 等待传输完成
+    
     while(DMA_GetFlagStatus(DMA1_FLAG_TC5) == RESET);
+    
     
     // 清除传输完成标志
     DMA_ClearFlag(DMA1_FLAG_TC5);

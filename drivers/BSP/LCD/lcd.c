@@ -805,6 +805,7 @@ void lcd_init(void)
     lcd_display_dir(0); /* 默认为竖屏 */
     LCD_BL(1);          /* 点亮背光 */
     lcd_clear(WHITE);
+    // rt_kprintf("lcd\r\n");
 }
 
 /**

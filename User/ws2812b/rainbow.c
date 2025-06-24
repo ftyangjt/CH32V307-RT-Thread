@@ -23,6 +23,7 @@ static void rainbow_thread_entry(void* parameter)
     float hue = 0.0f;
     rt_kprintf("rainbow init\n");
     while(1) {
+        // rt_kprintf("LED0\r\n");
         if(!rainbow_ctrl.running) {
             rt_thread_mdelay(100);  // 不运行时降低CPU负担
             continue;
@@ -31,6 +32,7 @@ static void rainbow_thread_entry(void* parameter)
         // 设置亮度(0-100转换为0.0-1.0)
         hsv.v = (float)rainbow_ctrl.brightness / 100.0f;
         
+        // rt_kprintf("LED1\r\n");
         // 更新所有LED颜色
         for(int i = 0; i < WS2812_LED_NUM; i++) {
             hsv.h = fmodf(hue + (float)i * (360.0f / WS2812_LED_NUM), 360.0f);
@@ -41,15 +43,18 @@ static void rainbow_thread_entry(void* parameter)
                 &led_data[i * 3 + 2]);
         }
         
+        // rt_kprintf("LED2\r\n");
         // 更新WS2812
         ws2812_update(led_data);
         
+        // rt_kprintf("LED3\r\n");
         // 更新色相
         hue += rainbow_ctrl.hue_step;
         if(hue >= 360.0f) hue -= 360.0f;
-        
+
         // 根据当前设定的延时参数延时
         rt_thread_mdelay(rainbow_ctrl.delay_ms);
+        // rt_kprintf("%d\r\n\r\n", rainbow_ctrl.delay_ms);
     }
 }
 
@@ -69,7 +74,7 @@ void rainbow_init(void)
                                        rainbow_thread_entry, 
                                        RT_NULL, 
                                        512, 
-                                       10, 
+                                       9, 
                                        10);
     if(rainbow_thread != RT_NULL) {
         rt_thread_startup(rainbow_thread);
