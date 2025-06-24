@@ -25,6 +25,7 @@
 #include "gif.h"
 #include "piclib.h"
 #include "./SYSTEM/delay/delay.h"
+#include "rtthread.h"
 
 
 const uint16_t _aMaskTbl[16] =
@@ -813,7 +814,7 @@ uint8_t gif_decode(const char *filename, uint16_t x, uint16_t y, uint16_t width,
                 
                 while (dtime-- && g_gif_decoding)
                 {
-                    delay_ms(10);   /* ясЁы */
+                    rt_thread_mdelay(10);   /* ясЁы */
                 }
                 
                 if (res == 2)

@@ -133,6 +133,146 @@ uint16_t pic_get_tnum(char *path)
     return rval;
 }
 
+static void pic_show_thread_entry(void *parameter)
+{
+    DIR picdir;
+    FILINFO *picfileinfo;
+    char *pname;
+    uint16_t totpicnum;
+    uint16_t curindex;
+    uint8_t key;
+    uint8_t pause = 0;
+    uint8_t t;
+    uint16_t temp;
+    uint32_t *picoffsettbl;
+    int res;
+
+    // 打开图片目录
+    while (f_opendir(&picdir, "0:/PICTURE"))
+    {
+        text_show_string(30, 150, 240, 16, "PICTURE文件夹错误!", 16, 0, RED);
+        rt_thread_mdelay(200);
+        lcd_fill(30, 150, 240, 186, WHITE);
+        rt_thread_mdelay(200);
+    }
+
+    totpicnum = pic_get_tnum("0:/PICTURE"); // 获取有效图片数
+
+    while (totpicnum == 0)
+    {
+        text_show_string(30, 150, 240, 16, "没有图片文件!", 16, 0, RED);
+        rt_thread_mdelay(200);
+        lcd_fill(30, 150, 240, 186, WHITE);
+        rt_thread_mdelay(200);
+    }
+
+    picfileinfo = (FILINFO *)mymalloc(SRAMIN, sizeof(FILINFO));
+    pname = mymalloc(SRAMIN, FF_MAX_LFN * 2 + 1);
+    picoffsettbl = mymalloc(SRAMIN, 4 * totpicnum);
+
+    while (!picfileinfo || !pname || !picoffsettbl)
+    {
+        text_show_string(30, 150, 240, 16, "内存分配失败!", 16, 0, RED);
+        rt_thread_mdelay(200);
+        lcd_fill(30, 150, 240, 186, WHITE);
+        rt_thread_mdelay(200);
+    }
+
+    // 记录所有图片文件的目录偏移
+    res = f_opendir(&picdir, "0:/PICTURE");
+    if (res == FR_OK)
+    {
+        curindex = 0;
+        while (1)
+        {
+            temp = picdir.dptr;
+            res = f_readdir(&picdir, picfileinfo);
+            if (res != FR_OK || picfileinfo->fname[0] == 0)
+            {
+                break;
+            }
+            res = exfuns_file_type(picfileinfo->fname);
+            if ((res & 0XF0) == 0X50)
+            {
+                picoffsettbl[curindex] = temp;
+                curindex++;
+            }
+        }
+    }
+
+    text_show_string(30, 150, 240, 16, "开始显示...", 16, 0, RED);
+    rt_thread_mdelay(1500);
+    piclib_init();
+    curindex = 0;
+    res = f_opendir(&picdir, (const TCHAR *)"0:/PICTURE");
+
+    while (res == FR_OK)
+    {
+        dir_sdi(&picdir, picoffsettbl[curindex]);
+        res = f_readdir(&picdir, picfileinfo);
+        if (res != FR_OK || picfileinfo->fname[0] == 0) break;
+
+        strcpy((char *)pname, "0:/PICTURE/");
+        strcat((char *)pname, (const char *)picfileinfo->fname);
+        lcd_clear(BLACK);
+
+        piclib_ai_load_picfile(pname, 0, 0, lcddev.width, lcddev.height, 1);
+        t = 0;
+
+        while (1)
+        {
+            key = key_scan(0);
+
+            if (t > 250)
+                key = 1; // 自动下一张
+
+            if ((t % 20) == 0)
+            {
+                LED0_TOGGLE();
+            }
+
+            if (key == KEY1_PRES)
+            {
+                if (curindex)
+                {
+                    curindex--;
+                }
+                else
+                {
+                    curindex = totpicnum - 1;
+                }
+                break;
+            }
+            else if (key == KEY0_PRES)
+            {
+                curindex++;
+                if (curindex >= totpicnum)
+                    curindex = 0;
+                break;
+            }
+            else if (key == WKUP_PRES)
+            {
+                pause = !pause;
+                LED1(!pause);
+            }
+
+            if (pause == 0)
+                t++;
+
+            rt_thread_mdelay(10);
+        }
+        res = 0;
+    }
+
+    myfree(SRAMIN, picfileinfo);
+    myfree(SRAMIN, pname);
+    myfree(SRAMIN, picoffsettbl);
+
+    // 线程结束后挂起自己
+    rt_thread_suspend(rt_thread_self());
+    rt_schedule();
+}
+
 int main(void)
 {
     rt_kprintf("\r\n");
@@ -162,9 +302,9 @@ int main(void)
     while (fonts_init())                                /* 检查字库 */
     {
         lcd_show_string(30, 50, 200, 16, 16, "Font Error!", RED);
-        delay_ms(200);
+        rt_thread_mdelay(200);
         lcd_fill(30, 50, 240, 66, WHITE);               /* 清除显示 */
-        delay_ms(200);
+        rt_thread_mdelay(200);
     }
 
     text_show_string(30,  50, 200, 16, "正点原子CH32开发板", 16, 0, RED);
@@ -172,6 +312,15 @@ int main(void)
     text_show_string(30,  90, 200, 16, "KEY0:NEXT KEY1:PREV", 16, 0, RED);
     text_show_string(30, 110, 200, 16, "KEY_UP:PAUSE", 16, 0, RED);
     text_show_string(30, 130, 200, 16, "正点原子@ALIENTEK", 16, 0, RED);
+
+    rt_thread_t pic_tid = rt_thread_create("picshow",
+                                          pic_show_thread_entry,
+                                          RT_NULL,
+                                          2048,
+                                          15,
+                                          10);
+    if (pic_tid != RT_NULL)
+        rt_thread_startup(pic_tid);
 
     // 主循环
     while(1)

@@ -39,7 +39,14 @@ Middlewares/PICTURE/gif.o: ../Middlewares/PICTURE/gif.c \
  ../Middlewares/PICTURE/../FATFS/exfuns/../source/ff.h \
  ../Middlewares/PICTURE/bmp.h ../Middlewares/PICTURE/tjpgd.h \
  ../Middlewares/PICTURE/tjpgdcnf.h \
- c:\users\lhxsy\mounriver-studio-projects\ch32v307-rt-thread\drivers\system\delay\delay.h
+ c:\users\lhxsy\mounriver-studio-projects\ch32v307-rt-thread\drivers\system\delay\delay.h \
+ c:/Users/lhxsy/mounriver-studio-projects/CH32V307-RT-Thread/rtthread/include/rtthread.h \
+ c:/Users/lhxsy/mounriver-studio-projects/CH32V307-RT-Thread/rtthread/rtconfig.h \
+ c:/Users/lhxsy/mounriver-studio-projects/CH32V307-RT-Thread/rtthread/include/rtdebug.h \
+ c:/Users/lhxsy/mounriver-studio-projects/CH32V307-RT-Thread/rtthread/include/rtdef.h \
+ c:/Users/lhxsy/mounriver-studio-projects/CH32V307-RT-Thread/rtthread/include/rtservice.h \
+ c:/Users/lhxsy/mounriver-studio-projects/CH32V307-RT-Thread/rtthread/include/rtm.h \
+ c:/Users/lhxsy/mounriver-studio-projects/CH32V307-RT-Thread/rtthread/components/finsh/finsh_api.h
 
 ../Middlewares/PICTURE/gif.h:
 
@@ -124,3 +131,17 @@ c:\users\lhxsy\mounriver-studio-projects\ch32v307-rt-thread\drivers\bsp\lcd\lcd.
 ../Middlewares/PICTURE/tjpgdcnf.h:
 
 c:\users\lhxsy\mounriver-studio-projects\ch32v307-rt-thread\drivers\system\delay\delay.h:
+
+c:/Users/lhxsy/mounriver-studio-projects/CH32V307-RT-Thread/rtthread/include/rtthread.h:
+
+c:/Users/lhxsy/mounriver-studio-projects/CH32V307-RT-Thread/rtthread/rtconfig.h:
+
+c:/Users/lhxsy/mounriver-studio-projects/CH32V307-RT-Thread/rtthread/include/rtdebug.h:
+
+c:/Users/lhxsy/mounriver-studio-projects/CH32V307-RT-Thread/rtthread/include/rtdef.h:
+
+c:/Users/lhxsy/mounriver-studio-projects/CH32V307-RT-Thread/rtthread/include/rtservice.h:
+
+c:/Users/lhxsy/mounriver-studio-projects/CH32V307-RT-Thread/rtthread/include/rtm.h:
+
+c:/Users/lhxsy/mounriver-studio-projects/CH32V307-RT-Thread/rtthread/components/finsh/finsh_api.h:

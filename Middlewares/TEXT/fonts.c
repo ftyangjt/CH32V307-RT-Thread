@@ -31,6 +31,7 @@
 #include "./SYSTEM/usart/usart.h"
 #include "./SYSTEM/delay/delay.h"
 #include "./BSP/NORFLASH/norflash.h"
+#include "rtthread.h"
 
 
 /* 字库区域占用的总扇区数大小(3个字库+unigbk表+字库信息=3238700 字节,约占791个25QXX扇区,一个扇区4K字节) */
@@ -296,7 +297,7 @@ uint8_t fonts_init(void)
             break;
         }
         
-        delay_ms(20);
+        rt_thread_mdelay(20);
     }
 
     if (ftinfo.fontok != 0xAA)

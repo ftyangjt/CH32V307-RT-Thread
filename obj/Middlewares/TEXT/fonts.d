@@ -35,7 +35,14 @@ Middlewares/TEXT/fonts.o: ../Middlewares/TEXT/fonts.c \
  ../Middlewares/TEXT/../FATFS/source/ffconf.h \
  c:\users\lhxsy\mounriver-studio-projects\ch32v307-rt-thread\drivers\system\usart\usart.h \
  c:\users\lhxsy\mounriver-studio-projects\ch32v307-rt-thread\drivers\system\delay\delay.h \
- c:\users\lhxsy\mounriver-studio-projects\ch32v307-rt-thread\drivers\bsp\norflash\norflash.h
+ c:\users\lhxsy\mounriver-studio-projects\ch32v307-rt-thread\drivers\bsp\norflash\norflash.h \
+ c:/Users/lhxsy/mounriver-studio-projects/CH32V307-RT-Thread/rtthread/include/rtthread.h \
+ c:/Users/lhxsy/mounriver-studio-projects/CH32V307-RT-Thread/rtthread/rtconfig.h \
+ c:/Users/lhxsy/mounriver-studio-projects/CH32V307-RT-Thread/rtthread/include/rtdebug.h \
+ c:/Users/lhxsy/mounriver-studio-projects/CH32V307-RT-Thread/rtthread/include/rtdef.h \
+ c:/Users/lhxsy/mounriver-studio-projects/CH32V307-RT-Thread/rtthread/include/rtservice.h \
+ c:/Users/lhxsy/mounriver-studio-projects/CH32V307-RT-Thread/rtthread/include/rtm.h \
+ c:/Users/lhxsy/mounriver-studio-projects/CH32V307-RT-Thread/rtthread/components/finsh/finsh_api.h
 
 c:\users\lhxsy\mounriver-studio-projects\ch32v307-rt-thread\drivers\bsp\lcd\lcd.h:
 
@@ -112,3 +119,17 @@ c:\users\lhxsy\mounriver-studio-projects\ch32v307-rt-thread\drivers\system\usart
 c:\users\lhxsy\mounriver-studio-projects\ch32v307-rt-thread\drivers\system\delay\delay.h:
 
 c:\users\lhxsy\mounriver-studio-projects\ch32v307-rt-thread\drivers\bsp\norflash\norflash.h:
+
+c:/Users/lhxsy/mounriver-studio-projects/CH32V307-RT-Thread/rtthread/include/rtthread.h:
+
+c:/Users/lhxsy/mounriver-studio-projects/CH32V307-RT-Thread/rtthread/rtconfig.h:
+
+c:/Users/lhxsy/mounriver-studio-projects/CH32V307-RT-Thread/rtthread/include/rtdebug.h:
+
+c:/Users/lhxsy/mounriver-studio-projects/CH32V307-RT-Thread/rtthread/include/rtdef.h:
+
+c:/Users/lhxsy/mounriver-studio-projects/CH32V307-RT-Thread/rtthread/include/rtservice.h:
+
+c:/Users/lhxsy/mounriver-studio-projects/CH32V307-RT-Thread/rtthread/include/rtm.h:
+
+c:/Users/lhxsy/mounriver-studio-projects/CH32V307-RT-Thread/rtthread/components/finsh/finsh_api.h:
