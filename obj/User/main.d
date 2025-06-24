@@ -47,7 +47,30 @@ User/main.o: ../User/main.c \
  c:/Users/lhxsy/mounriver-studio-projects/CH32V307-RT-Thread/rtthread/components/drivers/include/ipc/poll.h \
  c:/Users/lhxsy/mounriver-studio-projects/CH32V307-RT-Thread/rtthread/components/drivers/include/drivers/serial.h \
  c:/Users/lhxsy/mounriver-studio-projects/CH32V307-RT-Thread/rtthread/components/drivers/include/drivers/pin.h \
- ../User/ws2812b/ws2812.h ../User/ws2812b/rainbow.h ../User/lcd/lcd_rt.h
+ ../User/ws2812b/ws2812.h ../User/ws2812b/rainbow.h \
+ c:/Users/lhxsy/mounriver-studio-projects/CH32V307-RT-Thread/drivers/BSP/LCD/lcd.h \
+ c:\users\lhxsy\mounriver-studio-projects\ch32v307-rt-thread\drivers\system\sys\sys.h \
+ c:\users\lhxsy\mounriver-studio-projects\ch32v307-rt-thread\drivers\system\delay\delay.h \
+ c:\users\lhxsy\mounriver-studio-projects\ch32v307-rt-thread\drivers\system\usart\usart.h \
+ c:\users\lhxsy\mounriver-studio-projects\ch32v307-rt-thread\drivers\bsp\led\led.h \
+ c:\users\lhxsy\mounriver-studio-projects\ch32v307-rt-thread\drivers\bsp\lcd\lcd.h \
+ c:\users\lhxsy\mounriver-studio-projects\ch32v307-rt-thread\drivers\bsp\key\key.h \
+ c:\users\lhxsy\mounriver-studio-projects\ch32v307-rt-thread\drivers\bsp\sdio\sdio_sdcard.h \
+ c:\users\lhxsy\mounriver-studio-projects\ch32v307-rt-thread\drivers\bsp\norflash\norflash.h \
+ c:\users\lhxsy\mounriver-studio-projects\ch32v307-rt-thread\middlewares\fatfs\exfuns\exfuns.h \
+ c:\users\lhxsy\mounriver-studio-projects\ch32v307-rt-thread\middlewares\fatfs\source\ff.h \
+ c:\users\lhxsy\mounriver-studio-projects\ch32v307-rt-thread\middlewares\fatfs\source\ffconf.h \
+ c:\users\lhxsy\mounriver-studio-projects\ch32v307-rt-thread\middlewares\malloc\malloc.h \
+ c:\users\lhxsy\mounriver-studio-projects\ch32v307-rt-thread\middlewares\text\text.h \
+ c:\users\lhxsy\mounriver-studio-projects\ch32v307-rt-thread\middlewares\text\fonts.h \
+ c:\users\lhxsy\mounriver-studio-projects\ch32v307-rt-thread\middlewares\picture\piclib.h \
+ c:\users\lhxsy\mounriver-studio-projects\ch32v307-rt-thread\middlewares\malloc\malloc.h \
+ c:\users\lhxsy\mounriver-studio-projects\ch32v307-rt-thread\middlewares\fatfs\exfuns\exfuns.h \
+ c:\users\lhxsy\mounriver-studio-projects\ch32v307-rt-thread\middlewares\picture\bmp.h \
+ c:\users\lhxsy\mounriver-studio-projects\ch32v307-rt-thread\middlewares\picture\gif.h \
+ c:\users\lhxsy\mounriver-studio-projects\ch32v307-rt-thread\middlewares\fatfs\source\ff.h \
+ c:\users\lhxsy\mounriver-studio-projects\ch32v307-rt-thread\middlewares\picture\tjpgd.h \
+ c:\users\lhxsy\mounriver-studio-projects\ch32v307-rt-thread\middlewares\picture\tjpgdcnf.h
 
 c:/Users/lhxsy/mounriver-studio-projects/CH32V307-RT-Thread/Peripheral/inc/ch32v30x.h:
 
@@ -149,4 +172,48 @@ c:/Users/lhxsy/mounriver-studio-projects/CH32V307-RT-Thread/rtthread/components/
 
 ../User/ws2812b/rainbow.h:
 
-../User/lcd/lcd_rt.h:
+c:/Users/lhxsy/mounriver-studio-projects/CH32V307-RT-Thread/drivers/BSP/LCD/lcd.h:
+
+c:\users\lhxsy\mounriver-studio-projects\ch32v307-rt-thread\drivers\system\sys\sys.h:
+
+c:\users\lhxsy\mounriver-studio-projects\ch32v307-rt-thread\drivers\system\delay\delay.h:
+
+c:\users\lhxsy\mounriver-studio-projects\ch32v307-rt-thread\drivers\system\usart\usart.h:
+
+c:\users\lhxsy\mounriver-studio-projects\ch32v307-rt-thread\drivers\bsp\led\led.h:
+
+c:\users\lhxsy\mounriver-studio-projects\ch32v307-rt-thread\drivers\bsp\lcd\lcd.h:
+
+c:\users\lhxsy\mounriver-studio-projects\ch32v307-rt-thread\drivers\bsp\key\key.h:
+
+c:\users\lhxsy\mounriver-studio-projects\ch32v307-rt-thread\drivers\bsp\sdio\sdio_sdcard.h:
+
+c:\users\lhxsy\mounriver-studio-projects\ch32v307-rt-thread\drivers\bsp\norflash\norflash.h:
+
+c:\users\lhxsy\mounriver-studio-projects\ch32v307-rt-thread\middlewares\fatfs\exfuns\exfuns.h:
+
+c:\users\lhxsy\mounriver-studio-projects\ch32v307-rt-thread\middlewares\fatfs\source\ff.h:
+
+c:\users\lhxsy\mounriver-studio-projects\ch32v307-rt-thread\middlewares\fatfs\source\ffconf.h:
+
+c:\users\lhxsy\mounriver-studio-projects\ch32v307-rt-thread\middlewares\malloc\malloc.h:
+
+c:\users\lhxsy\mounriver-studio-projects\ch32v307-rt-thread\middlewares\text\text.h:
+
+c:\users\lhxsy\mounriver-studio-projects\ch32v307-rt-thread\middlewares\text\fonts.h:
+
+c:\users\lhxsy\mounriver-studio-projects\ch32v307-rt-thread\middlewares\picture\piclib.h:
+
+c:\users\lhxsy\mounriver-studio-projects\ch32v307-rt-thread\middlewares\malloc\malloc.h:
+
+c:\users\lhxsy\mounriver-studio-projects\ch32v307-rt-thread\middlewares\fatfs\exfuns\exfuns.h:
+
+c:\users\lhxsy\mounriver-studio-projects\ch32v307-rt-thread\middlewares\picture\bmp.h:
+
+c:\users\lhxsy\mounriver-studio-projects\ch32v307-rt-thread\middlewares\picture\gif.h:
+
+c:\users\lhxsy\mounriver-studio-projects\ch32v307-rt-thread\middlewares\fatfs\source\ff.h:
+
+c:\users\lhxsy\mounriver-studio-projects\ch32v307-rt-thread\middlewares\picture\tjpgd.h:
+
+c:\users\lhxsy\mounriver-studio-projects\ch32v307-rt-thread\middlewares\picture\tjpgdcnf.h:

@@ -16,7 +16,23 @@
 #include "ws2812b/rainbow.h"
 
 // 包含屏幕头文件
-#include "lcd/lcd_rt.h"
+#include "BSP/LCD/lcd.h"
+
+// 包含SD卡相关头文件
+#include "./SYSTEM/sys/sys.h"
+#include "./SYSTEM/delay/delay.h"
+#include "./SYSTEM/usart/usart.h"
+#include "./BSP/LED/led.h"
+#include "./BSP/LCD/lcd.h"
+#include "./BSP/KEY/key.h"
+#include "./BSP/SDIO/sdio_sdcard.h"
+#include "./BSP/NORFLASH/norflash.h"
+#include "./FATFS/exfuns/exfuns.h"
+#include "./MALLOC/malloc.h"
+#include "./TEXT/text.h"
+#include "./PICTURE/piclib.h"
+#include "string.h"
+#include "math.h"
 
 // 自定义字符串转整数函数
 static int str_to_int(const char* str)
@@ -79,19 +95,42 @@ static int cmd_brightness(int argc, char **argv)
 }
 MSH_CMD_EXPORT(cmd_brightness, set rainbow brightness [0-100]);
 
-// LCD显示线程
-static void lcd_show_entry(void *parameter)
+/**
+ * @brief       得到path路径下,目标文件的总个数
+ * @param       path : 路径
+ * @retval      总有效文件数
+ */
+uint16_t pic_get_tnum(char *path)
 {
-    lcd_hw_init();
-    // rt_kprintf("lcd_show_entry run!\n");
-    // lcd_hw_clear(0xFFFF); // 白色清屏
-    // lcd_hw_show_string(10, 10, "Hello RT-Thread!", 0xF800); // 红色
-    // lcd_hw_show_string(10, 40, "LCD Test", 0x001F);         // 蓝色
-    // lcd_hw_show_string(10, 70, "正点原子", 0x07E0);          // 绿色
+    uint8_t res;
+    uint16_t rval = 0;
+    DIR tdir;                                                   /* 临时目录 */
+    FILINFO *tfileinfo;                                         /* 临时文件信息 */
+    tfileinfo = (FILINFO *)mymalloc(SRAMIN, sizeof(FILINFO));   /* 申请内存 */
+    res = f_opendir(&tdir, (const TCHAR *)path);                /* 打开目录 */
 
-    // 线程任务完成后挂起自己
-    rt_thread_suspend(rt_thread_self());
-    rt_schedule();
+    if (res == FR_OK && tfileinfo)
+    {
+        while (1)                                               /* 查询总的有效文件数 */
+        {
+            res = f_readdir(&tdir, tfileinfo);                  /* 读取目录下的一个文件 */
+
+            if (res != FR_OK || tfileinfo->fname[0] == 0)
+            {
+                break;                                          /* 错误了/到末尾了,退出 */
+            }
+
+            res = exfuns_file_type(tfileinfo->fname);
+
+            if ((res & 0XF0) == 0X50)                           /* 取高四位,看看是不是图片文件 */
+            {
+                rval++;                                         /* 有效文件数增加1 */
+            }
+        }
+    }
+
+    myfree(SRAMIN, tfileinfo);                                  /* 释放内存 */
+    return rval;
 }
 
 int main(void)
@@ -106,27 +145,33 @@ int main(void)
     SystemCoreClockUpdate();
     rt_kprintf("SysClk: %dHz\r\n", SystemCoreClock);
     rt_kprintf("ChipID: %08x\r\n", DBGMCU_GetCHIPID());
-    
-    // 创建LCD显示线程
-    rt_thread_t tid = rt_thread_create("lcd_show",
-                                       lcd_show_entry,
-                                       RT_NULL,
-                                       1024,
-                                       10,
-                                       10);
-    if (tid != RT_NULL)
-        rt_thread_startup(tid);
-    else
-        rt_kprintf("RT_NULL!!");
 
+    // 初始化屏幕
+    lcd_init();
 
-    // 初始化各模块
-    // lcd_hw_init();
+    // 初始化彩虹灯光模块
     ws2812_init();
     rainbow_init();
+    rainbow_start(3);  // 启动彩虹效果，速度级别3
 
-    // 启动彩虹效果
-    rainbow_start(3);  // 速度级别3
+    my_mem_init(SRAMIN);                                /* 初始化内部SRAM内存池 */
+    exfuns_init();                                      /* 为fatfs相关变量申请内存 */
+    f_mount(fs[0], "0:", 1);                            /* 挂载SD卡 */
+    f_mount(fs[1], "1:", 1);                            /* 挂载FLASH */
+
+    while (fonts_init())                                /* 检查字库 */
+    {
+        lcd_show_string(30, 50, 200, 16, 16, "Font Error!", RED);
+        delay_ms(200);
+        lcd_fill(30, 50, 240, 66, WHITE);               /* 清除显示 */
+        delay_ms(200);
+    }
+
+    text_show_string(30,  50, 200, 16, "正点原子CH32开发板", 16, 0, RED);
+    text_show_string(30,  70, 200, 16, "图片显示 实验", 16, 0, RED);
+    text_show_string(30,  90, 200, 16, "KEY0:NEXT KEY1:PREV", 16, 0, RED);
+    text_show_string(30, 110, 200, 16, "KEY_UP:PAUSE", 16, 0, RED);
+    text_show_string(30, 130, 200, 16, "正点原子@ALIENTEK", 16, 0, RED);
 
     // 主循环
     while(1)

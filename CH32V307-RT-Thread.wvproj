@@ -40,8 +40,7 @@
 				"post_script": "",
 				"post_script_description": "",
 				"excludeResources": [
-					"${project}/Startup/startup_ch32v30x_D8.S",
-					"${project}/Middlewares"
+					"${project}/Startup/startup_ch32v30x_D8.S"
 				],
 				"riscvTargetProcessor": {
 					"architecture": "rv32i",

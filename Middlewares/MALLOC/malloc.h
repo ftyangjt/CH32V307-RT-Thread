@@ -41,7 +41,7 @@
 
 /* CH32V307内部SRAM配置 */
 #define MEM1_BLOCK_SIZE         32                              /* 内存块大小为32字节 */
-#define MEM1_MAX_SIZE           40 * 1024                       /* 管理内存 40KB */
+#define MEM1_MAX_SIZE           10 * 1024                       /* 管理内存 10KB */
 #define MEM1_ALLOC_TABLE_SIZE   MEM1_MAX_SIZE/MEM1_BLOCK_SIZE   /* 内存表大小 */
 
 /* 如果没有定义NULL, 定义NULL */

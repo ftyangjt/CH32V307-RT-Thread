@@ -25,10 +25,15 @@ RM := rm -rf
 -include drivers/BSP/KEY/subdir.mk
 -include drivers/subdir.mk
 -include User/ws2812b/subdir.mk
--include User/lcd/subdir.mk
 -include User/subdir.mk
 -include Startup/subdir.mk
 -include Peripheral/src/subdir.mk
+-include Middlewares/USMART/subdir.mk
+-include Middlewares/TEXT/subdir.mk
+-include Middlewares/PICTURE/subdir.mk
+-include Middlewares/MALLOC/subdir.mk
+-include Middlewares/FATFS/source/subdir.mk
+-include Middlewares/FATFS/exfuns/subdir.mk
 -include Debug/subdir.mk
 -include Core/subdir.mk
 -include subdir.mk
