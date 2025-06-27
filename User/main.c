@@ -34,6 +34,11 @@
 #include "string.h"
 #include "math.h"
 
+#include "WIFI.h"
+#include "PWM.h"
+#include "drv_pwm.h"
+#include "shell.h"
+
 // 自定义字符串转整数函数
 static int str_to_int(const char* str)
 {
@@ -312,6 +317,8 @@ int main(void)
     text_show_string(30,  90, 200, 16, "KEY0:NEXT KEY1:PREV", 16, 0, RED);
     text_show_string(30, 110, 200, 16, "KEY_UP:PAUSE", 16, 0, RED);
     text_show_string(30, 130, 200, 16, "正点原子@ALIENTEK", 16, 0, RED);
+        pwm_module_init();  
+    wifi_module_init(); 
 
     rt_thread_t pic_tid = rt_thread_create("picshow",
                                           pic_show_thread_entry,
