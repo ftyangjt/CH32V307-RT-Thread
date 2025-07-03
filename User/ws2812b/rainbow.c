@@ -15,6 +15,30 @@ static rainbow_ctrl_t rainbow_ctrl;
 static rt_thread_t rainbow_thread = RT_NULL;
 static uint8_t led_data[WS2812_LED_NUM * 3];
 
+// 自定义字符串转整数函数
+static int str_to_int(const char* str)
+{
+    int result = 0;
+    int sign = 1;
+    
+    // 处理符号
+    if(*str == '-') {
+        sign = -1;
+        str++;
+    } else if(*str == '+') {
+        str++;
+    }
+    
+    // 处理数字
+    while(*str >= '0' && *str <= '9') {
+        result = result * 10 + (*str - '0');
+        str++;
+    }
+    
+    return result * sign;
+}
+
+
 /* 彩虹效果线程 */
 static void rainbow_thread_entry(void* parameter)
 {
@@ -124,3 +148,41 @@ void rainbow_set_brightness(uint8_t brightness)
     
     rt_kprintf("彩虹效果亮度已设置为%d%%\n", brightness);
 }
+
+// MSH命令：启动彩虹效果
+static int cmd_rainbow(int argc, char **argv)
+{
+    int speed = 3;  // 默认速度级别
+    
+    if(argc > 1) {
+        speed = str_to_int(argv[1]);
+    }
+    
+    rainbow_start(speed);
+    return RT_EOK;
+}
+MSH_CMD_EXPORT(cmd_rainbow, start rainbow effect [speed 1-5]);
+
+// MSH命令：停止彩虹效果
+static int cmd_rainbow_stop(int argc, char **argv)
+{
+    rainbow_stop();
+    return RT_EOK;
+}
+MSH_CMD_EXPORT(cmd_rainbow_stop, stop rainbow effect);
+
+// MSH命令：设置彩虹效果亮度
+static int cmd_brightness(int argc, char **argv)
+{
+    int brightness = 30;  // 默认亮度30%
+    
+    if(argc > 1) {
+        brightness = str_to_int(argv[1]);
+        if(brightness < 0) brightness = 0;
+        if(brightness > 100) brightness = 100;
+    }
+    
+    rainbow_set_brightness(brightness);
+    return RT_EOK;
+}
+MSH_CMD_EXPORT(cmd_brightness, set rainbow brightness [0-100]);

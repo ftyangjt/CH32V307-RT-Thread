@@ -34,6 +34,7 @@ Middlewares/USMART \
 Peripheral/src \
 Startup \
 User \
+User/screen \
 User/ws2812b \
 drivers \
 drivers/BSP/KEY \

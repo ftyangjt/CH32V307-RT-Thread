@@ -25,6 +25,7 @@ RM := rm -rf
 -include drivers/BSP/KEY/subdir.mk
 -include drivers/subdir.mk
 -include User/ws2812b/subdir.mk
+-include User/screen/subdir.mk
 -include User/subdir.mk
 -include Startup/subdir.mk
 -include Peripheral/src/subdir.mk

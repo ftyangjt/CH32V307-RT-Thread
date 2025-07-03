@@ -17,6 +17,9 @@
         "ws2812.h": "c",
         "compare": "c",
         "math.h": "c",
-        "lcd_rt.h": "c"
+        "lcd_rt.h": "c",
+        "piclib.h": "c",
+        "wifi.h": "c",
+        "screen.h": "c"
     }
 }

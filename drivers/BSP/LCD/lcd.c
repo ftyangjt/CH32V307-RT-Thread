@@ -507,7 +507,8 @@ void lcd_display_dir(uint8_t dir)
         }
     }
 
-    lcd_scan_dir(DFT_SCAN_DIR);     /* 默认扫描方向 */
+    // 修改成R2L_U2D即可正常使用
+    lcd_scan_dir(L2R_U2D);     /* 默认扫描方向 */
 }
 
 /**
@@ -802,7 +803,7 @@ void lcd_init(void)
         fsmc_write_handle.FSMC_DataSetupTime = 1;    /* 数据保持时间 */
     }
 
-    lcd_display_dir(0); /* 默认为竖屏 */
+    lcd_display_dir(1); /* 默认为竖屏 */
     LCD_BL(1);          /* 点亮背光 */
     lcd_clear(WHITE);
     // rt_kprintf("lcd\r\n");
