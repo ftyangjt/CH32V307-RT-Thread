@@ -32,12 +32,12 @@
 #include "./BSP/LED/led.h"
 #include "string.h"
 #include "stdio.h"
+#include "./BSP/ADC/temp_adc.h"
 
 // 函数声明
 void pic_show_thread_entry(void *parameter);
 rt_thread_t screen_init(void);
 void display_aquarium_ui(void);
-static uint16_t color_lerp(uint16_t c1, uint16_t c2, float t);
-void lcd_draw_gradient_bg(void);
-
+void update_time_display(int hour, int min, int sec);
+void update_temperature_display(void);
 #endif /* __SCREEN_H */

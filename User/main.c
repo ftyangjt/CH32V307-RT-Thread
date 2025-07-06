@@ -25,6 +25,9 @@
 #include "drv_pwm.h"
 #include "shell.h"
 
+// 包含温度头文件
+#include "BSP/ADC/temp_adc.h"
+
 int main(void)
 {
     SystemCoreClockUpdate();
@@ -56,6 +59,8 @@ int main(void)
 
     // 初始化屏幕模块并创建鱼缸UI显示线程
     screen_init();
+
+    adc_temperature_init();                             /* 初始化内部温度传感器 */
 
     // 主循环
     while(1)

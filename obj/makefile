@@ -23,6 +23,7 @@ RM := rm -rf
 -include drivers/BSP/LED/subdir.mk
 -include drivers/BSP/LCD/subdir.mk
 -include drivers/BSP/KEY/subdir.mk
+-include drivers/BSP/ADC/subdir.mk
 -include drivers/subdir.mk
 -include User/ws2812b/subdir.mk
 -include User/screen/subdir.mk

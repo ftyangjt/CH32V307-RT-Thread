@@ -37,6 +37,7 @@ User \
 User/screen \
 User/ws2812b \
 drivers \
+drivers/BSP/ADC \
 drivers/BSP/KEY \
 drivers/BSP/LCD \
 drivers/BSP/LED \

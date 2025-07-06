@@ -67,11 +67,13 @@ User/main.o: ../User/main.c \
  c:\users\lhxsy\mounriver-studio-projects\ch32v307-rt-thread\middlewares\picture\tjpgd.h \
  c:\users\lhxsy\mounriver-studio-projects\ch32v307-rt-thread\middlewares\picture\tjpgdcnf.h \
  c:\users\lhxsy\mounriver-studio-projects\ch32v307-rt-thread\drivers\bsp\led\led.h \
+ c:\users\lhxsy\mounriver-studio-projects\ch32v307-rt-thread\drivers\bsp\adc\temp_adc.h \
  ../User/WIFI.h ../User/PWM.h \
  c:/Users/lhxsy/mounriver-studio-projects/CH32V307-RT-Thread/drivers/drv_pwm.h \
  c:/Users/lhxsy/mounriver-studio-projects/CH32V307-RT-Thread/rtthread/components/finsh/shell.h \
  c:/Users/lhxsy/mounriver-studio-projects/CH32V307-RT-Thread/rtthread/components/finsh/finsh.h \
- c:/Users/lhxsy/mounriver-studio-projects/CH32V307-RT-Thread/rtthread/components/finsh/finsh_api.h
+ c:/Users/lhxsy/mounriver-studio-projects/CH32V307-RT-Thread/rtthread/components/finsh/finsh_api.h \
+ c:/Users/lhxsy/mounriver-studio-projects/CH32V307-RT-Thread/drivers/BSP/ADC/temp_adc.h
 
 c:/Users/lhxsy/mounriver-studio-projects/CH32V307-RT-Thread/Peripheral/inc/ch32v30x.h:
 
@@ -211,6 +213,8 @@ c:\users\lhxsy\mounriver-studio-projects\ch32v307-rt-thread\middlewares\picture\
 
 c:\users\lhxsy\mounriver-studio-projects\ch32v307-rt-thread\drivers\bsp\led\led.h:
 
+c:\users\lhxsy\mounriver-studio-projects\ch32v307-rt-thread\drivers\bsp\adc\temp_adc.h:
+
 ../User/WIFI.h:
 
 ../User/PWM.h:
@@ -222,3 +226,5 @@ c:/Users/lhxsy/mounriver-studio-projects/CH32V307-RT-Thread/rtthread/components/
 c:/Users/lhxsy/mounriver-studio-projects/CH32V307-RT-Thread/rtthread/components/finsh/finsh.h:
 
 c:/Users/lhxsy/mounriver-studio-projects/CH32V307-RT-Thread/rtthread/components/finsh/finsh_api.h:
+
+c:/Users/lhxsy/mounriver-studio-projects/CH32V307-RT-Thread/drivers/BSP/ADC/temp_adc.h:
