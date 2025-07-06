@@ -3,58 +3,70 @@
 * Author             : ChatGPT
 * Version            : V2.0.0
 * Date               : 2025/05/27
-* Description        : CH32V307 + RT-Thread Ö÷³ÌĞò
+* Description        : CH32V307 + RT-Thread ä¸»ç¨‹åº
 *********************************************************************************/
-// °üº¬RTTÎÄ¼ş
+// åŒ…å«RTTæ–‡ä»¶
 #include "ch32v30x.h"
 #include <rtthread.h>
 #include <rthw.h>
 
-// °üº¬µÆÌõÄ£¿éÍ·ÎÄ¼ş
+// åŒ…å«ç¯æ¡æ¨¡å—å¤´æ–‡ä»¶
 #include "ws2812b/ws2812.h"
 #include "ws2812b/rainbow.h"
 
-// °üº¬ÆÁÄ»Ä£¿éÍ·ÎÄ¼ş
+// åŒ…å«å±å¹•æ¨¡å—å¤´æ–‡ä»¶
 #include "BSP/LCD/lcd.h"
 #include "screen/screen.h"
 
-// °üº¬WIFIÄ£¿éÍ·ÎÄ¼ş
+// åŒ…å«WIFIæ¨¡å—å¤´æ–‡ä»¶
 #include "WIFI.h"
 #include "PWM.h"
 #include "drv_pwm.h"
 #include "shell.h"
 #include "Cardinal.h"
+#include "PUMP.h"
 
-// °üº¬ÎÂ¶ÈÍ·ÎÄ¼ş
+
+// åŒ…å«æ¸©åº¦å¤´æ–‡ä»¶
 #include "BSP/ADC/temp_adc.h"
 
 int main(void)
 {
     SystemCoreClockUpdate();
 
-    // ³õÊ¼»¯ÆÁÄ»
+    // åˆå§‹åŒ– Finsh Shell
+    finsh_system_init();
+    finsh_set_device(RT_CONSOLE_DEVICE_NAME);
+
+    rt_device_t console = rt_device_find(RT_CONSOLE_DEVICE_NAME);
+    if (console)
+    {
+        rt_device_open(console, RT_DEVICE_OFLAG_RDWR | RT_DEVICE_FLAG_INT_RX);
+    }
+
+    // åˆå§‹åŒ–å±å¹•
     lcd_init();
-
-    // ³õÊ¼»¯²ÊºçµÆ¹âÄ£¿é
     ws2812_init();
-    rainbow_init();
-    rainbow_start(3);  // Æô¶¯²ÊºçĞ§¹û£¬ËÙ¶È¼¶±ğ3
-
-    // ³õÊ¼»¯WIFIºÍµç»ú
+    
+    // åˆå§‹åŒ–WIFIå’Œç”µæœº
+    cardinal_module_init(); //ä¸»æ§çº¿ç¨‹
+    pump_thread_init();
     pwm_module_init();  
     wifi_module_init(); 
-    cardinal_module_init(); //Ö÷¿ØÏß³Ì
+    breathing_start();
+
     
-    // ³õÊ¼»¯ÎÂ¶ÈÏÔÊ¾
+    // åˆå§‹åŒ–æ¸©åº¦æ˜¾ç¤º
     adc_temperature_init();
 
-    // ³õÊ¼»¯ÆÁÄ»Ä£¿é²¢´´½¨Óã¸×UIÏÔÊ¾Ïß³Ì
+    // åˆå§‹åŒ–å±å¹•æ¨¡å—å¹¶åˆ›å»ºé±¼ç¼¸UIæ˜¾ç¤ºçº¿ç¨‹
     screen_init();
 
-    // Ö÷Ñ­»·
+    // ä¸»å¾ªç¯
     while(1)
     {
         rt_thread_mdelay(1000);
-        // Ö÷Ñ­»·±£³Ö¿ÕÏĞ£¬¹¤×÷ÓÉÏß³ÌÍê³É
+        rt_kprintf("ä¸»çº¿ç¨‹\n");
+        // ä¸»å¾ªç¯ä¿æŒç©ºé—²ï¼Œå·¥ä½œç”±çº¿ç¨‹å®Œæˆ
     }
 }

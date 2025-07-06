@@ -9,6 +9,7 @@
 #include "ws2812.h"
 #include <stdint.h>
 
+int str_to_int(const char* str);
 
 // 彩虹灯效果控制结构体
 typedef struct {
@@ -39,7 +40,7 @@ void solid_color_set_brightness(uint8_t brightness);
 void white_mode_start(void);
 void white_mode_stop(void);
 
-void breathing_start(uint32_t cycle_time_s);
+void breathing_start();
 void breathing_stop(void);
 void breathing_set_color(uint8_t r, uint8_t g, uint8_t b, uint8_t max_brightness);
 

@@ -13,9 +13,9 @@ extern cardinal_time_t g_cardinal_time;
 
 // 定时任务结构体
 typedef struct {
-    int amount;           // 任务参数
-    int light_mode;       // 灯光模式
-    int water_duration;   // 水流时间
+    float amount;           // 任务参数（支持小数）
+    int light_mode;         // 灯光模式
+    int water_duration;     // 水流时间
 } cardinal_task_t;
 
 // 任务表，索引为小时（0~23）
@@ -33,5 +33,13 @@ void cardinal_update_tasks(const char *json);
 // 导出主控线程信号量和舵机线程信号量
 extern struct rt_semaphore *g_cardinal_main_sem;
 extern struct rt_semaphore *g_cardinal_servo_sem;
+
+// 新增：导出灯光线程信号量
+extern struct rt_semaphore *g_breathing_sem;
+extern struct rt_semaphore *g_breathing_done_sem;
+
+// 新增：导出泵线程信号量
+extern struct rt_semaphore *g_pump_sem;
+extern struct rt_semaphore *g_pump_done_sem;
 
 #endif // __CARDINAL_H__
