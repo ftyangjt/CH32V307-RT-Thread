@@ -35,27 +35,27 @@ Idx Name          Size      VMA       LMA       File off  Algn
                   ALLOC
   8 .stack        00000800  2000f800  2000f800  0001f800  2**0
                   ALLOC
-  9 .debug_info   00060c5e  00000000  00000000  0001f4d0  2**0
+  9 .debug_info   00060c54  00000000  00000000  0001f4d0  2**0
                   CONTENTS, READONLY, DEBUGGING
- 10 .debug_abbrev 0000d416  00000000  00000000  0008012e  2**0
+ 10 .debug_abbrev 0000d403  00000000  00000000  00080124  2**0
                   CONTENTS, READONLY, DEBUGGING
- 11 .debug_loc    0001d31c  00000000  00000000  0008d544  2**0
+ 11 .debug_loc    0001d32f  00000000  00000000  0008d527  2**0
                   CONTENTS, READONLY, DEBUGGING
- 12 .debug_aranges 00002198  00000000  00000000  000aa860  2**3
+ 12 .debug_aranges 00002198  00000000  00000000  000aa858  2**3
                   CONTENTS, READONLY, DEBUGGING
- 13 .debug_ranges 000035b0  00000000  00000000  000ac9f8  2**3
+ 13 .debug_ranges 000035b0  00000000  00000000  000ac9f0  2**3
                   CONTENTS, READONLY, DEBUGGING
- 14 .debug_line   0004bcfd  00000000  00000000  000affa8  2**0
+ 14 .debug_line   0004bd00  00000000  00000000  000affa0  2**0
                   CONTENTS, READONLY, DEBUGGING
- 15 .debug_str    00009aeb  00000000  00000000  000fbca5  2**0
+ 15 .debug_str    00009aeb  00000000  00000000  000fbca0  2**0
                   CONTENTS, READONLY, DEBUGGING
- 16 .comment      00000033  00000000  00000000  00105790  2**0
+ 16 .comment      00000033  00000000  00000000  0010578b  2**0
                   CONTENTS, READONLY
- 17 .debug_frame  00008238  00000000  00000000  001057c4  2**2
+ 17 .debug_frame  00008240  00000000  00000000  001057c0  2**2
                   CONTENTS, READONLY, DEBUGGING
- 18 .stab         00000084  00000000  00000000  0010d9fc  2**2
+ 18 .stab         00000084  00000000  00000000  0010da00  2**2
                   CONTENTS, READONLY, DEBUGGING
- 19 .stabstr      00000117  00000000  00000000  0010da80  2**0
+ 19 .stabstr      00000117  00000000  00000000  0010da84  2**0
                   CONTENTS, READONLY, DEBUGGING
 SYMBOL TABLE:
 00000000 l    d  .init	00000000 .init
@@ -289,14 +289,14 @@ SYMBOL TABLE:
 20009fb0 l     O .bss	00000604 pwm_data
 00000000 l    df *ABS*	00000000 screen.c
 00000000 l    df *ABS*	00000000 PWM.c
-0000b324 l     F .text	00000034 servo_speed_to_pulse
-0000b358 l     F .text	00000030 servo_stop_cmd
-0000b388 l     F .text	000000ce servo_thread_entry
-0000b456 l     F .text	0000006e servo_run_cmd
+0000b3a6 l     F .text	00000034 servo_speed_to_pulse
+0000b3da l     F .text	00000030 servo_stop_cmd
+0000b40a l     F .text	000000ce servo_thread_entry
+0000b4d8 l     F .text	0000006e servo_run_cmd
 00000000 l    df *ABS*	00000000 WIFI.c
-0000b538 l     F .text	00000202 wifi_recv_thread_entry
-0000b73a l     F .text	00000016 wifi_uart_rx_callback
-0000b84a l     F .text	0000004e wifi_power_cmd
+0000b5ba l     F .text	00000202 wifi_recv_thread_entry
+0000b7bc l     F .text	00000016 wifi_uart_rx_callback
+0000b8cc l     F .text	0000004e wifi_power_cmd
 2000a5c0 l     O .bss	00000080 wifi_recv_buf
 2000a640 l     O .bss	00000020 wifi_rx_sem
 200005cc l     O .bss	00000004 wifi_data_len
@@ -515,7 +515,7 @@ SYMBOL TABLE:
 00013594 g     F .text	000000bc __swbuf_r
 0000485e g     F .text	00000224 sd_enable_wide_bus_operation
 0000c594 g     F .text	00000008 SDIO_ClearFlag
-0000b8b8 g     F .text	00000020 HardFault_Handler
+0000b93a g     F .text	00000020 HardFault_Handler
 00009ef2 g     F .text	00000034 pwm_gpio_init_10
 000139c0 g     F .text	00000048 __sfmoreglue
 000161a0 g     F .text	00000002 __malloc_unlock
@@ -552,7 +552,7 @@ SYMBOL TABLE:
 00000798 g     F .text	000000d2 rt_device_open
 000142be g     F .text	00000018 __locale_ctype_ptr
 0000bbb0  w      .text	00000000 DMA2_Channel8_IRQHandler
-0000b898 g     F .text	00000020 NMI_Handler
+0000b91a g     F .text	00000020 NMI_Handler
 00014430 g     F .text	0000008c _Balloc
 00011e7e g     F .text	00000062 .hidden __fixsfsi
 0000bbb0  w      .text	00000000 CAN2_RX1_IRQHandler
@@ -614,7 +614,7 @@ SYMBOL TABLE:
 00005a32 g     F .text	00000042 norflash_send_address
 000041aa g     F .text	00000208 sd_power_on
 0001783c g     O .text	00000014 __fsym___cmd_clear_desc
-0000b750 g     F .text	00000034 wifi_power_ctrl
+0000b7d2 g     F .text	00000034 wifi_power_ctrl
 0000c126 g     F .text	0000001e FSMC_NORSRAMCmd
 0001b890 g     O .text	00000015 __fsym___cmd_cmd_white_stop_name
 000008d6 g     F .text	00000066 rt_device_read
@@ -643,7 +643,7 @@ SYMBOL TABLE:
 00012586 g     F .text	0000000c puts
 0001d2b0 g       .text	00000000 __rt_init_end
 00006264 g     F .text	00000142 lcd_display_dir
-0001bc94 g     O .text	0000000d __fsym___cmd_servo_stop_cmd_desc
+0001bca8 g     O .text	0000000d __fsym___cmd_servo_stop_cmd_desc
 00000b08 g     F .text	00000038 rt_thread_idle_init
 0000525c g     F .text	00000342 sd_write_block
 0000a938 g     F .text	0000009c rainbow_start
@@ -883,7 +883,7 @@ SYMBOL TABLE:
 0000bbb0  w      .text	00000000 TIM3_IRQHandler
 0000bbb0  w      .text	00000000 RCC_IRQHandler
 00004a82 g     F .text	00000034 sd_select_deselect
-0000b4c4 g     F .text	00000074 pwm_module_init
+0000b546 g     F .text	00000074 pwm_module_init
 0000a7de g     F .text	00000024 solid_color_set_rgb
 000010c8 g     F .text	00000012 rt_strlen
 000003a2 g     F .text	0000000c .hidden __riscv_save_3
@@ -1010,7 +1010,7 @@ SYMBOL TABLE:
 000003b2 g     F .text	00000020 .hidden __riscv_restore_9
 000063dc g     F .text	000003c6 lcd_init
 000003bc g     F .text	00000016 .hidden __riscv_restore_7
-0000b8d8 g     F .text	000000b4 main
+0000b95a g     F .text	00000032 main
 00003ece g     F .text	00000036 delay_ms
 0001823c g     O .text	000005f0 asc2_1608
 00017a4c g     O .text	00000015 __fsym___cmd_help_desc
@@ -1093,7 +1093,7 @@ SYMBOL TABLE:
 000043b2 g     F .text	000001ae sd_initialize_cards
 000175d0 g     O .text	00000012 __fsym___cmd_list_device_name
 20000560 g     O .bss	00000008 rt_thread_defunct
-0001bdfc g     O .text	00000015 __fsym___cmd_wifi_power_cmd_name
+0001be10 g     O .text	00000015 __fsym___cmd_wifi_power_cmd_name
 0001d1c4 g     O .text	0000000c __fsym___cmd_cmd_rainbow_min_brightness
 0000bbb0  w      .text	00000000 WWDG_IRQHandler
 0001d1ac g     O .text	0000000c __fsym_pinWrite
@@ -1146,7 +1146,7 @@ SYMBOL TABLE:
 0000ad48 g     F .text	0000017c ws2812_hsv_to_rgb
 00005d3c g     F .text	000000c6 norflash_write
 00009d5a g     F .text	00000028 EXTI1_IRQHandler
-0000b2f2 g     F .text	00000032 screen_init
+0000b2f2 g     F .text	000000b4 screen_init
 00004b7c g     F .text	00000138 sd_process_irq_src
 000027fe g     F .text	00000006 rt_hw_interrupt_enable
 00000388 g     F .text	0000001a .hidden __riscv_save_5
@@ -1182,7 +1182,7 @@ SYMBOL TABLE:
 0000a3b4 g     F .text	00000020 USART2_IRQHandler
 0000bbb0  w      .text	00000000 UART6_IRQHandler
 00012616 g     F .text	0000004c __swrite
-0001bde4 g     O .text	00000015 __fsym___cmd_wifi_power_cmd_desc
+0001bdf8 g     O .text	00000015 __fsym___cmd_wifi_power_cmd_desc
 0000dbbe g     F .text	00000054 disk_write
 0000086a g     F .text	0000006c rt_device_close
 00002118 g     F .text	00000006 rt_thread_self
@@ -1226,7 +1226,7 @@ SYMBOL TABLE:
 00016a78 g     O .text	0000001e __fsym_list_mem_desc
 00000bfa g     F .text	0000012e rt_sem_take
 0001d248 g     O .text	0000000c __fsym___cmd_cmd_rainbow
-0001bcbc g     O .text	0000002c __fsym___cmd_servo_run_cmd_desc
+0001bcd0 g     O .text	0000002c __fsym___cmd_servo_run_cmd_desc
 0000b1e4 g     F .text	0000005a update_time_display
 0000a394 g     F .text	00000020 USART1_IRQHandler
 0001d11c g     O .text	0000000c __fsym___cmd_list_sem
@@ -1243,8 +1243,8 @@ SYMBOL TABLE:
 00013c34 g     F .text	000004cc __gethex
 200005f0 g     O .bss	00000004 __malloc_sbrk_start
 20000484 g     O .data	00000004 g_back_color
-0001bce8 g     O .text	00000014 __fsym___cmd_servo_run_cmd_name
-0001bca4 g     O .text	00000015 __fsym___cmd_servo_stop_cmd_name
+0001bcfc g     O .text	00000014 __fsym___cmd_servo_run_cmd_name
+0001bcb8 g     O .text	00000015 __fsym___cmd_servo_stop_cmd_name
 0000144e g     F .text	0000002e rt_console_set_device
 00009ac2 g     F .text	00000092 ch32_pin_attach_irq
 0000bbb0  w      .text	00000000 I2C1_ER_IRQHandler
@@ -1287,7 +1287,7 @@ SYMBOL TABLE:
 00002eaa g     F .text	00000058 msh_help
 20000314 g     O .data	0000016c __global_locale
 00003b34 g     F .text	000000c2 rt_hw_serial_isr
-0000b784 g     F .text	000000c6 wifi_module_init
+0000b806 g     F .text	000000c6 wifi_module_init
 0000bbb0  w      .text	00000000 USBWakeUp_IRQHandler
 20000270 g     O .data	00000030 usmart_nametab
 000001dc g       .text	00000000 rt_hw_context_switch
@@ -1314,9 +1314,9 @@ Disassembly of section .vector:
 
 00000004 <_vector_base>:
 	...
-   c:	b898                	sb	a4,17(s1)
+   c:	b91a                	sh	a4,48(a0)
    e:	0000                	unimp
-  10:	b8b8                	sb	a4,19(s1)
+  10:	b93a                	sh	a4,50(a0)
   12:	0000                	unimp
   14:	0000                	unimp
   16:	0000                	unimp
@@ -2015,7 +2015,7 @@ Disassembly of section .text:
 0000067e <main_thread_entry>:
      67e:	d25ff2ef          	jal	t0,3a2 <__riscv_save_0>
      682:	3f55                	jal	636 <rt_components_init>
-     684:	2540b0ef          	jal	ra,b8d8 <main>
+     684:	2d60b0ef          	jal	ra,b95a <main>
      688:	bb3d                	j	3c6 <__riscv_restore_0>
 
 0000068a <rt_application_init>:
@@ -5257,7 +5257,7 @@ Disassembly of section .text:
     2a62:	a1dfe0ef          	jal	ra,147e <rt_kprintf>
     2a66:	854a                	mv	a0,s2
     2a68:	e1bff0ef          	jal	ra,2882 <show_wait_queue>
-    2a6c:	478b0513          	addi	a0,s6,1144 # 1c478 <__fsym___cmd_wifi_power_cmd_name+0x67c>
+    2a6c:	478b0513          	addi	a0,s6,1144 # 1c478 <__fsym___cmd_wifi_power_cmd_name+0x668>
     2a70:	a0ffe0ef          	jal	ra,147e <rt_kprintf>
     2a74:	4000                	lw	s0,0(s0)
     2a76:	bf65                	j	2a2e <list_sem+0x54>
@@ -5319,7 +5319,7 @@ Disassembly of section .text:
     2b18:	967fe0ef          	jal	ra,147e <rt_kprintf>
     2b1c:	854a                	mv	a0,s2
     2b1e:	d65ff0ef          	jal	ra,2882 <show_wait_queue>
-    2b22:	478b0513          	addi	a0,s6,1144 # 1c478 <__fsym___cmd_wifi_power_cmd_name+0x67c>
+    2b22:	478b0513          	addi	a0,s6,1144 # 1c478 <__fsym___cmd_wifi_power_cmd_name+0x668>
     2b26:	959fe0ef          	jal	ra,147e <rt_kprintf>
     2b2a:	4000                	lw	s0,0(s0)
     2b2c:	bf65                	j	2ae4 <list_event+0x54>
@@ -5424,7 +5424,7 @@ Disassembly of section .text:
     2c4c:	833fe0ef          	jal	ra,147e <rt_kprintf>
     2c50:	854a                	mv	a0,s2
     2c52:	c31ff0ef          	jal	ra,2882 <show_wait_queue>
-    2c56:	478b0513          	addi	a0,s6,1144 # 1c478 <__fsym___cmd_wifi_power_cmd_name+0x67c>
+    2c56:	478b0513          	addi	a0,s6,1144 # 1c478 <__fsym___cmd_wifi_power_cmd_name+0x668>
     2c5a:	825fe0ef          	jal	ra,147e <rt_kprintf>
     2c5e:	4000                	lw	s0,0(s0)
     2c60:	bf4d                	j	2c12 <list_mailbox+0x54>
@@ -5487,7 +5487,7 @@ Disassembly of section .text:
     2d04:	f7afe0ef          	jal	ra,147e <rt_kprintf>
     2d08:	854a                	mv	a0,s2
     2d0a:	b79ff0ef          	jal	ra,2882 <show_wait_queue>
-    2d0e:	478b0513          	addi	a0,s6,1144 # 1c478 <__fsym___cmd_wifi_power_cmd_name+0x67c>
+    2d0e:	478b0513          	addi	a0,s6,1144 # 1c478 <__fsym___cmd_wifi_power_cmd_name+0x668>
     2d12:	f6cfe0ef          	jal	ra,147e <rt_kprintf>
     2d16:	4000                	lw	s0,0(s0)
     2d18:	bf65                	j	2cd0 <list_msgqueue+0x54>
@@ -5637,7 +5637,7 @@ Disassembly of section .text:
     2ec6:	9201a783          	lw	a5,-1760(gp) # 200005a0 <_syscall_table_end>
     2eca:	00f46b63          	bltu	s0,a5,2ee0 <msh_help+0x36>
     2ece:	0001c537          	lui	a0,0x1c
-    2ed2:	47850513          	addi	a0,a0,1144 # 1c478 <__fsym___cmd_wifi_power_cmd_name+0x67c>
+    2ed2:	47850513          	addi	a0,a0,1144 # 1c478 <__fsym___cmd_wifi_power_cmd_name+0x668>
     2ed6:	da8fe0ef          	jal	ra,147e <rt_kprintf>
     2eda:	4501                	li	a0,0
     2edc:	ce0fd06f          	j	3bc <__riscv_restore_4>
@@ -5754,7 +5754,7 @@ Disassembly of section .text:
     3024:	c5afe0ef          	jal	ra,147e <rt_kprintf>
     3028:	fe8919e3          	bne	s2,s0,301a <msh_exec+0x114>
     302c:	0001c537          	lui	a0,0x1c
-    3030:	47850513          	addi	a0,a0,1144 # 1c478 <__fsym___cmd_wifi_power_cmd_name+0x67c>
+    3030:	47850513          	addi	a0,a0,1144 # 1c478 <__fsym___cmd_wifi_power_cmd_name+0x668>
     3034:	c4afe0ef          	jal	ra,147e <rt_kprintf>
     3038:	4529                	li	a0,10
     303a:	002c                	addi	a1,sp,8
@@ -6146,7 +6146,7 @@ Disassembly of section .text:
     34c2:	4080                	lw	s0,0(s1)
     34c4:	20b44783          	lbu	a5,523(s0)
     34c8:	fef948e3          	blt	s2,a5,34b8 <finsh_thread_entry+0x182>
-    34cc:	478a0513          	addi	a0,s4,1144 # 1c478 <__fsym___cmd_wifi_power_cmd_name+0x67c>
+    34cc:	478a0513          	addi	a0,s4,1144 # 1c478 <__fsym___cmd_wifi_power_cmd_name+0x668>
     34d0:	faffd0ef          	jal	ra,147e <rt_kprintf>
     34d4:	a2fff0ef          	jal	ra,2f02 <msh_is_used>
     34d8:	4785                	li	a5,1
@@ -12658,7 +12658,7 @@ Disassembly of section .text:
     831e:	4581                	li	a1,0
     8320:	64b1                	lui	s1,0xc
     8322:	b21fd0ef          	jal	ra,5e42 <lcd_write_reg>
-    8326:	80048513          	addi	a0,s1,-2048 # b800 <wifi_module_init+0x7c>
+    8326:	80048513          	addi	a0,s1,-2048 # b800 <wifi_power_ctrl+0x2e>
     832a:	02400593          	li	a1,36
     832e:	b15fd0ef          	jal	ra,5e42 <lcd_write_reg>
     8332:	80148513          	addi	a0,s1,-2047
@@ -13704,7 +13704,7 @@ Disassembly of section .text:
     91de:	07000593          	li	a1,112
     91e2:	6431                	lui	s0,0xc
     91e4:	c5ffc0ef          	jal	ra,5e42 <lcd_write_reg>
-    91e8:	80040513          	addi	a0,s0,-2048 # b800 <wifi_module_init+0x7c>
+    91e8:	80040513          	addi	a0,s0,-2048 # b800 <wifi_power_ctrl+0x2e>
     91ec:	4585                	li	a1,1
     91ee:	c55fc0ef          	jal	ra,5e42 <lcd_write_reg>
     91f2:	80140513          	addi	a0,s0,-2047
@@ -14891,7 +14891,7 @@ Disassembly of section .text:
     9ffe:	0aa1                	addi	s5,s5,8
     a000:	00f977b3          	and	a5,s2,a5
     a004:	64f1                	lui	s1,0x1c
-    a006:	20048493          	addi	s1,s1,512 # 1c200 <__fsym___cmd_wifi_power_cmd_name+0x404>
+    a006:	20048493          	addi	s1,s1,512 # 1c200 <__fsym___cmd_wifi_power_cmd_name+0x3f0>
     a00a:	0157e7b3          	or	a5,a5,s5
     a00e:	000c0db7          	lui	s11,0xc0
     a012:	6b6d                	lui	s6,0x1b
@@ -16422,7 +16422,7 @@ Disassembly of section .text:
     b1ec:	0001c637          	lui	a2,0x1c
     b1f0:	872e                	mv	a4,a1
     b1f2:	86aa                	mv	a3,a0
-    b1f4:	c8460613          	addi	a2,a2,-892 # 1bc84 <__fsym___cmd_cmd_rainbow_name+0x32c>
+    b1f4:	c9860613          	addi	a2,a2,-872 # 1bc98 <__fsym___cmd_cmd_rainbow_name+0x340>
     b1f8:	45c1                	li	a1,16
     b1fa:	850a                	mv	a0,sp
     b1fc:	a32f60ef          	jal	ra,142e <rt_snprintf>
@@ -16453,7 +16453,7 @@ Disassembly of section .text:
     b248:	06400693          	li	a3,100
     b24c:	02d56733          	rem	a4,a0,a3
     b250:	0001c637          	lui	a2,0x1c
-    b254:	c7860613          	addi	a2,a2,-904 # 1bc78 <__fsym___cmd_cmd_rainbow_name+0x320>
+    b254:	c8c60613          	addi	a2,a2,-884 # 1bc8c <__fsym___cmd_cmd_rainbow_name+0x334>
     b258:	45c1                	li	a1,16
     b25a:	02d546b3          	div	a3,a0,a3
     b25e:	850a                	mv	a0,sp
@@ -16509,552 +16509,552 @@ Disassembly of section .text:
 
 0000b2f2 <screen_init>:
     b2f2:	8b0f52ef          	jal	t0,3a2 <__riscv_save_0>
-    b2f6:	6685                	lui	a3,0x1
-    b2f8:	0000b5b7          	lui	a1,0xb
-    b2fc:	0001c537          	lui	a0,0x1c
-    b300:	47a9                	li	a5,10
-    b302:	473d                	li	a4,15
-    b304:	80068693          	addi	a3,a3,-2048 # 800 <__stack_size>
-    b308:	4601                	li	a2,0
-    b30a:	2a658593          	addi	a1,a1,678 # b2a6 <pic_show_thread_entry>
-    b30e:	c6c50513          	addi	a0,a0,-916 # 1bc6c <__fsym___cmd_cmd_rainbow_name+0x314>
-    b312:	e0df60ef          	jal	ra,211e <rt_thread_create>
-    b316:	842a                	mv	s0,a0
-    b318:	c119                	beqz	a0,b31e <screen_init+0x2c>
-    b31a:	8ccf70ef          	jal	ra,23e6 <rt_thread_startup>
-    b31e:	8522                	mv	a0,s0
-    b320:	8a6f506f          	j	3c6 <__riscv_restore_0>
+    b2f6:	4501                	li	a0,0
+    b2f8:	7a4020ef          	jal	ra,da9c <my_mem_init>
+    b2fc:	014030ef          	jal	ra,e310 <exfuns_init>
+    b300:	9641a503          	lw	a0,-1692(gp) # 200005e4 <fs>
+    b304:	0001c5b7          	lui	a1,0x1c
+    b308:	4605                	li	a2,1
+    b30a:	c6c58593          	addi	a1,a1,-916 # 1bc6c <__fsym___cmd_cmd_rainbow_name+0x314>
+    b30e:	7b1020ef          	jal	ra,e2be <f_mount>
+    b312:	96418413          	addi	s0,gp,-1692 # 200005e4 <fs>
+    b316:	4048                	lw	a0,4(s0)
+    b318:	0001c5b7          	lui	a1,0x1c
+    b31c:	4605                	li	a2,1
+    b31e:	c7058593          	addi	a1,a1,-912 # 1bc70 <__fsym___cmd_cmd_rainbow_name+0x318>
+    b322:	79d020ef          	jal	ra,e2be <f_mount>
+    b326:	6741                	lui	a4,0x10
+    b328:	80070493          	addi	s1,a4,-2048 # f800 <__adddf3+0x174>
+    b32c:	0001c937          	lui	s2,0x1c
+    b330:	fff70413          	addi	s0,a4,-1
+    b334:	322020ef          	jal	ra,d656 <fonts_init>
+    b338:	e905                	bnez	a0,b368 <screen_init+0x76>
+    b33a:	6685                	lui	a3,0x1
+    b33c:	0000b5b7          	lui	a1,0xb
+    b340:	0001c537          	lui	a0,0x1c
+    b344:	47a9                	li	a5,10
+    b346:	473d                	li	a4,15
+    b348:	80068693          	addi	a3,a3,-2048 # 800 <__stack_size>
+    b34c:	4601                	li	a2,0
+    b34e:	2a658593          	addi	a1,a1,678 # b2a6 <pic_show_thread_entry>
+    b352:	c8050513          	addi	a0,a0,-896 # 1bc80 <__fsym___cmd_cmd_rainbow_name+0x328>
+    b356:	dc9f60ef          	jal	ra,211e <rt_thread_create>
+    b35a:	842a                	mv	s0,a0
+    b35c:	c119                	beqz	a0,b362 <screen_init+0x70>
+    b35e:	888f70ef          	jal	ra,23e6 <rt_thread_startup>
+    b362:	8522                	mv	a0,s0
+    b364:	862f506f          	j	3c6 <__riscv_restore_0>
+    b368:	8826                	mv	a6,s1
+    b36a:	c7490793          	addi	a5,s2,-908 # 1bc74 <__fsym___cmd_cmd_rainbow_name+0x31c>
+    b36e:	4741                	li	a4,16
+    b370:	46c1                	li	a3,16
+    b372:	0c800613          	li	a2,200
+    b376:	03200593          	li	a1,50
+    b37a:	4579                	li	a0,30
+    b37c:	e9afb0ef          	jal	ra,6a16 <lcd_show_string>
+    b380:	0c800513          	li	a0,200
+    b384:	fcff60ef          	jal	ra,2352 <rt_thread_mdelay>
+    b388:	8722                	mv	a4,s0
+    b38a:	04200693          	li	a3,66
+    b38e:	0f000613          	li	a2,240
+    b392:	03200593          	li	a1,50
+    b396:	4579                	li	a0,30
+    b398:	c0afb0ef          	jal	ra,67a2 <lcd_fill>
+    b39c:	0c800513          	li	a0,200
+    b3a0:	fb3f60ef          	jal	ra,2352 <rt_thread_mdelay>
+    b3a4:	bf41                	j	b334 <screen_init+0x42>
 
-0000b324 <servo_speed_to_pulse>:
-    b324:	06400713          	li	a4,100
-    b328:	87aa                	mv	a5,a0
-    b32a:	02a74163          	blt	a4,a0,b34c <servo_speed_to_pulse+0x28>
-    b32e:	f9c00713          	li	a4,-100
-    b332:	02e54063          	blt	a0,a4,b352 <servo_speed_to_pulse+0x2e>
-    b336:	5dc00513          	li	a0,1500
-    b33a:	cb81                	beqz	a5,b34a <servo_speed_to_pulse+0x26>
-    b33c:	4529                	li	a0,10
-    b33e:	02a78533          	mul	a0,a5,a0
-    b342:	5dc50513          	addi	a0,a0,1500
-    b346:	0542                	slli	a0,a0,0x10
-    b348:	8141                	srli	a0,a0,0x10
-    b34a:	8082                	ret
-    b34c:	06400793          	li	a5,100
-    b350:	b7f5                	j	b33c <servo_speed_to_pulse+0x18>
-    b352:	f9c00793          	li	a5,-100
-    b356:	b7dd                	j	b33c <servo_speed_to_pulse+0x18>
+0000b3a6 <servo_speed_to_pulse>:
+    b3a6:	06400713          	li	a4,100
+    b3aa:	87aa                	mv	a5,a0
+    b3ac:	02a74163          	blt	a4,a0,b3ce <servo_speed_to_pulse+0x28>
+    b3b0:	f9c00713          	li	a4,-100
+    b3b4:	02e54063          	blt	a0,a4,b3d4 <servo_speed_to_pulse+0x2e>
+    b3b8:	5dc00513          	li	a0,1500
+    b3bc:	cb81                	beqz	a5,b3cc <servo_speed_to_pulse+0x26>
+    b3be:	4529                	li	a0,10
+    b3c0:	02a78533          	mul	a0,a5,a0
+    b3c4:	5dc50513          	addi	a0,a0,1500
+    b3c8:	0542                	slli	a0,a0,0x10
+    b3ca:	8141                	srli	a0,a0,0x10
+    b3cc:	8082                	ret
+    b3ce:	06400793          	li	a5,100
+    b3d2:	b7f5                	j	b3be <servo_speed_to_pulse+0x18>
+    b3d4:	f9c00793          	li	a5,-100
+    b3d8:	b7dd                	j	b3be <servo_speed_to_pulse+0x18>
 
-0000b358 <servo_stop_cmd>:
-    b358:	84af52ef          	jal	t0,3a2 <__riscv_save_0>
-    b35c:	81418793          	addi	a5,gp,-2028 # 20000494 <g_servo_param>
-    b360:	4501                	li	a0,0
-    b362:	0007a023          	sw	zero,0(a5) # 2000 <_rt_thread_init.isra.0+0x76>
-    b366:	0007a223          	sw	zero,4(a5)
-    b36a:	fbbff0ef          	jal	ra,b324 <servo_speed_to_pulse>
-    b36e:	85aa                	mv	a1,a0
-    b370:	40015537          	lui	a0,0x40015
-    b374:	43a010ef          	jal	ra,c7ae <TIM_SetCompare1>
-    b378:	0001c537          	lui	a0,0x1c
-    b37c:	d9c50513          	addi	a0,a0,-612 # 1bd9c <__fsym___cmd_servo_run_cmd_name+0xb4>
-    b380:	8fef60ef          	jal	ra,147e <rt_kprintf>
-    b384:	842f506f          	j	3c6 <__riscv_restore_0>
+0000b3da <servo_stop_cmd>:
+    b3da:	fc9f42ef          	jal	t0,3a2 <__riscv_save_0>
+    b3de:	81418793          	addi	a5,gp,-2028 # 20000494 <g_servo_param>
+    b3e2:	4501                	li	a0,0
+    b3e4:	0007a023          	sw	zero,0(a5) # 2000 <_rt_thread_init.isra.0+0x76>
+    b3e8:	0007a223          	sw	zero,4(a5)
+    b3ec:	fbbff0ef          	jal	ra,b3a6 <servo_speed_to_pulse>
+    b3f0:	85aa                	mv	a1,a0
+    b3f2:	40015537          	lui	a0,0x40015
+    b3f6:	3b8010ef          	jal	ra,c7ae <TIM_SetCompare1>
+    b3fa:	0001c537          	lui	a0,0x1c
+    b3fe:	db050513          	addi	a0,a0,-592 # 1bdb0 <__fsym___cmd_servo_run_cmd_name+0xb4>
+    b402:	87cf60ef          	jal	ra,147e <rt_kprintf>
+    b406:	fc1f406f          	j	3c6 <__riscv_restore_0>
 
-0000b388 <servo_thread_entry>:
-    b388:	800f52ef          	jal	t0,388 <__riscv_save_4>
-    b38c:	b67fe0ef          	jal	ra,9ef2 <pwm_gpio_init_10>
-    b390:	4501                	li	a0,0
-    b392:	f93ff0ef          	jal	ra,b324 <servo_speed_to_pulse>
-    b396:	85aa                	mv	a1,a0
-    b398:	892a                	mv	s2,a0
-    b39a:	6515                	lui	a0,0x5
-    b39c:	e2050513          	addi	a0,a0,-480 # 4e20 <sd_read_block+0xee>
-    b3a0:	b87fe0ef          	jal	ra,9f26 <pwm_tim10_init>
-    b3a4:	85ca                	mv	a1,s2
-    b3a6:	40015537          	lui	a0,0x40015
-    b3aa:	404010ef          	jal	ra,c7ae <TIM_SetCompare1>
-    b3ae:	4585                	li	a1,1
-    b3b0:	40015537          	lui	a0,0x40015
-    b3b4:	37e010ef          	jal	ra,c732 <TIM_Cmd>
-    b3b8:	c1900493          	li	s1,-999
-    b3bc:	81418413          	addi	s0,gp,-2028 # 20000494 <g_servo_param>
-    b3c0:	0001ca37          	lui	s4,0x1c
-    b3c4:	03200a93          	li	s5,50
-    b3c8:	0001cb37          	lui	s6,0x1c
-    b3cc:	400c                	lw	a1,0(s0)
-    b3ce:	c5ad                	beqz	a1,b438 <servo_thread_entry+0xb0>
-    b3d0:	4050                	lw	a2,4(s0)
-    b3d2:	06c05363          	blez	a2,b438 <servo_thread_entry+0xb0>
-    b3d6:	da8a0513          	addi	a0,s4,-600 # 1bda8 <__fsym___cmd_servo_run_cmd_name+0xc0>
-    b3da:	8a4f60ef          	jal	ra,147e <rt_kprintf>
-    b3de:	4008                	lw	a0,0(s0)
-    b3e0:	4981                	li	s3,0
-    b3e2:	f43ff0ef          	jal	ra,b324 <servo_speed_to_pulse>
-    b3e6:	85aa                	mv	a1,a0
-    b3e8:	40015537          	lui	a0,0x40015
-    b3ec:	3c2010ef          	jal	ra,c7ae <TIM_SetCompare1>
-    b3f0:	4004                	lw	s1,0(s0)
-    b3f2:	405c                	lw	a5,4(s0)
-    b3f4:	02fa87b3          	mul	a5,s5,a5
-    b3f8:	02f9c063          	blt	s3,a5,b418 <servo_thread_entry+0x90>
-    b3fc:	85ca                	mv	a1,s2
-    b3fe:	40015537          	lui	a0,0x40015
-    b402:	3ac010ef          	jal	ra,c7ae <TIM_SetCompare1>
-    b406:	dccb0513          	addi	a0,s6,-564 # 1bdcc <__fsym___cmd_servo_run_cmd_name+0xe4>
-    b40a:	00042023          	sw	zero,0(s0)
-    b40e:	00042223          	sw	zero,4(s0)
-    b412:	86cf60ef          	jal	ra,147e <rt_kprintf>
-    b416:	bf5d                	j	b3cc <servo_thread_entry+0x44>
-    b418:	4551                	li	a0,20
-    b41a:	f39f60ef          	jal	ra,2352 <rt_thread_mdelay>
-    b41e:	4008                	lw	a0,0(s0)
-    b420:	00950a63          	beq	a0,s1,b434 <servo_thread_entry+0xac>
-    b424:	f01ff0ef          	jal	ra,b324 <servo_speed_to_pulse>
-    b428:	85aa                	mv	a1,a0
-    b42a:	40015537          	lui	a0,0x40015
-    b42e:	380010ef          	jal	ra,c7ae <TIM_SetCompare1>
-    b432:	4004                	lw	s1,0(s0)
-    b434:	0985                	addi	s3,s3,1
-    b436:	bf75                	j	b3f2 <servo_thread_entry+0x6a>
-    b438:	00958b63          	beq	a1,s1,b44e <servo_thread_entry+0xc6>
-    b43c:	852e                	mv	a0,a1
-    b43e:	ee7ff0ef          	jal	ra,b324 <servo_speed_to_pulse>
-    b442:	85aa                	mv	a1,a0
-    b444:	40015537          	lui	a0,0x40015
-    b448:	366010ef          	jal	ra,c7ae <TIM_SetCompare1>
-    b44c:	4004                	lw	s1,0(s0)
-    b44e:	4551                	li	a0,20
-    b450:	f03f60ef          	jal	ra,2352 <rt_thread_mdelay>
-    b454:	bfa5                	j	b3cc <servo_thread_entry+0x44>
+0000b40a <servo_thread_entry>:
+    b40a:	f7ff42ef          	jal	t0,388 <__riscv_save_4>
+    b40e:	ae5fe0ef          	jal	ra,9ef2 <pwm_gpio_init_10>
+    b412:	4501                	li	a0,0
+    b414:	f93ff0ef          	jal	ra,b3a6 <servo_speed_to_pulse>
+    b418:	85aa                	mv	a1,a0
+    b41a:	892a                	mv	s2,a0
+    b41c:	6515                	lui	a0,0x5
+    b41e:	e2050513          	addi	a0,a0,-480 # 4e20 <sd_read_block+0xee>
+    b422:	b05fe0ef          	jal	ra,9f26 <pwm_tim10_init>
+    b426:	85ca                	mv	a1,s2
+    b428:	40015537          	lui	a0,0x40015
+    b42c:	382010ef          	jal	ra,c7ae <TIM_SetCompare1>
+    b430:	4585                	li	a1,1
+    b432:	40015537          	lui	a0,0x40015
+    b436:	2fc010ef          	jal	ra,c732 <TIM_Cmd>
+    b43a:	c1900493          	li	s1,-999
+    b43e:	81418413          	addi	s0,gp,-2028 # 20000494 <g_servo_param>
+    b442:	0001ca37          	lui	s4,0x1c
+    b446:	03200a93          	li	s5,50
+    b44a:	0001cb37          	lui	s6,0x1c
+    b44e:	400c                	lw	a1,0(s0)
+    b450:	c5ad                	beqz	a1,b4ba <servo_thread_entry+0xb0>
+    b452:	4050                	lw	a2,4(s0)
+    b454:	06c05363          	blez	a2,b4ba <servo_thread_entry+0xb0>
+    b458:	dbca0513          	addi	a0,s4,-580 # 1bdbc <__fsym___cmd_servo_run_cmd_name+0xc0>
+    b45c:	822f60ef          	jal	ra,147e <rt_kprintf>
+    b460:	4008                	lw	a0,0(s0)
+    b462:	4981                	li	s3,0
+    b464:	f43ff0ef          	jal	ra,b3a6 <servo_speed_to_pulse>
+    b468:	85aa                	mv	a1,a0
+    b46a:	40015537          	lui	a0,0x40015
+    b46e:	340010ef          	jal	ra,c7ae <TIM_SetCompare1>
+    b472:	4004                	lw	s1,0(s0)
+    b474:	405c                	lw	a5,4(s0)
+    b476:	02fa87b3          	mul	a5,s5,a5
+    b47a:	02f9c063          	blt	s3,a5,b49a <servo_thread_entry+0x90>
+    b47e:	85ca                	mv	a1,s2
+    b480:	40015537          	lui	a0,0x40015
+    b484:	32a010ef          	jal	ra,c7ae <TIM_SetCompare1>
+    b488:	de0b0513          	addi	a0,s6,-544 # 1bde0 <__fsym___cmd_servo_run_cmd_name+0xe4>
+    b48c:	00042023          	sw	zero,0(s0)
+    b490:	00042223          	sw	zero,4(s0)
+    b494:	febf50ef          	jal	ra,147e <rt_kprintf>
+    b498:	bf5d                	j	b44e <servo_thread_entry+0x44>
+    b49a:	4551                	li	a0,20
+    b49c:	eb7f60ef          	jal	ra,2352 <rt_thread_mdelay>
+    b4a0:	4008                	lw	a0,0(s0)
+    b4a2:	00950a63          	beq	a0,s1,b4b6 <servo_thread_entry+0xac>
+    b4a6:	f01ff0ef          	jal	ra,b3a6 <servo_speed_to_pulse>
+    b4aa:	85aa                	mv	a1,a0
+    b4ac:	40015537          	lui	a0,0x40015
+    b4b0:	2fe010ef          	jal	ra,c7ae <TIM_SetCompare1>
+    b4b4:	4004                	lw	s1,0(s0)
+    b4b6:	0985                	addi	s3,s3,1
+    b4b8:	bf75                	j	b474 <servo_thread_entry+0x6a>
+    b4ba:	00958b63          	beq	a1,s1,b4d0 <servo_thread_entry+0xc6>
+    b4be:	852e                	mv	a0,a1
+    b4c0:	ee7ff0ef          	jal	ra,b3a6 <servo_speed_to_pulse>
+    b4c4:	85aa                	mv	a1,a0
+    b4c6:	40015537          	lui	a0,0x40015
+    b4ca:	2e4010ef          	jal	ra,c7ae <TIM_SetCompare1>
+    b4ce:	4004                	lw	s1,0(s0)
+    b4d0:	4551                	li	a0,20
+    b4d2:	e81f60ef          	jal	ra,2352 <rt_thread_mdelay>
+    b4d6:	bfa5                	j	b44e <servo_thread_entry+0x44>
 
-0000b456 <servo_run_cmd>:
-    b456:	f4df42ef          	jal	t0,3a2 <__riscv_save_0>
-    b45a:	478d                	li	a5,3
-    b45c:	1141                	addi	sp,sp,-16
-    b45e:	00f50b63          	beq	a0,a5,b474 <servo_run_cmd+0x1e>
-    b462:	0001c537          	lui	a0,0x1c
-    b466:	d2c50513          	addi	a0,a0,-724 # 1bd2c <__fsym___cmd_servo_run_cmd_name+0x44>
-    b46a:	814f60ef          	jal	ra,147e <rt_kprintf>
-    b46e:	0141                	addi	sp,sp,16
-    b470:	f57f406f          	j	3c6 <__riscv_restore_0>
-    b474:	41c8                	lw	a0,4(a1)
-    b476:	c62e                	sw	a1,12(sp)
-    b478:	6dd060ef          	jal	ra,12354 <atoi>
-    b47c:	45b2                	lw	a1,12(sp)
-    b47e:	842a                	mv	s0,a0
-    b480:	4588                	lw	a0,8(a1)
-    b482:	6d3060ef          	jal	ra,12354 <atoi>
-    b486:	06440713          	addi	a4,s0,100
-    b48a:	0c800793          	li	a5,200
-    b48e:	862a                	mv	a2,a0
-    b490:	00e7f763          	bgeu	a5,a4,b49e <servo_run_cmd+0x48>
-    b494:	0001c537          	lui	a0,0x1c
-    b498:	d5450513          	addi	a0,a0,-684 # 1bd54 <__fsym___cmd_servo_run_cmd_name+0x6c>
-    b49c:	b7f9                	j	b46a <servo_run_cmd+0x14>
-    b49e:	00a04763          	bgtz	a0,b4ac <servo_run_cmd+0x56>
-    b4a2:	0001c537          	lui	a0,0x1c
-    b4a6:	d6850513          	addi	a0,a0,-664 # 1bd68 <__fsym___cmd_servo_run_cmd_name+0x80>
-    b4aa:	b7c1                	j	b46a <servo_run_cmd+0x14>
-    b4ac:	81418793          	addi	a5,gp,-2028 # 20000494 <g_servo_param>
-    b4b0:	c3c8                	sw	a0,4(a5)
-    b4b2:	0001c537          	lui	a0,0x1c
-    b4b6:	85a2                	mv	a1,s0
-    b4b8:	d7c50513          	addi	a0,a0,-644 # 1bd7c <__fsym___cmd_servo_run_cmd_name+0x94>
-    b4bc:	c380                	sw	s0,0(a5)
-    b4be:	fc1f50ef          	jal	ra,147e <rt_kprintf>
-    b4c2:	b775                	j	b46e <servo_run_cmd+0x18>
+0000b4d8 <servo_run_cmd>:
+    b4d8:	ecbf42ef          	jal	t0,3a2 <__riscv_save_0>
+    b4dc:	478d                	li	a5,3
+    b4de:	1141                	addi	sp,sp,-16
+    b4e0:	00f50b63          	beq	a0,a5,b4f6 <servo_run_cmd+0x1e>
+    b4e4:	0001c537          	lui	a0,0x1c
+    b4e8:	d4050513          	addi	a0,a0,-704 # 1bd40 <__fsym___cmd_servo_run_cmd_name+0x44>
+    b4ec:	f93f50ef          	jal	ra,147e <rt_kprintf>
+    b4f0:	0141                	addi	sp,sp,16
+    b4f2:	ed5f406f          	j	3c6 <__riscv_restore_0>
+    b4f6:	41c8                	lw	a0,4(a1)
+    b4f8:	c62e                	sw	a1,12(sp)
+    b4fa:	65b060ef          	jal	ra,12354 <atoi>
+    b4fe:	45b2                	lw	a1,12(sp)
+    b500:	842a                	mv	s0,a0
+    b502:	4588                	lw	a0,8(a1)
+    b504:	651060ef          	jal	ra,12354 <atoi>
+    b508:	06440713          	addi	a4,s0,100
+    b50c:	0c800793          	li	a5,200
+    b510:	862a                	mv	a2,a0
+    b512:	00e7f763          	bgeu	a5,a4,b520 <servo_run_cmd+0x48>
+    b516:	0001c537          	lui	a0,0x1c
+    b51a:	d6850513          	addi	a0,a0,-664 # 1bd68 <__fsym___cmd_servo_run_cmd_name+0x6c>
+    b51e:	b7f9                	j	b4ec <servo_run_cmd+0x14>
+    b520:	00a04763          	bgtz	a0,b52e <servo_run_cmd+0x56>
+    b524:	0001c537          	lui	a0,0x1c
+    b528:	d7c50513          	addi	a0,a0,-644 # 1bd7c <__fsym___cmd_servo_run_cmd_name+0x80>
+    b52c:	b7c1                	j	b4ec <servo_run_cmd+0x14>
+    b52e:	81418793          	addi	a5,gp,-2028 # 20000494 <g_servo_param>
+    b532:	c3c8                	sw	a0,4(a5)
+    b534:	0001c537          	lui	a0,0x1c
+    b538:	85a2                	mv	a1,s0
+    b53a:	d9050513          	addi	a0,a0,-624 # 1bd90 <__fsym___cmd_servo_run_cmd_name+0x94>
+    b53e:	c380                	sw	s0,0(a5)
+    b540:	f3ff50ef          	jal	ra,147e <rt_kprintf>
+    b544:	b775                	j	b4f0 <servo_run_cmd+0x18>
 
-0000b4c4 <pwm_module_init>:
-    b4c4:	edff42ef          	jal	t0,3a2 <__riscv_save_0>
-    b4c8:	2b7d                	jal	ba86 <SystemCoreClockUpdate>
-    b4ca:	0001c537          	lui	a0,0x1c
-    b4ce:	cfc50513          	addi	a0,a0,-772 # 1bcfc <__fsym___cmd_servo_run_cmd_name+0x14>
-    b4d2:	fadf50ef          	jal	ra,147e <rt_kprintf>
-    b4d6:	a1dfe0ef          	jal	ra,9ef2 <pwm_gpio_init_10>
-    b4da:	4501                	li	a0,0
-    b4dc:	e49ff0ef          	jal	ra,b324 <servo_speed_to_pulse>
-    b4e0:	85aa                	mv	a1,a0
-    b4e2:	842a                	mv	s0,a0
-    b4e4:	6515                	lui	a0,0x5
-    b4e6:	e2050513          	addi	a0,a0,-480 # 4e20 <sd_read_block+0xee>
-    b4ea:	a3dfe0ef          	jal	ra,9f26 <pwm_tim10_init>
-    b4ee:	85a2                	mv	a1,s0
-    b4f0:	40015537          	lui	a0,0x40015
-    b4f4:	2ba010ef          	jal	ra,c7ae <TIM_SetCompare1>
-    b4f8:	4585                	li	a1,1
-    b4fa:	40015537          	lui	a0,0x40015
-    b4fe:	234010ef          	jal	ra,c732 <TIM_Cmd>
-    b502:	0000b5b7          	lui	a1,0xb
-    b506:	0001c537          	lui	a0,0x1c
-    b50a:	47a9                	li	a5,10
-    b50c:	4721                	li	a4,8
-    b50e:	40000693          	li	a3,1024
-    b512:	4601                	li	a2,0
-    b514:	38858593          	addi	a1,a1,904 # b388 <servo_thread_entry>
-    b518:	d1050513          	addi	a0,a0,-752 # 1bd10 <__fsym___cmd_servo_run_cmd_name+0x28>
-    b51c:	c03f60ef          	jal	ra,211e <rt_thread_create>
-    b520:	c509                	beqz	a0,b52a <pwm_module_init+0x66>
-    b522:	ec5f60ef          	jal	ra,23e6 <rt_thread_startup>
-    b526:	ea1f406f          	j	3c6 <__riscv_restore_0>
-    b52a:	0001c537          	lui	a0,0x1c
-    b52e:	d1850513          	addi	a0,a0,-744 # 1bd18 <__fsym___cmd_servo_run_cmd_name+0x30>
-    b532:	f4df50ef          	jal	ra,147e <rt_kprintf>
-    b536:	bfc5                	j	b526 <pwm_module_init+0x62>
+0000b546 <pwm_module_init>:
+    b546:	e5df42ef          	jal	t0,3a2 <__riscv_save_0>
+    b54a:	2b35                	jal	ba86 <SystemCoreClockUpdate>
+    b54c:	0001c537          	lui	a0,0x1c
+    b550:	d1050513          	addi	a0,a0,-752 # 1bd10 <__fsym___cmd_servo_run_cmd_name+0x14>
+    b554:	f2bf50ef          	jal	ra,147e <rt_kprintf>
+    b558:	99bfe0ef          	jal	ra,9ef2 <pwm_gpio_init_10>
+    b55c:	4501                	li	a0,0
+    b55e:	e49ff0ef          	jal	ra,b3a6 <servo_speed_to_pulse>
+    b562:	85aa                	mv	a1,a0
+    b564:	842a                	mv	s0,a0
+    b566:	6515                	lui	a0,0x5
+    b568:	e2050513          	addi	a0,a0,-480 # 4e20 <sd_read_block+0xee>
+    b56c:	9bbfe0ef          	jal	ra,9f26 <pwm_tim10_init>
+    b570:	85a2                	mv	a1,s0
+    b572:	40015537          	lui	a0,0x40015
+    b576:	238010ef          	jal	ra,c7ae <TIM_SetCompare1>
+    b57a:	4585                	li	a1,1
+    b57c:	40015537          	lui	a0,0x40015
+    b580:	1b2010ef          	jal	ra,c732 <TIM_Cmd>
+    b584:	0000b5b7          	lui	a1,0xb
+    b588:	0001c537          	lui	a0,0x1c
+    b58c:	47a9                	li	a5,10
+    b58e:	4721                	li	a4,8
+    b590:	40000693          	li	a3,1024
+    b594:	4601                	li	a2,0
+    b596:	40a58593          	addi	a1,a1,1034 # b40a <servo_thread_entry>
+    b59a:	d2450513          	addi	a0,a0,-732 # 1bd24 <__fsym___cmd_servo_run_cmd_name+0x28>
+    b59e:	b81f60ef          	jal	ra,211e <rt_thread_create>
+    b5a2:	c509                	beqz	a0,b5ac <pwm_module_init+0x66>
+    b5a4:	e43f60ef          	jal	ra,23e6 <rt_thread_startup>
+    b5a8:	e1ff406f          	j	3c6 <__riscv_restore_0>
+    b5ac:	0001c537          	lui	a0,0x1c
+    b5b0:	d2c50513          	addi	a0,a0,-724 # 1bd2c <__fsym___cmd_servo_run_cmd_name+0x30>
+    b5b4:	ecbf50ef          	jal	ra,147e <rt_kprintf>
+    b5b8:	bfc5                	j	b5a8 <pwm_module_init+0x62>
 
-0000b538 <wifi_recv_thread_entry>:
-    b538:	e43f42ef          	jal	t0,37a <__riscv_save_10>
-    b53c:	0001c7b7          	lui	a5,0x1c
-    b540:	e9c7ac03          	lw	s8,-356(a5) # 1be9c <__fsym___cmd_wifi_power_cmd_name+0xa0>
-    b544:	0001c7b7          	lui	a5,0x1c
-    b548:	a9c7ab03          	lw	s6,-1380(a5) # 1ba9c <__fsym___cmd_cmd_rainbow_name+0x144>
-    b54c:	2000a9b7          	lui	s3,0x2000a
-    b550:	711d                	addi	sp,sp,-96
-    b552:	5c098993          	addi	s3,s3,1472 # 2000a5c0 <wifi_recv_buf>
-    b556:	8cda                	mv	s9,s6
-    b558:	2000a537          	lui	a0,0x2000a
-    b55c:	55fd                	li	a1,-1
-    b55e:	64050513          	addi	a0,a0,1600 # 2000a640 <wifi_rx_sem>
-    b562:	e98f50ef          	jal	ra,bfa <rt_sem_take>
-    b566:	9501a503          	lw	a0,-1712(gp) # 200005d0 <wifi_uart>
-    b56a:	4685                	li	a3,1
-    b56c:	01f10613          	addi	a2,sp,31
-    b570:	4581                	li	a1,0
-    b572:	b64f50ef          	jal	ra,8d6 <rt_device_read>
-    b576:	4785                	li	a5,1
-    b578:	fef510e3          	bne	a0,a5,b558 <wifi_recv_thread_entry+0x20>
-    b57c:	94c1a783          	lw	a5,-1716(gp) # 200005cc <wifi_data_len>
-    b580:	07e00713          	li	a4,126
-    b584:	94c18913          	addi	s2,gp,-1716 # 200005cc <wifi_data_len>
-    b588:	18f76663          	bltu	a4,a5,b714 <wifi_recv_thread_entry+0x1dc>
-    b58c:	01f10683          	lb	a3,31(sp)
-    b590:	00178713          	addi	a4,a5,1
-    b594:	97ce                	add	a5,a5,s3
-    b596:	a394                	sb	a3,0(a5)
-    b598:	00e92023          	sw	a4,0(s2)
-    b59c:	974e                	add	a4,a4,s3
-    b59e:	00070023          	sb	zero,0(a4)
-    b5a2:	07d00793          	li	a5,125
-    b5a6:	fcf690e3          	bne	a3,a5,b566 <wifi_recv_thread_entry+0x2e>
-    b5aa:	07b00593          	li	a1,123
-    b5ae:	854e                	mv	a0,s3
-    b5b0:	10a070ef          	jal	ra,126ba <strchr>
-    b5b4:	842a                	mv	s0,a0
-    b5b6:	14050f63          	beqz	a0,b714 <wifi_recv_thread_entry+0x1dc>
-    b5ba:	85aa                	mv	a1,a0
-    b5bc:	0001c537          	lui	a0,0x1c
-    b5c0:	ea050513          	addi	a0,a0,-352 # 1bea0 <__fsym___cmd_wifi_power_cmd_name+0xa4>
-    b5c4:	ebbf50ef          	jal	ra,147e <rt_kprintf>
-    b5c8:	4581                	li	a1,0
-    b5ca:	02000613          	li	a2,32
-    b5ce:	1008                	addi	a0,sp,32
-    b5d0:	e03f40ef          	jal	ra,3d2 <memset>
-    b5d4:	0001c5b7          	lui	a1,0x1c
-    b5d8:	eb458593          	addi	a1,a1,-332 # 1beb4 <__fsym___cmd_wifi_power_cmd_name+0xb8>
-    b5dc:	8522                	mv	a0,s0
-    b5de:	13e070ef          	jal	ra,1271c <strstr>
-    b5e2:	12050c63          	beqz	a0,b71a <wifi_recv_thread_entry+0x1e2>
-    b5e6:	0001c5b7          	lui	a1,0x1c
-    b5ea:	0090                	addi	a2,sp,64
-    b5ec:	ec058593          	addi	a1,a1,-320 # 1bec0 <__fsym___cmd_wifi_power_cmd_name+0xc4>
-    b5f0:	052d                	addi	a0,a0,11
-    b5f2:	7a1060ef          	jal	ra,12592 <siscanf>
-    b5f6:	0088                	addi	a0,sp,64
-    b5f8:	557060ef          	jal	ra,1234e <atof>
-    b5fc:	37b060ef          	jal	ra,12176 <__truncdfsf2>
-    b600:	8aaa                	mv	s5,a0
-    b602:	4a05                	li	s4,1
-    b604:	0001c5b7          	lui	a1,0x1c
-    b608:	ecc58593          	addi	a1,a1,-308 # 1becc <__fsym___cmd_wifi_power_cmd_name+0xd0>
-    b60c:	8522                	mv	a0,s0
-    b60e:	10e070ef          	jal	ra,1271c <strstr>
-    b612:	00000493          	li	s1,0
-    b616:	c105                	beqz	a0,b636 <wifi_recv_thread_entry+0xfe>
-    b618:	0001c5b7          	lui	a1,0x1c
-    b61c:	0090                	addi	a2,sp,64
-    b61e:	ec058593          	addi	a1,a1,-320 # 1bec0 <__fsym___cmd_wifi_power_cmd_name+0xc4>
-    b622:	0525                	addi	a0,a0,9
-    b624:	76f060ef          	jal	ra,12592 <siscanf>
-    b628:	0088                	addi	a0,sp,64
-    b62a:	525060ef          	jal	ra,1234e <atof>
-    b62e:	349060ef          	jal	ra,12176 <__truncdfsf2>
-    b632:	84aa                	mv	s1,a0
-    b634:	4a05                	li	s4,1
-    b636:	0001c5b7          	lui	a1,0x1c
-    b63a:	ed858593          	addi	a1,a1,-296 # 1bed8 <__fsym___cmd_wifi_power_cmd_name+0xdc>
-    b63e:	8522                	mv	a0,s0
-    b640:	0dc070ef          	jal	ra,1271c <strstr>
-    b644:	4d01                	li	s10,0
-    b646:	cd11                	beqz	a0,b662 <wifi_recv_thread_entry+0x12a>
-    b648:	0001c5b7          	lui	a1,0x1c
-    b64c:	0090                	addi	a2,sp,64
-    b64e:	ec058593          	addi	a1,a1,-320 # 1bec0 <__fsym___cmd_wifi_power_cmd_name+0xc4>
-    b652:	0521                	addi	a0,a0,8
-    b654:	73f060ef          	jal	ra,12592 <siscanf>
-    b658:	0088                	addi	a0,sp,64
-    b65a:	4fb060ef          	jal	ra,12354 <atoi>
-    b65e:	8d2a                	mv	s10,a0
-    b660:	4a05                	li	s4,1
-    b662:	0001c5b7          	lui	a1,0x1c
-    b666:	ee458593          	addi	a1,a1,-284 # 1bee4 <__fsym___cmd_wifi_power_cmd_name+0xe8>
-    b66a:	8522                	mv	a0,s0
-    b66c:	0b0070ef          	jal	ra,1271c <strstr>
-    b670:	c169                	beqz	a0,b732 <wifi_recv_thread_entry+0x1fa>
-    b672:	051d                	addi	a0,a0,7
-    b674:	02000713          	li	a4,32
-    b678:	00050783          	lb	a5,0(a0)
-    b67c:	9bf5                	andi	a5,a5,-3
-    b67e:	0ae78263          	beq	a5,a4,b722 <wifi_recv_thread_entry+0x1ea>
-    b682:	0001c5b7          	lui	a1,0x1c
-    b686:	1010                	addi	a2,sp,32
-    b688:	eec58593          	addi	a1,a1,-276 # 1beec <__fsym___cmd_wifi_power_cmd_name+0xf0>
-    b68c:	707060ef          	jal	ra,12592 <siscanf>
-    b690:	060a0b63          	beqz	s4,b706 <wifi_recv_thread_entry+0x1ce>
-    b694:	4a05                	li	s4,1
-    b696:	2000a7b7          	lui	a5,0x2000a
-    b69a:	5b478793          	addi	a5,a5,1460 # 2000a5b4 <g_wifi_param>
-    b69e:	0157a023          	sw	s5,0(a5)
-    b6a2:	c3c4                	sw	s1,4(a5)
-    b6a4:	01a7a423          	sw	s10,8(a5)
-    b6a8:	85e2                	mv	a1,s8
-    b6aa:	8526                	mv	a0,s1
-    b6ac:	17a060ef          	jal	ra,11826 <__mulsf3>
-    b6b0:	7ce060ef          	jal	ra,11e7e <__fixsfsi>
-    b6b4:	80a1aa23          	sw	a0,-2028(gp) # 20000494 <g_servo_param>
-    b6b8:	85da                	mv	a1,s6
-    b6ba:	8526                	mv	a0,s1
-    b6bc:	16a060ef          	jal	ra,11826 <__mulsf3>
-    b6c0:	7be060ef          	jal	ra,11e7e <__fixsfsi>
-    b6c4:	06400413          	li	s0,100
-    b6c8:	02856733          	rem	a4,a0,s0
-    b6cc:	8526                	mv	a0,s1
-    b6ce:	c63a                	sw	a4,12(sp)
-    b6d0:	7ae060ef          	jal	ra,11e7e <__fixsfsi>
-    b6d4:	85e6                	mv	a1,s9
-    b6d6:	c42a                	sw	a0,8(sp)
-    b6d8:	8556                	mv	a0,s5
-    b6da:	14c060ef          	jal	ra,11826 <__mulsf3>
-    b6de:	7a0060ef          	jal	ra,11e7e <__fixsfsi>
-    b6e2:	02856433          	rem	s0,a0,s0
-    b6e6:	8556                	mv	a0,s5
-    b6e8:	796060ef          	jal	ra,11e7e <__fixsfsi>
-    b6ec:	4732                	lw	a4,12(sp)
-    b6ee:	46a2                	lw	a3,8(sp)
-    b6f0:	85aa                	mv	a1,a0
-    b6f2:	0001c537          	lui	a0,0x1c
-    b6f6:	87ea                	mv	a5,s10
-    b6f8:	ef450513          	addi	a0,a0,-268 # 1bef4 <__fsym___cmd_wifi_power_cmd_name+0xf8>
-    b6fc:	8622                	mv	a2,s0
-    b6fe:	d81f50ef          	jal	ra,147e <rt_kprintf>
-    b702:	000a0963          	beqz	s4,b714 <wifi_recv_thread_entry+0x1dc>
-    b706:	0001c537          	lui	a0,0x1c
-    b70a:	100c                	addi	a1,sp,32
-    b70c:	f2c50513          	addi	a0,a0,-212 # 1bf2c <__fsym___cmd_wifi_power_cmd_name+0x130>
-    b710:	d6ff50ef          	jal	ra,147e <rt_kprintf>
-    b714:	00092023          	sw	zero,0(s2)
-    b718:	b5b9                	j	b566 <wifi_recv_thread_entry+0x2e>
-    b71a:	4a01                	li	s4,0
-    b71c:	00000a93          	li	s5,0
-    b720:	b5d5                	j	b604 <wifi_recv_thread_entry+0xcc>
-    b722:	0505                	addi	a0,a0,1
-    b724:	bf91                	j	b678 <wifi_recv_thread_entry+0x140>
-    b726:	0001c537          	lui	a0,0x1c
-    b72a:	85a2                	mv	a1,s0
-    b72c:	f4450513          	addi	a0,a0,-188 # 1bf44 <__fsym___cmd_wifi_power_cmd_name+0x148>
-    b730:	b7c5                	j	b710 <wifi_recv_thread_entry+0x1d8>
-    b732:	fe0a0ae3          	beqz	s4,b726 <wifi_recv_thread_entry+0x1ee>
-    b736:	4a01                	li	s4,0
-    b738:	bfb9                	j	b696 <wifi_recv_thread_entry+0x15e>
+0000b5ba <wifi_recv_thread_entry>:
+    b5ba:	dc1f42ef          	jal	t0,37a <__riscv_save_10>
+    b5be:	0001c7b7          	lui	a5,0x1c
+    b5c2:	eb07ac03          	lw	s8,-336(a5) # 1beb0 <__fsym___cmd_wifi_power_cmd_name+0xa0>
+    b5c6:	0001c7b7          	lui	a5,0x1c
+    b5ca:	a9c7ab03          	lw	s6,-1380(a5) # 1ba9c <__fsym___cmd_cmd_rainbow_name+0x144>
+    b5ce:	2000a9b7          	lui	s3,0x2000a
+    b5d2:	711d                	addi	sp,sp,-96
+    b5d4:	5c098993          	addi	s3,s3,1472 # 2000a5c0 <wifi_recv_buf>
+    b5d8:	8cda                	mv	s9,s6
+    b5da:	2000a537          	lui	a0,0x2000a
+    b5de:	55fd                	li	a1,-1
+    b5e0:	64050513          	addi	a0,a0,1600 # 2000a640 <wifi_rx_sem>
+    b5e4:	e16f50ef          	jal	ra,bfa <rt_sem_take>
+    b5e8:	9501a503          	lw	a0,-1712(gp) # 200005d0 <wifi_uart>
+    b5ec:	4685                	li	a3,1
+    b5ee:	01f10613          	addi	a2,sp,31
+    b5f2:	4581                	li	a1,0
+    b5f4:	ae2f50ef          	jal	ra,8d6 <rt_device_read>
+    b5f8:	4785                	li	a5,1
+    b5fa:	fef510e3          	bne	a0,a5,b5da <wifi_recv_thread_entry+0x20>
+    b5fe:	94c1a783          	lw	a5,-1716(gp) # 200005cc <wifi_data_len>
+    b602:	07e00713          	li	a4,126
+    b606:	94c18913          	addi	s2,gp,-1716 # 200005cc <wifi_data_len>
+    b60a:	18f76663          	bltu	a4,a5,b796 <wifi_recv_thread_entry+0x1dc>
+    b60e:	01f10683          	lb	a3,31(sp)
+    b612:	00178713          	addi	a4,a5,1
+    b616:	97ce                	add	a5,a5,s3
+    b618:	a394                	sb	a3,0(a5)
+    b61a:	00e92023          	sw	a4,0(s2)
+    b61e:	974e                	add	a4,a4,s3
+    b620:	00070023          	sb	zero,0(a4)
+    b624:	07d00793          	li	a5,125
+    b628:	fcf690e3          	bne	a3,a5,b5e8 <wifi_recv_thread_entry+0x2e>
+    b62c:	07b00593          	li	a1,123
+    b630:	854e                	mv	a0,s3
+    b632:	088070ef          	jal	ra,126ba <strchr>
+    b636:	842a                	mv	s0,a0
+    b638:	14050f63          	beqz	a0,b796 <wifi_recv_thread_entry+0x1dc>
+    b63c:	85aa                	mv	a1,a0
+    b63e:	0001c537          	lui	a0,0x1c
+    b642:	eb450513          	addi	a0,a0,-332 # 1beb4 <__fsym___cmd_wifi_power_cmd_name+0xa4>
+    b646:	e39f50ef          	jal	ra,147e <rt_kprintf>
+    b64a:	4581                	li	a1,0
+    b64c:	02000613          	li	a2,32
+    b650:	1008                	addi	a0,sp,32
+    b652:	d81f40ef          	jal	ra,3d2 <memset>
+    b656:	0001c5b7          	lui	a1,0x1c
+    b65a:	ec858593          	addi	a1,a1,-312 # 1bec8 <__fsym___cmd_wifi_power_cmd_name+0xb8>
+    b65e:	8522                	mv	a0,s0
+    b660:	0bc070ef          	jal	ra,1271c <strstr>
+    b664:	12050c63          	beqz	a0,b79c <wifi_recv_thread_entry+0x1e2>
+    b668:	0001c5b7          	lui	a1,0x1c
+    b66c:	0090                	addi	a2,sp,64
+    b66e:	ed458593          	addi	a1,a1,-300 # 1bed4 <__fsym___cmd_wifi_power_cmd_name+0xc4>
+    b672:	052d                	addi	a0,a0,11
+    b674:	71f060ef          	jal	ra,12592 <siscanf>
+    b678:	0088                	addi	a0,sp,64
+    b67a:	4d5060ef          	jal	ra,1234e <atof>
+    b67e:	2f9060ef          	jal	ra,12176 <__truncdfsf2>
+    b682:	8aaa                	mv	s5,a0
+    b684:	4a05                	li	s4,1
+    b686:	0001c5b7          	lui	a1,0x1c
+    b68a:	ee058593          	addi	a1,a1,-288 # 1bee0 <__fsym___cmd_wifi_power_cmd_name+0xd0>
+    b68e:	8522                	mv	a0,s0
+    b690:	08c070ef          	jal	ra,1271c <strstr>
+    b694:	00000493          	li	s1,0
+    b698:	c105                	beqz	a0,b6b8 <wifi_recv_thread_entry+0xfe>
+    b69a:	0001c5b7          	lui	a1,0x1c
+    b69e:	0090                	addi	a2,sp,64
+    b6a0:	ed458593          	addi	a1,a1,-300 # 1bed4 <__fsym___cmd_wifi_power_cmd_name+0xc4>
+    b6a4:	0525                	addi	a0,a0,9
+    b6a6:	6ed060ef          	jal	ra,12592 <siscanf>
+    b6aa:	0088                	addi	a0,sp,64
+    b6ac:	4a3060ef          	jal	ra,1234e <atof>
+    b6b0:	2c7060ef          	jal	ra,12176 <__truncdfsf2>
+    b6b4:	84aa                	mv	s1,a0
+    b6b6:	4a05                	li	s4,1
+    b6b8:	0001c5b7          	lui	a1,0x1c
+    b6bc:	eec58593          	addi	a1,a1,-276 # 1beec <__fsym___cmd_wifi_power_cmd_name+0xdc>
+    b6c0:	8522                	mv	a0,s0
+    b6c2:	05a070ef          	jal	ra,1271c <strstr>
+    b6c6:	4d01                	li	s10,0
+    b6c8:	cd11                	beqz	a0,b6e4 <wifi_recv_thread_entry+0x12a>
+    b6ca:	0001c5b7          	lui	a1,0x1c
+    b6ce:	0090                	addi	a2,sp,64
+    b6d0:	ed458593          	addi	a1,a1,-300 # 1bed4 <__fsym___cmd_wifi_power_cmd_name+0xc4>
+    b6d4:	0521                	addi	a0,a0,8
+    b6d6:	6bd060ef          	jal	ra,12592 <siscanf>
+    b6da:	0088                	addi	a0,sp,64
+    b6dc:	479060ef          	jal	ra,12354 <atoi>
+    b6e0:	8d2a                	mv	s10,a0
+    b6e2:	4a05                	li	s4,1
+    b6e4:	0001c5b7          	lui	a1,0x1c
+    b6e8:	ef858593          	addi	a1,a1,-264 # 1bef8 <__fsym___cmd_wifi_power_cmd_name+0xe8>
+    b6ec:	8522                	mv	a0,s0
+    b6ee:	02e070ef          	jal	ra,1271c <strstr>
+    b6f2:	c169                	beqz	a0,b7b4 <wifi_recv_thread_entry+0x1fa>
+    b6f4:	051d                	addi	a0,a0,7
+    b6f6:	02000713          	li	a4,32
+    b6fa:	00050783          	lb	a5,0(a0)
+    b6fe:	9bf5                	andi	a5,a5,-3
+    b700:	0ae78263          	beq	a5,a4,b7a4 <wifi_recv_thread_entry+0x1ea>
+    b704:	0001c5b7          	lui	a1,0x1c
+    b708:	1010                	addi	a2,sp,32
+    b70a:	f0058593          	addi	a1,a1,-256 # 1bf00 <__fsym___cmd_wifi_power_cmd_name+0xf0>
+    b70e:	685060ef          	jal	ra,12592 <siscanf>
+    b712:	060a0b63          	beqz	s4,b788 <wifi_recv_thread_entry+0x1ce>
+    b716:	4a05                	li	s4,1
+    b718:	2000a7b7          	lui	a5,0x2000a
+    b71c:	5b478793          	addi	a5,a5,1460 # 2000a5b4 <g_wifi_param>
+    b720:	0157a023          	sw	s5,0(a5)
+    b724:	c3c4                	sw	s1,4(a5)
+    b726:	01a7a423          	sw	s10,8(a5)
+    b72a:	85e2                	mv	a1,s8
+    b72c:	8526                	mv	a0,s1
+    b72e:	0f8060ef          	jal	ra,11826 <__mulsf3>
+    b732:	74c060ef          	jal	ra,11e7e <__fixsfsi>
+    b736:	80a1aa23          	sw	a0,-2028(gp) # 20000494 <g_servo_param>
+    b73a:	85da                	mv	a1,s6
+    b73c:	8526                	mv	a0,s1
+    b73e:	0e8060ef          	jal	ra,11826 <__mulsf3>
+    b742:	73c060ef          	jal	ra,11e7e <__fixsfsi>
+    b746:	06400413          	li	s0,100
+    b74a:	02856733          	rem	a4,a0,s0
+    b74e:	8526                	mv	a0,s1
+    b750:	c63a                	sw	a4,12(sp)
+    b752:	72c060ef          	jal	ra,11e7e <__fixsfsi>
+    b756:	85e6                	mv	a1,s9
+    b758:	c42a                	sw	a0,8(sp)
+    b75a:	8556                	mv	a0,s5
+    b75c:	0ca060ef          	jal	ra,11826 <__mulsf3>
+    b760:	71e060ef          	jal	ra,11e7e <__fixsfsi>
+    b764:	02856433          	rem	s0,a0,s0
+    b768:	8556                	mv	a0,s5
+    b76a:	714060ef          	jal	ra,11e7e <__fixsfsi>
+    b76e:	4732                	lw	a4,12(sp)
+    b770:	46a2                	lw	a3,8(sp)
+    b772:	85aa                	mv	a1,a0
+    b774:	0001c537          	lui	a0,0x1c
+    b778:	87ea                	mv	a5,s10
+    b77a:	f0850513          	addi	a0,a0,-248 # 1bf08 <__fsym___cmd_wifi_power_cmd_name+0xf8>
+    b77e:	8622                	mv	a2,s0
+    b780:	cfff50ef          	jal	ra,147e <rt_kprintf>
+    b784:	000a0963          	beqz	s4,b796 <wifi_recv_thread_entry+0x1dc>
+    b788:	0001c537          	lui	a0,0x1c
+    b78c:	100c                	addi	a1,sp,32
+    b78e:	f4050513          	addi	a0,a0,-192 # 1bf40 <__fsym___cmd_wifi_power_cmd_name+0x130>
+    b792:	cedf50ef          	jal	ra,147e <rt_kprintf>
+    b796:	00092023          	sw	zero,0(s2)
+    b79a:	b5b9                	j	b5e8 <wifi_recv_thread_entry+0x2e>
+    b79c:	4a01                	li	s4,0
+    b79e:	00000a93          	li	s5,0
+    b7a2:	b5d5                	j	b686 <wifi_recv_thread_entry+0xcc>
+    b7a4:	0505                	addi	a0,a0,1
+    b7a6:	bf91                	j	b6fa <wifi_recv_thread_entry+0x140>
+    b7a8:	0001c537          	lui	a0,0x1c
+    b7ac:	85a2                	mv	a1,s0
+    b7ae:	f5850513          	addi	a0,a0,-168 # 1bf58 <__fsym___cmd_wifi_power_cmd_name+0x148>
+    b7b2:	b7c5                	j	b792 <wifi_recv_thread_entry+0x1d8>
+    b7b4:	fe0a0ae3          	beqz	s4,b7a8 <wifi_recv_thread_entry+0x1ee>
+    b7b8:	4a01                	li	s4,0
+    b7ba:	bfb9                	j	b718 <wifi_recv_thread_entry+0x15e>
 
-0000b73a <wifi_uart_rx_callback>:
-    b73a:	c69f42ef          	jal	t0,3a2 <__riscv_save_0>
-    b73e:	2000a537          	lui	a0,0x2000a
-    b742:	64050513          	addi	a0,a0,1600 # 2000a640 <wifi_rx_sem>
-    b746:	de2f50ef          	jal	ra,d28 <rt_sem_release>
-    b74a:	4501                	li	a0,0
-    b74c:	c7bf406f          	j	3c6 <__riscv_restore_0>
+0000b7bc <wifi_uart_rx_callback>:
+    b7bc:	be7f42ef          	jal	t0,3a2 <__riscv_save_0>
+    b7c0:	2000a537          	lui	a0,0x2000a
+    b7c4:	64050513          	addi	a0,a0,1600 # 2000a640 <wifi_rx_sem>
+    b7c8:	d60f50ef          	jal	ra,d28 <rt_sem_release>
+    b7cc:	4501                	li	a0,0
+    b7ce:	bf9f406f          	j	3c6 <__riscv_restore_0>
 
-0000b750 <wifi_power_ctrl>:
-    b750:	c53f42ef          	jal	t0,3a2 <__riscv_save_0>
-    b754:	842a                	mv	s0,a0
-    b756:	00a035b3          	snez	a1,a0
-    b75a:	452d                	li	a0,11
-    b75c:	d0ef80ef          	jal	ra,3c6a <rt_pin_write>
-    b760:	ec09                	bnez	s0,b77a <wifi_power_ctrl+0x2a>
-    b762:	0001c5b7          	lui	a1,0x1c
-    b766:	e8458593          	addi	a1,a1,-380 # 1be84 <__fsym___cmd_wifi_power_cmd_name+0x88>
-    b76a:	0001c537          	lui	a0,0x1c
-    b76e:	e8850513          	addi	a0,a0,-376 # 1be88 <__fsym___cmd_wifi_power_cmd_name+0x8c>
-    b772:	d0df50ef          	jal	ra,147e <rt_kprintf>
-    b776:	c51f406f          	j	3c6 <__riscv_restore_0>
-    b77a:	0001c5b7          	lui	a1,0x1c
-    b77e:	e8058593          	addi	a1,a1,-384 # 1be80 <__fsym___cmd_wifi_power_cmd_name+0x84>
-    b782:	b7e5                	j	b76a <wifi_power_ctrl+0x1a>
+0000b7d2 <wifi_power_ctrl>:
+    b7d2:	bd1f42ef          	jal	t0,3a2 <__riscv_save_0>
+    b7d6:	842a                	mv	s0,a0
+    b7d8:	00a035b3          	snez	a1,a0
+    b7dc:	452d                	li	a0,11
+    b7de:	c8cf80ef          	jal	ra,3c6a <rt_pin_write>
+    b7e2:	ec09                	bnez	s0,b7fc <wifi_power_ctrl+0x2a>
+    b7e4:	0001c5b7          	lui	a1,0x1c
+    b7e8:	e9858593          	addi	a1,a1,-360 # 1be98 <__fsym___cmd_wifi_power_cmd_name+0x88>
+    b7ec:	0001c537          	lui	a0,0x1c
+    b7f0:	e9c50513          	addi	a0,a0,-356 # 1be9c <__fsym___cmd_wifi_power_cmd_name+0x8c>
+    b7f4:	c8bf50ef          	jal	ra,147e <rt_kprintf>
+    b7f8:	bcff406f          	j	3c6 <__riscv_restore_0>
+    b7fc:	0001c5b7          	lui	a1,0x1c
+    b800:	e9458593          	addi	a1,a1,-364 # 1be94 <__fsym___cmd_wifi_power_cmd_name+0x84>
+    b804:	b7e5                	j	b7ec <wifi_power_ctrl+0x1a>
 
-0000b784 <wifi_module_init>:
-    b784:	c1ff42ef          	jal	t0,3a2 <__riscv_save_0>
-    b788:	2000a7b7          	lui	a5,0x2000a
-    b78c:	0001b537          	lui	a0,0x1b
-    b790:	5b478793          	addi	a5,a5,1460 # 2000a5b4 <g_wifi_param>
-    b794:	00000713          	li	a4,0
-    b798:	1141                	addi	sp,sp,-16
-    b79a:	4f050513          	addi	a0,a0,1264 # 1b4f0 <ch32_uart_ops+0x14>
-    b79e:	c398                	sw	a4,0(a5)
-    b7a0:	c3d8                	sw	a4,4(a5)
-    b7a2:	0007a423          	sw	zero,8(a5)
-    b7a6:	95018413          	addi	s0,gp,-1712 # 200005d0 <wifi_uart>
-    b7aa:	f59f40ef          	jal	ra,702 <rt_device_find>
-    b7ae:	c008                	sw	a0,0(s0)
-    b7b0:	e911                	bnez	a0,b7c4 <wifi_module_init+0x40>
-    b7b2:	0001c537          	lui	a0,0x1c
-    b7b6:	e1450513          	addi	a0,a0,-492 # 1be14 <__fsym___cmd_wifi_power_cmd_name+0x18>
-    b7ba:	cc5f50ef          	jal	ra,147e <rt_kprintf>
-    b7be:	0141                	addi	sp,sp,16
-    b7c0:	c07f406f          	j	3c6 <__riscv_restore_0>
-    b7c4:	4732                	lw	a4,12(sp)
-    b7c6:	67f1                	lui	a5,0x1c
-    b7c8:	20078793          	addi	a5,a5,512 # 1c200 <__fsym___cmd_wifi_power_cmd_name+0x404>
-    b7cc:	c43e                	sw	a5,8(sp)
-    b7ce:	c00007b7          	lui	a5,0xc0000
-    b7d2:	8ff9                	and	a5,a5,a4
-    b7d4:	6741                	lui	a4,0x10
-    b7d6:	0721                	addi	a4,a4,8
-    b7d8:	0001c5b7          	lui	a1,0x1c
-    b7dc:	2000a537          	lui	a0,0x2000a
-    b7e0:	8fd9                	or	a5,a5,a4
-    b7e2:	4681                	li	a3,0
-    b7e4:	4601                	li	a2,0
-    b7e6:	e2c58593          	addi	a1,a1,-468 # 1be2c <__fsym___cmd_wifi_power_cmd_name+0x30>
-    b7ea:	64050513          	addi	a0,a0,1600 # 2000a640 <wifi_rx_sem>
-    b7ee:	c63e                	sw	a5,12(sp)
-    b7f0:	bacf50ef          	jal	ra,b9c <rt_sem_init>
-    b7f4:	4008                	lw	a0,0(s0)
-    b7f6:	0030                	addi	a2,sp,8
-    b7f8:	458d                	li	a1,3
-    b7fa:	9a6f50ef          	jal	ra,9a0 <rt_device_control>
-    b7fe:	4008                	lw	a0,0(s0)
-    b800:	10300593          	li	a1,259
-    b804:	f95f40ef          	jal	ra,798 <rt_device_open>
-    b808:	4008                	lw	a0,0(s0)
-    b80a:	0000b5b7          	lui	a1,0xb
-    b80e:	73a58593          	addi	a1,a1,1850 # b73a <wifi_uart_rx_callback>
-    b812:	9e2f50ef          	jal	ra,9f4 <rt_device_set_rx_indicate>
-    b816:	0000b5b7          	lui	a1,0xb
-    b81a:	0001c537          	lui	a0,0x1c
-    b81e:	47a9                	li	a5,10
-    b820:	4721                	li	a4,8
-    b822:	40000693          	li	a3,1024
-    b826:	4601                	li	a2,0
-    b828:	53858593          	addi	a1,a1,1336 # b538 <wifi_recv_thread_entry>
-    b82c:	e3450513          	addi	a0,a0,-460 # 1be34 <__fsym___cmd_wifi_power_cmd_name+0x38>
-    b830:	8eff60ef          	jal	ra,211e <rt_thread_create>
-    b834:	c119                	beqz	a0,b83a <wifi_module_init+0xb6>
-    b836:	bb1f60ef          	jal	ra,23e6 <rt_thread_startup>
-    b83a:	4581                	li	a1,0
-    b83c:	452d                	li	a0,11
-    b83e:	beef80ef          	jal	ra,3c2c <rt_pin_mode>
-    b842:	4505                	li	a0,1
-    b844:	f0dff0ef          	jal	ra,b750 <wifi_power_ctrl>
-    b848:	bf9d                	j	b7be <wifi_module_init+0x3a>
+0000b806 <wifi_module_init>:
+    b806:	b9df42ef          	jal	t0,3a2 <__riscv_save_0>
+    b80a:	2000a7b7          	lui	a5,0x2000a
+    b80e:	0001b537          	lui	a0,0x1b
+    b812:	5b478793          	addi	a5,a5,1460 # 2000a5b4 <g_wifi_param>
+    b816:	00000713          	li	a4,0
+    b81a:	1141                	addi	sp,sp,-16
+    b81c:	4f050513          	addi	a0,a0,1264 # 1b4f0 <ch32_uart_ops+0x14>
+    b820:	c398                	sw	a4,0(a5)
+    b822:	c3d8                	sw	a4,4(a5)
+    b824:	0007a423          	sw	zero,8(a5)
+    b828:	95018413          	addi	s0,gp,-1712 # 200005d0 <wifi_uart>
+    b82c:	ed7f40ef          	jal	ra,702 <rt_device_find>
+    b830:	c008                	sw	a0,0(s0)
+    b832:	e911                	bnez	a0,b846 <wifi_module_init+0x40>
+    b834:	0001c537          	lui	a0,0x1c
+    b838:	e2850513          	addi	a0,a0,-472 # 1be28 <__fsym___cmd_wifi_power_cmd_name+0x18>
+    b83c:	c43f50ef          	jal	ra,147e <rt_kprintf>
+    b840:	0141                	addi	sp,sp,16
+    b842:	b85f406f          	j	3c6 <__riscv_restore_0>
+    b846:	4732                	lw	a4,12(sp)
+    b848:	67f1                	lui	a5,0x1c
+    b84a:	20078793          	addi	a5,a5,512 # 1c200 <__fsym___cmd_wifi_power_cmd_name+0x3f0>
+    b84e:	c43e                	sw	a5,8(sp)
+    b850:	c00007b7          	lui	a5,0xc0000
+    b854:	8ff9                	and	a5,a5,a4
+    b856:	6741                	lui	a4,0x10
+    b858:	0721                	addi	a4,a4,8
+    b85a:	0001c5b7          	lui	a1,0x1c
+    b85e:	2000a537          	lui	a0,0x2000a
+    b862:	8fd9                	or	a5,a5,a4
+    b864:	4681                	li	a3,0
+    b866:	4601                	li	a2,0
+    b868:	e4058593          	addi	a1,a1,-448 # 1be40 <__fsym___cmd_wifi_power_cmd_name+0x30>
+    b86c:	64050513          	addi	a0,a0,1600 # 2000a640 <wifi_rx_sem>
+    b870:	c63e                	sw	a5,12(sp)
+    b872:	b2af50ef          	jal	ra,b9c <rt_sem_init>
+    b876:	4008                	lw	a0,0(s0)
+    b878:	0030                	addi	a2,sp,8
+    b87a:	458d                	li	a1,3
+    b87c:	924f50ef          	jal	ra,9a0 <rt_device_control>
+    b880:	4008                	lw	a0,0(s0)
+    b882:	10300593          	li	a1,259
+    b886:	f13f40ef          	jal	ra,798 <rt_device_open>
+    b88a:	4008                	lw	a0,0(s0)
+    b88c:	0000b5b7          	lui	a1,0xb
+    b890:	7bc58593          	addi	a1,a1,1980 # b7bc <wifi_uart_rx_callback>
+    b894:	960f50ef          	jal	ra,9f4 <rt_device_set_rx_indicate>
+    b898:	0000b5b7          	lui	a1,0xb
+    b89c:	0001c537          	lui	a0,0x1c
+    b8a0:	47a9                	li	a5,10
+    b8a2:	4721                	li	a4,8
+    b8a4:	40000693          	li	a3,1024
+    b8a8:	4601                	li	a2,0
+    b8aa:	5ba58593          	addi	a1,a1,1466 # b5ba <wifi_recv_thread_entry>
+    b8ae:	e4850513          	addi	a0,a0,-440 # 1be48 <__fsym___cmd_wifi_power_cmd_name+0x38>
+    b8b2:	86df60ef          	jal	ra,211e <rt_thread_create>
+    b8b6:	c119                	beqz	a0,b8bc <wifi_module_init+0xb6>
+    b8b8:	b2ff60ef          	jal	ra,23e6 <rt_thread_startup>
+    b8bc:	4581                	li	a1,0
+    b8be:	452d                	li	a0,11
+    b8c0:	b6cf80ef          	jal	ra,3c2c <rt_pin_mode>
+    b8c4:	4505                	li	a0,1
+    b8c6:	f0dff0ef          	jal	ra,b7d2 <wifi_power_ctrl>
+    b8ca:	bf9d                	j	b840 <wifi_module_init+0x3a>
 
-0000b84a <wifi_power_cmd>:
-    b84a:	b59f42ef          	jal	t0,3a2 <__riscv_save_0>
-    b84e:	4789                	li	a5,2
-    b850:	00f50963          	beq	a0,a5,b862 <wifi_power_cmd+0x18>
-    b854:	0001c537          	lui	a0,0x1c
-    b858:	e4050513          	addi	a0,a0,-448 # 1be40 <__fsym___cmd_wifi_power_cmd_name+0x44>
-    b85c:	c23f50ef          	jal	ra,147e <rt_kprintf>
-    b860:	a829                	j	b87a <wifi_power_cmd+0x30>
-    b862:	41c0                	lw	s0,4(a1)
-    b864:	0001c5b7          	lui	a1,0x1c
-    b868:	e5c58593          	addi	a1,a1,-420 # 1be5c <__fsym___cmd_wifi_power_cmd_name+0x60>
-    b86c:	8522                	mv	a0,s0
-    b86e:	c0df40ef          	jal	ra,47a <strcmp>
-    b872:	e511                	bnez	a0,b87e <wifi_power_cmd+0x34>
-    b874:	4505                	li	a0,1
-    b876:	edbff0ef          	jal	ra,b750 <wifi_power_ctrl>
-    b87a:	b4df406f          	j	3c6 <__riscv_restore_0>
-    b87e:	0001c5b7          	lui	a1,0x1c
-    b882:	e6058593          	addi	a1,a1,-416 # 1be60 <__fsym___cmd_wifi_power_cmd_name+0x64>
-    b886:	8522                	mv	a0,s0
-    b888:	bf3f40ef          	jal	ra,47a <strcmp>
-    b88c:	d56d                	beqz	a0,b876 <wifi_power_cmd+0x2c>
-    b88e:	0001c537          	lui	a0,0x1c
-    b892:	e6450513          	addi	a0,a0,-412 # 1be64 <__fsym___cmd_wifi_power_cmd_name+0x68>
-    b896:	b7d9                	j	b85c <wifi_power_cmd+0x12>
+0000b8cc <wifi_power_cmd>:
+    b8cc:	ad7f42ef          	jal	t0,3a2 <__riscv_save_0>
+    b8d0:	4789                	li	a5,2
+    b8d2:	00f50963          	beq	a0,a5,b8e4 <wifi_power_cmd+0x18>
+    b8d6:	0001c537          	lui	a0,0x1c
+    b8da:	e5450513          	addi	a0,a0,-428 # 1be54 <__fsym___cmd_wifi_power_cmd_name+0x44>
+    b8de:	ba1f50ef          	jal	ra,147e <rt_kprintf>
+    b8e2:	a829                	j	b8fc <wifi_power_cmd+0x30>
+    b8e4:	41c0                	lw	s0,4(a1)
+    b8e6:	0001c5b7          	lui	a1,0x1c
+    b8ea:	e7058593          	addi	a1,a1,-400 # 1be70 <__fsym___cmd_wifi_power_cmd_name+0x60>
+    b8ee:	8522                	mv	a0,s0
+    b8f0:	b8bf40ef          	jal	ra,47a <strcmp>
+    b8f4:	e511                	bnez	a0,b900 <wifi_power_cmd+0x34>
+    b8f6:	4505                	li	a0,1
+    b8f8:	edbff0ef          	jal	ra,b7d2 <wifi_power_ctrl>
+    b8fc:	acbf406f          	j	3c6 <__riscv_restore_0>
+    b900:	0001c5b7          	lui	a1,0x1c
+    b904:	e7458593          	addi	a1,a1,-396 # 1be74 <__fsym___cmd_wifi_power_cmd_name+0x64>
+    b908:	8522                	mv	a0,s0
+    b90a:	b71f40ef          	jal	ra,47a <strcmp>
+    b90e:	d56d                	beqz	a0,b8f8 <wifi_power_cmd+0x2c>
+    b910:	0001c537          	lui	a0,0x1c
+    b914:	e7850513          	addi	a0,a0,-392 # 1be78 <__fsym___cmd_wifi_power_cmd_name+0x68>
+    b918:	b7d9                	j	b8de <wifi_power_cmd+0x12>
 
-0000b898 <NMI_Handler>:
-    b898:	34011173          	csrrw	sp,mscratch,sp
-    b89c:	d0af50ef          	jal	ra,da6 <rt_interrupt_enter>
-    b8a0:	0001c537          	lui	a0,0x1c
-    b8a4:	f6450513          	addi	a0,a0,-156 # 1bf64 <__fsym___cmd_wifi_power_cmd_name+0x168>
-    b8a8:	bd7f50ef          	jal	ra,147e <rt_kprintf>
-    b8ac:	d28f50ef          	jal	ra,dd4 <rt_interrupt_leave>
-    b8b0:	34011173          	csrrw	sp,mscratch,sp
-    b8b4:	30200073          	mret
+0000b91a <NMI_Handler>:
+    b91a:	34011173          	csrrw	sp,mscratch,sp
+    b91e:	c88f50ef          	jal	ra,da6 <rt_interrupt_enter>
+    b922:	0001c537          	lui	a0,0x1c
+    b926:	f7850513          	addi	a0,a0,-136 # 1bf78 <__fsym___cmd_wifi_power_cmd_name+0x168>
+    b92a:	b55f50ef          	jal	ra,147e <rt_kprintf>
+    b92e:	ca6f50ef          	jal	ra,dd4 <rt_interrupt_leave>
+    b932:	34011173          	csrrw	sp,mscratch,sp
+    b936:	30200073          	mret
 
-0000b8b8 <HardFault_Handler>:
-    b8b8:	34011173          	csrrw	sp,mscratch,sp
-    b8bc:	ceaf50ef          	jal	ra,da6 <rt_interrupt_enter>
-    b8c0:	0001c537          	lui	a0,0x1c
-    b8c4:	f5850513          	addi	a0,a0,-168 # 1bf58 <__fsym___cmd_wifi_power_cmd_name+0x15c>
-    b8c8:	bb7f50ef          	jal	ra,147e <rt_kprintf>
-    b8cc:	d08f50ef          	jal	ra,dd4 <rt_interrupt_leave>
-    b8d0:	34011173          	csrrw	sp,mscratch,sp
-    b8d4:	30200073          	mret
+0000b93a <HardFault_Handler>:
+    b93a:	34011173          	csrrw	sp,mscratch,sp
+    b93e:	c68f50ef          	jal	ra,da6 <rt_interrupt_enter>
+    b942:	0001c537          	lui	a0,0x1c
+    b946:	f6c50513          	addi	a0,a0,-148 # 1bf6c <__fsym___cmd_wifi_power_cmd_name+0x15c>
+    b94a:	b35f50ef          	jal	ra,147e <rt_kprintf>
+    b94e:	c86f50ef          	jal	ra,dd4 <rt_interrupt_leave>
+    b952:	34011173          	csrrw	sp,mscratch,sp
+    b956:	30200073          	mret
 
-0000b8d8 <main>:
-    b8d8:	acbf42ef          	jal	t0,3a2 <__riscv_save_0>
-    b8dc:	226d                	jal	ba86 <SystemCoreClockUpdate>
-    b8de:	afffa0ef          	jal	ra,63dc <lcd_init>
-    b8e2:	eccff0ef          	jal	ra,afae <ws2812_init>
-    b8e6:	dcffe0ef          	jal	ra,a6b4 <rainbow_init>
-    b8ea:	450d                	li	a0,3
-    b8ec:	84cff0ef          	jal	ra,a938 <rainbow_start>
-    b8f0:	bd5ff0ef          	jal	ra,b4c4 <pwm_module_init>
-    b8f4:	e91ff0ef          	jal	ra,b784 <wifi_module_init>
-    b8f8:	4501                	li	a0,0
-    b8fa:	1a2020ef          	jal	ra,da9c <my_mem_init>
-    b8fe:	213020ef          	jal	ra,e310 <exfuns_init>
-    b902:	9641a503          	lw	a0,-1692(gp) # 200005e4 <fs>
-    b906:	0001c5b7          	lui	a1,0x1c
-    b90a:	4605                	li	a2,1
-    b90c:	f7458593          	addi	a1,a1,-140 # 1bf74 <__fsym___cmd_wifi_power_cmd_name+0x178>
-    b910:	1af020ef          	jal	ra,e2be <f_mount>
-    b914:	96418413          	addi	s0,gp,-1692 # 200005e4 <fs>
-    b918:	4048                	lw	a0,4(s0)
-    b91a:	0001c5b7          	lui	a1,0x1c
-    b91e:	4605                	li	a2,1
-    b920:	f7858593          	addi	a1,a1,-136 # 1bf78 <__fsym___cmd_wifi_power_cmd_name+0x17c>
-    b924:	19b020ef          	jal	ra,e2be <f_mount>
-    b928:	6741                	lui	a4,0x10
-    b92a:	80070493          	addi	s1,a4,-2048 # f800 <__adddf3+0x174>
-    b92e:	0001c937          	lui	s2,0x1c
-    b932:	fff70413          	addi	s0,a4,-1
-    b936:	521010ef          	jal	ra,d656 <fonts_init>
-    b93a:	e911                	bnez	a0,b94e <main+0x76>
-    b93c:	9b7ff0ef          	jal	ra,b2f2 <screen_init>
-    b940:	ebffd0ef          	jal	ra,97fe <adc_temperature_init>
-    b944:	3e800513          	li	a0,1000
-    b948:	a0bf60ef          	jal	ra,2352 <rt_thread_mdelay>
-    b94c:	bfe5                	j	b944 <main+0x6c>
-    b94e:	8826                	mv	a6,s1
-    b950:	f7c90793          	addi	a5,s2,-132 # 1bf7c <__fsym___cmd_wifi_power_cmd_name+0x180>
-    b954:	4741                	li	a4,16
-    b956:	46c1                	li	a3,16
-    b958:	0c800613          	li	a2,200
-    b95c:	03200593          	li	a1,50
-    b960:	4579                	li	a0,30
-    b962:	8b4fb0ef          	jal	ra,6a16 <lcd_show_string>
-    b966:	0c800513          	li	a0,200
-    b96a:	9e9f60ef          	jal	ra,2352 <rt_thread_mdelay>
-    b96e:	8722                	mv	a4,s0
-    b970:	04200693          	li	a3,66
-    b974:	0f000613          	li	a2,240
-    b978:	03200593          	li	a1,50
-    b97c:	4579                	li	a0,30
-    b97e:	e25fa0ef          	jal	ra,67a2 <lcd_fill>
-    b982:	0c800513          	li	a0,200
+0000b95a <main>:
+    b95a:	a49f42ef          	jal	t0,3a2 <__riscv_save_0>
+    b95e:	2225                	jal	ba86 <SystemCoreClockUpdate>
+    b960:	a7dfa0ef          	jal	ra,63dc <lcd_init>
+    b964:	e4aff0ef          	jal	ra,afae <ws2812_init>
+    b968:	d4dfe0ef          	jal	ra,a6b4 <rainbow_init>
+    b96c:	450d                	li	a0,3
+    b96e:	fcbfe0ef          	jal	ra,a938 <rainbow_start>
+    b972:	bd5ff0ef          	jal	ra,b546 <pwm_module_init>
+    b976:	e91ff0ef          	jal	ra,b806 <wifi_module_init>
+    b97a:	979ff0ef          	jal	ra,b2f2 <screen_init>
+    b97e:	e81fd0ef          	jal	ra,97fe <adc_temperature_init>
+    b982:	3e800513          	li	a0,1000
     b986:	9cdf60ef          	jal	ra,2352 <rt_thread_mdelay>
-    b98a:	b775                	j	b936 <main+0x5e>
+    b98a:	bfe5                	j	b982 <main+0x28>
 
 0000b98c <SystemInit>:
     b98c:	400217b7          	lui	a5,0x40021
@@ -18738,11 +18738,11 @@ Disassembly of section .text:
     c974:	0ef76a63          	bltu	a4,a5,ca68 <usmart_sys_cmd_exe+0x13a>
     c978:	6771                	lui	a4,0x1c
     c97a:	078a                	slli	a5,a5,0x2
-    c97c:	f8870713          	addi	a4,a4,-120 # 1bf88 <__fsym___cmd_wifi_power_cmd_name+0x18c>
+    c97c:	f8870713          	addi	a4,a4,-120 # 1bf88 <__fsym___cmd_wifi_power_cmd_name+0x178>
     c980:	97ba                	add	a5,a5,a4
     c982:	439c                	lw	a5,0(a5)
     c984:	0001c437          	lui	s0,0x1c
-    c988:	3b040513          	addi	a0,s0,944 # 1c3b0 <__fsym___cmd_wifi_power_cmd_name+0x5b4>
+    c988:	3b040513          	addi	a0,s0,944 # 1c3b0 <__fsym___cmd_wifi_power_cmd_name+0x5a0>
     c98c:	8782                	jr	a5
     c98e:	849c                	lbu	a5,9(sp)
     c990:	0785                	addi	a5,a5,1
@@ -18750,62 +18750,62 @@ Disassembly of section .text:
     c994:	b7d9                	j	c95a <usmart_sys_cmd_exe+0x2c>
     c996:	3f1050ef          	jal	ra,12586 <puts>
     c99a:	0001c537          	lui	a0,0x1c
-    c99e:	07c50513          	addi	a0,a0,124 # 1c07c <__fsym___cmd_wifi_power_cmd_name+0x280>
+    c99e:	07c50513          	addi	a0,a0,124 # 1c07c <__fsym___cmd_wifi_power_cmd_name+0x26c>
     c9a2:	3e5050ef          	jal	ra,12586 <puts>
     c9a6:	0001c537          	lui	a0,0x1c
-    c9aa:	0bc50513          	addi	a0,a0,188 # 1c0bc <__fsym___cmd_wifi_power_cmd_name+0x2c0>
+    c9aa:	0bc50513          	addi	a0,a0,188 # 1c0bc <__fsym___cmd_wifi_power_cmd_name+0x2ac>
     c9ae:	3d9050ef          	jal	ra,12586 <puts>
     c9b2:	0001c537          	lui	a0,0x1c
-    c9b6:	0fc50513          	addi	a0,a0,252 # 1c0fc <__fsym___cmd_wifi_power_cmd_name+0x300>
+    c9b6:	0fc50513          	addi	a0,a0,252 # 1c0fc <__fsym___cmd_wifi_power_cmd_name+0x2ec>
     c9ba:	3cd050ef          	jal	ra,12586 <puts>
     c9be:	0001c537          	lui	a0,0x1c
-    c9c2:	13c50513          	addi	a0,a0,316 # 1c13c <__fsym___cmd_wifi_power_cmd_name+0x340>
+    c9c2:	13c50513          	addi	a0,a0,316 # 1c13c <__fsym___cmd_wifi_power_cmd_name+0x32c>
     c9c6:	3c1050ef          	jal	ra,12586 <puts>
     c9ca:	0001c537          	lui	a0,0x1c
-    c9ce:	17c50513          	addi	a0,a0,380 # 1c17c <__fsym___cmd_wifi_power_cmd_name+0x380>
+    c9ce:	17c50513          	addi	a0,a0,380 # 1c17c <__fsym___cmd_wifi_power_cmd_name+0x36c>
     c9d2:	3b5050ef          	jal	ra,12586 <puts>
     c9d6:	0001c537          	lui	a0,0x1c
-    c9da:	1bc50513          	addi	a0,a0,444 # 1c1bc <__fsym___cmd_wifi_power_cmd_name+0x3c0>
+    c9da:	1bc50513          	addi	a0,a0,444 # 1c1bc <__fsym___cmd_wifi_power_cmd_name+0x3ac>
     c9de:	3a9050ef          	jal	ra,12586 <puts>
     c9e2:	0001c537          	lui	a0,0x1c
-    c9e6:	1f850513          	addi	a0,a0,504 # 1c1f8 <__fsym___cmd_wifi_power_cmd_name+0x3fc>
+    c9e6:	1f850513          	addi	a0,a0,504 # 1c1f8 <__fsym___cmd_wifi_power_cmd_name+0x3e8>
     c9ea:	39d050ef          	jal	ra,12586 <puts>
     c9ee:	0001c537          	lui	a0,0x1c
-    c9f2:	21450513          	addi	a0,a0,532 # 1c214 <__fsym___cmd_wifi_power_cmd_name+0x418>
+    c9f2:	21450513          	addi	a0,a0,532 # 1c214 <__fsym___cmd_wifi_power_cmd_name+0x404>
     c9f6:	391050ef          	jal	ra,12586 <puts>
     c9fa:	0001c537          	lui	a0,0x1c
-    c9fe:	23450513          	addi	a0,a0,564 # 1c234 <__fsym___cmd_wifi_power_cmd_name+0x438>
+    c9fe:	23450513          	addi	a0,a0,564 # 1c234 <__fsym___cmd_wifi_power_cmd_name+0x424>
     ca02:	385050ef          	jal	ra,12586 <puts>
     ca06:	0001c537          	lui	a0,0x1c
-    ca0a:	24c50513          	addi	a0,a0,588 # 1c24c <__fsym___cmd_wifi_power_cmd_name+0x450>
+    ca0a:	24c50513          	addi	a0,a0,588 # 1c24c <__fsym___cmd_wifi_power_cmd_name+0x43c>
     ca0e:	379050ef          	jal	ra,12586 <puts>
     ca12:	0001c537          	lui	a0,0x1c
-    ca16:	26450513          	addi	a0,a0,612 # 1c264 <__fsym___cmd_wifi_power_cmd_name+0x468>
+    ca16:	26450513          	addi	a0,a0,612 # 1c264 <__fsym___cmd_wifi_power_cmd_name+0x454>
     ca1a:	36d050ef          	jal	ra,12586 <puts>
     ca1e:	0001c537          	lui	a0,0x1c
-    ca22:	28050513          	addi	a0,a0,640 # 1c280 <__fsym___cmd_wifi_power_cmd_name+0x484>
+    ca22:	28050513          	addi	a0,a0,640 # 1c280 <__fsym___cmd_wifi_power_cmd_name+0x470>
     ca26:	361050ef          	jal	ra,12586 <puts>
     ca2a:	0001c537          	lui	a0,0x1c
-    ca2e:	29c50513          	addi	a0,a0,668 # 1c29c <__fsym___cmd_wifi_power_cmd_name+0x4a0>
+    ca2e:	29c50513          	addi	a0,a0,668 # 1c29c <__fsym___cmd_wifi_power_cmd_name+0x48c>
     ca32:	355050ef          	jal	ra,12586 <puts>
     ca36:	0001c537          	lui	a0,0x1c
-    ca3a:	2d450513          	addi	a0,a0,724 # 1c2d4 <__fsym___cmd_wifi_power_cmd_name+0x4d8>
+    ca3a:	2d450513          	addi	a0,a0,724 # 1c2d4 <__fsym___cmd_wifi_power_cmd_name+0x4c4>
     ca3e:	349050ef          	jal	ra,12586 <puts>
     ca42:	0001c537          	lui	a0,0x1c
-    ca46:	30c50513          	addi	a0,a0,780 # 1c30c <__fsym___cmd_wifi_power_cmd_name+0x510>
+    ca46:	30c50513          	addi	a0,a0,780 # 1c30c <__fsym___cmd_wifi_power_cmd_name+0x4fc>
     ca4a:	33d050ef          	jal	ra,12586 <puts>
     ca4e:	0001c537          	lui	a0,0x1c
-    ca52:	34050513          	addi	a0,a0,832 # 1c340 <__fsym___cmd_wifi_power_cmd_name+0x544>
+    ca52:	34050513          	addi	a0,a0,832 # 1c340 <__fsym___cmd_wifi_power_cmd_name+0x530>
     ca56:	331050ef          	jal	ra,12586 <puts>
     ca5a:	0001c537          	lui	a0,0x1c
-    ca5e:	37450513          	addi	a0,a0,884 # 1c374 <__fsym___cmd_wifi_power_cmd_name+0x578>
+    ca5e:	37450513          	addi	a0,a0,884 # 1c374 <__fsym___cmd_wifi_power_cmd_name+0x564>
     ca62:	325050ef          	jal	ra,12586 <puts>
     ca66:	4501                	li	a0,0
     ca68:	6145                	addi	sp,sp,48
     ca6a:	953f306f          	j	3bc <__riscv_restore_4>
     ca6e:	319050ef          	jal	ra,12586 <puts>
     ca72:	0001c537          	lui	a0,0x1c
-    ca76:	3b450513          	addi	a0,a0,948 # 1c3b4 <__fsym___cmd_wifi_power_cmd_name+0x5b8>
+    ca76:	3b450513          	addi	a0,a0,948 # 1c3b4 <__fsym___cmd_wifi_power_cmd_name+0x5a4>
     ca7a:	200004b7          	lui	s1,0x20000
     ca7e:	309050ef          	jal	ra,12586 <puts>
     ca82:	17c48913          	addi	s2,s1,380 # 2000017c <usmart_dev>
@@ -18818,7 +18818,7 @@ Disassembly of section .text:
     ca9c:	b7d9                	j	ca62 <usmart_sys_cmd_exe+0x134>
     ca9e:	17c4a703          	lw	a4,380(s1)
     caa2:	078e                	slli	a5,a5,0x3
-    caa4:	3f498513          	addi	a0,s3,1012 # 1c3f4 <__fsym___cmd_wifi_power_cmd_name+0x5f8>
+    caa4:	3f498513          	addi	a0,s3,1012 # 1c3f4 <__fsym___cmd_wifi_power_cmd_name+0x5e4>
     caa8:	97ba                	add	a5,a5,a4
     caaa:	43cc                	lw	a1,4(a5)
     caac:	18f050ef          	jal	ra,1243a <iprintf>
@@ -18828,7 +18828,7 @@ Disassembly of section .text:
     cab6:	bfe1                	j	ca8e <usmart_sys_cmd_exe+0x160>
     cab8:	2cf050ef          	jal	ra,12586 <puts>
     cabc:	0001c537          	lui	a0,0x1c
-    cac0:	3fc50513          	addi	a0,a0,1020 # 1c3fc <__fsym___cmd_wifi_power_cmd_name+0x600>
+    cac0:	3fc50513          	addi	a0,a0,1020 # 1c3fc <__fsym___cmd_wifi_power_cmd_name+0x5ec>
     cac4:	200004b7          	lui	s1,0x20000
     cac8:	2bf050ef          	jal	ra,12586 <puts>
     cacc:	17c48993          	addi	s3,s1,380 # 2000017c <usmart_dev>
@@ -18851,7 +18851,7 @@ Disassembly of section .text:
     cb02:	070e                	slli	a4,a4,0x3
     cb04:	97ba                	add	a5,a5,a4
     cb06:	4390                	lw	a2,0(a5)
-    cb08:	43c90513          	addi	a0,s2,1084 # 1c43c <__fsym___cmd_wifi_power_cmd_name+0x640>
+    cb08:	43c90513          	addi	a0,s2,1084 # 1c43c <__fsym___cmd_wifi_power_cmd_name+0x62c>
     cb0c:	12f050ef          	jal	ra,1243a <iprintf>
     cb10:	849c                	lbu	a5,9(sp)
     cb12:	0785                	addi	a5,a5,1
@@ -18873,13 +18873,13 @@ Disassembly of section .text:
     cb38:	e909                	bnez	a0,cb4a <usmart_sys_cmd_exe+0x21c>
     cb3a:	45b2                	lw	a1,12(sp)
     cb3c:	0001c537          	lui	a0,0x1c
-    cb40:	45050513          	addi	a0,a0,1104 # 1c450 <__fsym___cmd_wifi_power_cmd_name+0x654>
+    cb40:	45050513          	addi	a0,a0,1104 # 1c450 <__fsym___cmd_wifi_power_cmd_name+0x640>
     cb44:	0f7050ef          	jal	ra,1243a <iprintf>
     cb48:	bf81                	j	ca98 <usmart_sys_cmd_exe+0x16a>
     cb4a:	4791                	li	a5,4
     cb4c:	fef510e3          	bne	a0,a5,cb2c <usmart_sys_cmd_exe+0x1fe>
     cb50:	0001c537          	lui	a0,0x1c
-    cb54:	45c50513          	addi	a0,a0,1116 # 1c45c <__fsym___cmd_wifi_power_cmd_name+0x660>
+    cb54:	45c50513          	addi	a0,a0,1116 # 1c45c <__fsym___cmd_wifi_power_cmd_name+0x64c>
     cb58:	22f050ef          	jal	ra,12586 <puts>
     cb5c:	200007b7          	lui	a5,0x20000
     cb60:	4705                	li	a4,1
@@ -18899,12 +18899,12 @@ Disassembly of section .text:
     cb84:	e519                	bnez	a0,cb92 <usmart_sys_cmd_exe+0x264>
     cb86:	0001c537          	lui	a0,0x1c
     cb8a:	45b2                	lw	a1,12(sp)
-    cb8c:	47050513          	addi	a0,a0,1136 # 1c470 <__fsym___cmd_wifi_power_cmd_name+0x674>
+    cb8c:	47050513          	addi	a0,a0,1136 # 1c470 <__fsym___cmd_wifi_power_cmd_name+0x660>
     cb90:	bf55                	j	cb44 <usmart_sys_cmd_exe+0x216>
     cb92:	4791                	li	a5,4
     cb94:	f8f51ce3          	bne	a0,a5,cb2c <usmart_sys_cmd_exe+0x1fe>
     cb98:	0001c537          	lui	a0,0x1c
-    cb9c:	47c50513          	addi	a0,a0,1148 # 1c47c <__fsym___cmd_wifi_power_cmd_name+0x680>
+    cb9c:	47c50513          	addi	a0,a0,1148 # 1c47c <__fsym___cmd_wifi_power_cmd_name+0x66c>
     cba0:	1e7050ef          	jal	ra,12586 <puts>
     cba4:	200007b7          	lui	a5,0x20000
     cba8:	180789a3          	sb	zero,403(a5) # 20000193 <usmart_dev+0x17>
@@ -18926,11 +18926,11 @@ Disassembly of section .text:
     cbd2:	26f70423          	sb	a5,616(a4) # 20000268 <usmart_dev+0xec>
     cbd6:	cb81                	beqz	a5,cbe6 <usmart_sys_cmd_exe+0x2b8>
     cbd8:	0001c537          	lui	a0,0x1c
-    cbdc:	49050513          	addi	a0,a0,1168 # 1c490 <__fsym___cmd_wifi_power_cmd_name+0x694>
+    cbdc:	49050513          	addi	a0,a0,1168 # 1c490 <__fsym___cmd_wifi_power_cmd_name+0x680>
     cbe0:	1a7050ef          	jal	ra,12586 <puts>
     cbe4:	bd55                	j	ca98 <usmart_sys_cmd_exe+0x16a>
     cbe6:	0001c537          	lui	a0,0x1c
-    cbea:	4ac50513          	addi	a0,a0,1196 # 1c4ac <__fsym___cmd_wifi_power_cmd_name+0x6b0>
+    cbea:	4ac50513          	addi	a0,a0,1196 # 1c4ac <__fsym___cmd_wifi_power_cmd_name+0x69c>
     cbee:	bfcd                	j	cbe0 <usmart_sys_cmd_exe+0x2b2>
     cbf0:	4505                	li	a0,1
     cbf2:	bd9d                	j	ca68 <usmart_sys_cmd_exe+0x13a>
@@ -19018,7 +19018,7 @@ Disassembly of section .text:
     ccc2:	2b4d                	jal	d274 <usmart_get_fname>
     ccc4:	0001c537          	lui	a0,0x1c
     ccc8:	102c                	addi	a1,sp,40
-    ccca:	ff850513          	addi	a0,a0,-8 # 1bff8 <__fsym___cmd_wifi_power_cmd_name+0x1fc>
+    ccca:	ff850513          	addi	a0,a0,-8 # 1bff8 <__fsym___cmd_wifi_power_cmd_name+0x1e8>
     ccce:	20000ab7          	lui	s5,0x20000
     ccd2:	17c40993          	addi	s3,s0,380
     ccd6:	764050ef          	jal	ra,1243a <iprintf>
@@ -19038,7 +19038,7 @@ Disassembly of section .text:
     cd06:	0af76263          	bltu	a4,a5,cdaa <usmart_exe+0x112>
     cd0a:	6771                	lui	a4,0x1c
     cd0c:	078a                	slli	a5,a5,0x2
-    cd0e:	fa470713          	addi	a4,a4,-92 # 1bfa4 <__fsym___cmd_wifi_power_cmd_name+0x1a8>
+    cd0e:	fa470713          	addi	a4,a4,-92 # 1bfa4 <__fsym___cmd_wifi_power_cmd_name+0x194>
     cd12:	97ba                	add	a5,a5,a4
     cd14:	439c                	lw	a5,0(a5)
     cd16:	8782                	jr	a5
@@ -19081,7 +19081,7 @@ Disassembly of section .text:
     cd8a:	fcba2c23          	sw	a1,-40(s4)
     cd8e:	000b8513          	mv	a0,s7
     cd92:	c399                	beqz	a5,cd98 <usmart_exe+0x100>
-    cd94:	004b0513          	addi	a0,s6,4 # 1c004 <__fsym___cmd_wifi_power_cmd_name+0x208>
+    cd94:	004b0513          	addi	a0,s6,4 # 1c004 <__fsym___cmd_wifi_power_cmd_name+0x1f4>
     cd98:	6a2050ef          	jal	ra,1243a <iprintf>
     cd9c:	b7c9                	j	cd5e <usmart_exe+0xc6>
     cd9e:	17c42783          	lw	a5,380(s0)
@@ -19098,7 +19098,7 @@ Disassembly of section .text:
     cdbc:	45f2                	lw	a1,28(sp)
     cdbe:	12079663          	bnez	a5,ceea <usmart_exe+0x252>
     cdc2:	0001c537          	lui	a0,0x1c
-    cdc6:	00c50513          	addi	a0,a0,12 # 1c00c <__fsym___cmd_wifi_power_cmd_name+0x210>
+    cdc6:	00c50513          	addi	a0,a0,12 # 1c00c <__fsym___cmd_wifi_power_cmd_name+0x1fc>
     cdca:	670050ef          	jal	ra,1243a <iprintf>
     cdce:	0ec9c783          	lbu	a5,236(s3)
     cdd2:	cf91                	beqz	a5,cdee <usmart_exe+0x156>
@@ -19106,7 +19106,7 @@ Disassembly of section .text:
     cdd8:	47a9                	li	a5,10
     cdda:	0001c537          	lui	a0,0x1c
     cdde:	02f5f633          	remu	a2,a1,a5
-    cde2:	02450513          	addi	a0,a0,36 # 1c024 <__fsym___cmd_wifi_power_cmd_name+0x228>
+    cde2:	02450513          	addi	a0,a0,36 # 1c024 <__fsym___cmd_wifi_power_cmd_name+0x214>
     cde6:	02f5d5b3          	divu	a1,a1,a5
     cdea:	650050ef          	jal	ra,1243a <iprintf>
     cdee:	6165                	addi	sp,sp,112
@@ -19220,10 +19220,10 @@ Disassembly of section .text:
     cee6:	9302                	jalr	t1
     cee8:	b5c1                	j	cda8 <usmart_exe+0x110>
     ceea:	0001c537          	lui	a0,0x1c
-    ceee:	01450513          	addi	a0,a0,20 # 1c014 <__fsym___cmd_wifi_power_cmd_name+0x218>
+    ceee:	01450513          	addi	a0,a0,20 # 1c014 <__fsym___cmd_wifi_power_cmd_name+0x204>
     cef2:	bde1                	j	cdca <usmart_exe+0x132>
     cef4:	0001c537          	lui	a0,0x1c
-    cef8:	02050513          	addi	a0,a0,32 # 1c020 <__fsym___cmd_wifi_power_cmd_name+0x224>
+    cef8:	02050513          	addi	a0,a0,32 # 1c020 <__fsym___cmd_wifi_power_cmd_name+0x210>
     cefc:	68a050ef          	jal	ra,12586 <puts>
     cf00:	b5f9                	j	cdce <usmart_exe+0x136>
 
@@ -19253,7 +19253,7 @@ Disassembly of section .text:
     cf3e:	4785                	li	a5,1
     cf40:	fef410e3          	bne	s0,a5,cf20 <usmart_scan+0x1e>
     cf44:	0001c537          	lui	a0,0x1c
-    cf48:	04450513          	addi	a0,a0,68 # 1c044 <__fsym___cmd_wifi_power_cmd_name+0x248>
+    cf48:	04450513          	addi	a0,a0,68 # 1c044 <__fsym___cmd_wifi_power_cmd_name+0x234>
     cf4c:	63a050ef          	jal	ra,12586 <puts>
     cf50:	bfc1                	j	cf20 <usmart_scan+0x1e>
     cf52:	478d                	li	a5,3
@@ -19261,13 +19261,13 @@ Disassembly of section .text:
     cf58:	4791                	li	a5,4
     cf5a:	fcf413e3          	bne	s0,a5,cf20 <usmart_scan+0x1e>
     cf5e:	0001c537          	lui	a0,0x1c
-    cf62:	06850513          	addi	a0,a0,104 # 1c068 <__fsym___cmd_wifi_power_cmd_name+0x26c>
+    cf62:	06850513          	addi	a0,a0,104 # 1c068 <__fsym___cmd_wifi_power_cmd_name+0x258>
     cf66:	b7dd                	j	cf4c <usmart_scan+0x4a>
     cf68:	0001c537          	lui	a0,0x1c
-    cf6c:	05050513          	addi	a0,a0,80 # 1c050 <__fsym___cmd_wifi_power_cmd_name+0x254>
+    cf6c:	05050513          	addi	a0,a0,80 # 1c050 <__fsym___cmd_wifi_power_cmd_name+0x240>
     cf70:	bff1                	j	cf4c <usmart_scan+0x4a>
     cf72:	0001c537          	lui	a0,0x1c
-    cf76:	05c50513          	addi	a0,a0,92 # 1c05c <__fsym___cmd_wifi_power_cmd_name+0x260>
+    cf76:	05c50513          	addi	a0,a0,92 # 1c05c <__fsym___cmd_wifi_power_cmd_name+0x24c>
     cf7a:	bfc9                	j	cf4c <usmart_scan+0x4a>
 
 0000cf7c <read_addr>:
@@ -19590,7 +19590,7 @@ Disassembly of section .text:
     d2e2:	07f7f793          	andi	a5,a5,127
     d2e6:	0001c5b7          	lui	a1,0x1c
     d2ea:	97ba                	add	a5,a5,a4
-    d2ec:	64c58593          	addi	a1,a1,1612 # 1c64c <__fsym___cmd_wifi_power_cmd_name+0x850>
+    d2ec:	64c58593          	addi	a1,a1,1612 # 1c64c <__fsym___cmd_wifi_power_cmd_name+0x83c>
     d2f0:	0828                	addi	a0,sp,24
     d2f2:	c636                	sw	a3,12(sp)
     d2f4:	fe078c23          	sb	zero,-8(a5)
@@ -19669,7 +19669,7 @@ Disassembly of section .text:
     d3cc:	101c                	addi	a5,sp,32
     d3ce:	0001c5b7          	lui	a1,0x1c
     d3d2:	973e                	add	a4,a4,a5
-    d3d4:	64c58593          	addi	a1,a1,1612 # 1c64c <__fsym___cmd_wifi_power_cmd_name+0x850>
+    d3d4:	64c58593          	addi	a1,a1,1612 # 1c64c <__fsym___cmd_wifi_power_cmd_name+0x83c>
     d3d8:	0828                	addi	a0,sp,24
     d3da:	fe070c23          	sb	zero,-8(a4)
     d3de:	cf9ff0ef          	jal	ra,d0d6 <usmart_strcmp>
@@ -19836,7 +19836,7 @@ Disassembly of section .text:
     d5b0:	02900713          	li	a4,41
     d5b4:	00e78363          	beq	a5,a4,d5ba <usmart_get_fparam+0x70>
     d5b8:	fbf1                	bnez	a5,d58c <usmart_get_fparam+0x42>
-    d5ba:	008b8023          	sb	s0,0(s7) # 1c000 <__fsym___cmd_wifi_power_cmd_name+0x204>
+    d5ba:	008b8023          	sb	s0,0(s7) # 1c000 <__fsym___cmd_wifi_power_cmd_name+0x1f0>
     d5be:	4501                	li	a0,0
     d5c0:	a0a9                	j	d60a <usmart_get_fparam+0xc0>
     d5c2:	00098703          	lb	a4,0(s3)
@@ -20615,7 +20615,7 @@ Disassembly of section .text:
     dd92:	00f49d63          	bne	s1,a5,ddac <check_fs+0x44>
     dd96:	0001c5b7          	lui	a1,0x1c
     dd9a:	462d                	li	a2,11
-    dd9c:	65458593          	addi	a1,a1,1620 # 1c654 <__fsym___cmd_wifi_power_cmd_name+0x858>
+    dd9c:	65458593          	addi	a1,a1,1620 # 1c654 <__fsym___cmd_wifi_power_cmd_name+0x844>
     dda0:	03c40513          	addi	a0,s0,60
     dda4:	5c0040ef          	jal	ra,12364 <memcmp>
     dda8:	4785                	li	a5,1
@@ -20632,7 +20632,7 @@ Disassembly of section .text:
     ddca:	00f49d63          	bne	s1,a5,dde4 <check_fs+0x7c>
     ddce:	0001c5b7          	lui	a1,0x1c
     ddd2:	4621                	li	a2,8
-    ddd4:	66058593          	addi	a1,a1,1632 # 1c660 <__fsym___cmd_wifi_power_cmd_name+0x864>
+    ddd4:	66058593          	addi	a1,a1,1632 # 1c660 <__fsym___cmd_wifi_power_cmd_name+0x850>
     ddd8:	08e40513          	addi	a0,s0,142
     dddc:	588040ef          	jal	ra,12364 <memcmp>
     dde0:	4781                	li	a5,0
@@ -21241,7 +21241,7 @@ Disassembly of section .text:
     e49c:	c43e                	sw	a5,8(sp)
     e49e:	8526                	mv	a0,s1
     e4a0:	0000e797          	auipc	a5,0xe
-    e4a4:	1cc78793          	addi	a5,a5,460 # 1c66c <__fsym___cmd_wifi_power_cmd_name+0x870>
+    e4a4:	1cc78793          	addi	a5,a5,460 # 1c66c <__fsym___cmd_wifi_power_cmd_name+0x85c>
     e4a8:	c63e                	sw	a5,12(sp)
     e4aa:	d402                	sw	zero,40(sp)
     e4ac:	41f030ef          	jal	ra,120ca <__extendsfdf2>
@@ -21419,7 +21419,7 @@ Disassembly of section .text:
     e68e:	84ae                	mv	s1,a1
     e690:	06874163          	blt	a4,s0,e6f2 <__ieee754_rem_pio2f+0x96>
     e694:	0000e797          	auipc	a5,0xe
-    e698:	fe078793          	addi	a5,a5,-32 # 1c674 <__fsym___cmd_wifi_power_cmd_name+0x878>
+    e698:	fe078793          	addi	a5,a5,-32 # 1c674 <__fsym___cmd_wifi_power_cmd_name+0x864>
     e69c:	9841                	andi	s0,s0,-16
     e69e:	438c                	lw	a1,0(a5)
     e6a0:	2aa05e63          	blez	a0,e95c <__ieee754_rem_pio2f+0x300>
@@ -21429,7 +21429,7 @@ Disassembly of section .text:
     e6b0:	892a                	mv	s2,a0
     e6b2:	10f40663          	beq	s0,a5,e7be <__ieee754_rem_pio2f+0x162>
     e6b6:	0000e417          	auipc	s0,0xe
-    e6ba:	fc240413          	addi	s0,s0,-62 # 1c678 <__fsym___cmd_wifi_power_cmd_name+0x87c>
+    e6ba:	fc240413          	addi	s0,s0,-62 # 1c678 <__fsym___cmd_wifi_power_cmd_name+0x868>
     e6be:	400c                	lw	a1,0(s0)
     e6c0:	4b85                	li	s7,1
     e6c2:	3f8030ef          	jal	ra,11aba <__subsf3>
@@ -21470,7 +21470,7 @@ Disassembly of section .text:
     e722:	8522                	mv	a0,s0
     e724:	c23e                	sw	a5,4(sp)
     e726:	0000ea17          	auipc	s4,0xe
-    e72a:	f6aa0a13          	addi	s4,s4,-150 # 1c690 <__fsym___cmd_wifi_power_cmd_name+0x894>
+    e72a:	f6aa0a13          	addi	s4,s4,-150 # 1c690 <__fsym___cmd_wifi_power_cmd_name+0x880>
     e72e:	38c030ef          	jal	ra,11aba <__subsf3>
     e732:	000a2583          	lw	a1,0(s4)
     e736:	0f0030ef          	jal	ra,11826 <__mulsf3>
@@ -21524,10 +21524,10 @@ Disassembly of section .text:
     e7ba:	4b81                	li	s7,0
     e7bc:	bf31                	j	e6d8 <__ieee754_rem_pio2f+0x7c>
     e7be:	0000e797          	auipc	a5,0xe
-    e7c2:	ebe78793          	addi	a5,a5,-322 # 1c67c <__fsym___cmd_wifi_power_cmd_name+0x880>
+    e7c2:	ebe78793          	addi	a5,a5,-322 # 1c67c <__fsym___cmd_wifi_power_cmd_name+0x86c>
     e7c6:	438c                	lw	a1,0(a5)
     e7c8:	0000e417          	auipc	s0,0xe
-    e7cc:	eb840413          	addi	s0,s0,-328 # 1c680 <__fsym___cmd_wifi_power_cmd_name+0x884>
+    e7cc:	eb840413          	addi	s0,s0,-328 # 1c680 <__fsym___cmd_wifi_power_cmd_name+0x870>
     e7d0:	4b85                	li	s7,1
     e7d2:	2e8030ef          	jal	ra,11aba <__subsf3>
     e7d6:	892a                	mv	s2,a0
@@ -21535,7 +21535,7 @@ Disassembly of section .text:
     e7da:	b5e5                	j	e6c2 <__ieee754_rem_pio2f+0x66>
     e7dc:	4ef000ef          	jal	ra,f4ca <fabsf>
     e7e0:	0000e797          	auipc	a5,0xe
-    e7e4:	ea478793          	addi	a5,a5,-348 # 1c684 <__fsym___cmd_wifi_power_cmd_name+0x888>
+    e7e4:	ea478793          	addi	a5,a5,-348 # 1c684 <__fsym___cmd_wifi_power_cmd_name+0x874>
     e7e8:	438c                	lw	a1,0(a5)
     e7ea:	892a                	mv	s2,a0
     e7ec:	03a030ef          	jal	ra,11826 <__mulsf3>
@@ -21547,7 +21547,7 @@ Disassembly of section .text:
     e802:	8baa                	mv	s7,a0
     e804:	732030ef          	jal	ra,11f36 <__floatsisf>
     e808:	0000e797          	auipc	a5,0xe
-    e80c:	e6c78793          	addi	a5,a5,-404 # 1c674 <__fsym___cmd_wifi_power_cmd_name+0x878>
+    e80c:	e6c78793          	addi	a5,a5,-404 # 1c674 <__fsym___cmd_wifi_power_cmd_name+0x864>
     e810:	438c                	lw	a1,0(a5)
     e812:	8aaa                	mv	s5,a0
     e814:	012030ef          	jal	ra,11826 <__mulsf3>
@@ -21555,7 +21555,7 @@ Disassembly of section .text:
     e81a:	854a                	mv	a0,s2
     e81c:	29e030ef          	jal	ra,11aba <__subsf3>
     e820:	0000e797          	auipc	a5,0xe
-    e824:	e5878793          	addi	a5,a5,-424 # 1c678 <__fsym___cmd_wifi_power_cmd_name+0x87c>
+    e824:	e5878793          	addi	a5,a5,-424 # 1c678 <__fsym___cmd_wifi_power_cmd_name+0x868>
     e828:	438c                	lw	a1,0(a5)
     e82a:	8b2a                	mv	s6,a0
     e82c:	8556                	mv	a0,s5
@@ -21599,7 +21599,7 @@ Disassembly of section .text:
     e8a2:	4721                	li	a4,8
     e8a4:	faf75ee3          	bge	a4,a5,e860 <__ieee754_rem_pio2f+0x204>
     e8a8:	0000e797          	auipc	a5,0xe
-    e8ac:	dd478793          	addi	a5,a5,-556 # 1c67c <__fsym___cmd_wifi_power_cmd_name+0x880>
+    e8ac:	dd478793          	addi	a5,a5,-556 # 1c67c <__fsym___cmd_wifi_power_cmd_name+0x86c>
     e8b0:	438c                	lw	a1,0(a5)
     e8b2:	8556                	mv	a0,s5
     e8b4:	773020ef          	jal	ra,11826 <__mulsf3>
@@ -21614,7 +21614,7 @@ Disassembly of section .text:
     e8cc:	85ca                	mv	a1,s2
     e8ce:	1ec030ef          	jal	ra,11aba <__subsf3>
     e8d2:	0000e797          	auipc	a5,0xe
-    e8d6:	dae78793          	addi	a5,a5,-594 # 1c680 <__fsym___cmd_wifi_power_cmd_name+0x884>
+    e8d6:	dae78793          	addi	a5,a5,-594 # 1c680 <__fsym___cmd_wifi_power_cmd_name+0x870>
     e8da:	438c                	lw	a1,0(a5)
     e8dc:	892a                	mv	s2,a0
     e8de:	8556                	mv	a0,s5
@@ -21635,7 +21635,7 @@ Disassembly of section .text:
     e908:	8b62                	mv	s6,s8
     e90a:	bfa9                	j	e864 <__ieee754_rem_pio2f+0x208>
     e90c:	0000e797          	auipc	a5,0xe
-    e910:	d7c78793          	addi	a5,a5,-644 # 1c688 <__fsym___cmd_wifi_power_cmd_name+0x88c>
+    e910:	d7c78793          	addi	a5,a5,-644 # 1c688 <__fsym___cmd_wifi_power_cmd_name+0x878>
     e914:	438c                	lw	a1,0(a5)
     e916:	8556                	mv	a0,s5
     e918:	70f020ef          	jal	ra,11826 <__mulsf3>
@@ -21650,7 +21650,7 @@ Disassembly of section .text:
     e930:	85a2                	mv	a1,s0
     e932:	188030ef          	jal	ra,11aba <__subsf3>
     e936:	0000e797          	auipc	a5,0xe
-    e93a:	d5678793          	addi	a5,a5,-682 # 1c68c <__fsym___cmd_wifi_power_cmd_name+0x890>
+    e93a:	d5678793          	addi	a5,a5,-682 # 1c68c <__fsym___cmd_wifi_power_cmd_name+0x87c>
     e93e:	438c                	lw	a1,0(a5)
     e940:	842a                	mv	s0,a0
     e942:	8556                	mv	a0,s5
@@ -21669,7 +21669,7 @@ Disassembly of section .text:
     e968:	892a                	mv	s2,a0
     e96a:	02f40463          	beq	s0,a5,e992 <__ieee754_rem_pio2f+0x336>
     e96e:	0000e417          	auipc	s0,0xe
-    e972:	d0a40413          	addi	s0,s0,-758 # 1c678 <__fsym___cmd_wifi_power_cmd_name+0x87c>
+    e972:	d0a40413          	addi	s0,s0,-758 # 1c678 <__fsym___cmd_wifi_power_cmd_name+0x868>
     e976:	400c                	lw	a1,0(s0)
     e978:	5bfd                	li	s7,-1
     e97a:	722020ef          	jal	ra,1109c <__addsf3>
@@ -21682,10 +21682,10 @@ Disassembly of section .text:
     e98e:	c0c8                	sw	a0,4(s1)
     e990:	b3a1                	j	e6d8 <__ieee754_rem_pio2f+0x7c>
     e992:	0000e797          	auipc	a5,0xe
-    e996:	cea78793          	addi	a5,a5,-790 # 1c67c <__fsym___cmd_wifi_power_cmd_name+0x880>
+    e996:	cea78793          	addi	a5,a5,-790 # 1c67c <__fsym___cmd_wifi_power_cmd_name+0x86c>
     e99a:	438c                	lw	a1,0(a5)
     e99c:	0000e417          	auipc	s0,0xe
-    e9a0:	ce440413          	addi	s0,s0,-796 # 1c680 <__fsym___cmd_wifi_power_cmd_name+0x884>
+    e9a0:	ce440413          	addi	s0,s0,-796 # 1c680 <__fsym___cmd_wifi_power_cmd_name+0x870>
     e9a4:	5bfd                	li	s7,-1
     e9a6:	6f6020ef          	jal	ra,1109c <__addsf3>
     e9aa:	892a                	mv	s2,a0
@@ -21995,7 +21995,7 @@ Disassembly of section .text:
     ed22:	00f48933          	add	s2,s1,a5
     ed26:	090a                	slli	s2,s2,0x2
     ed28:	0000e717          	auipc	a4,0xe
-    ed2c:	96870713          	addi	a4,a4,-1688 # 1c690 <__fsym___cmd_wifi_power_cmd_name+0x894>
+    ed2c:	96870713          	addi	a4,a4,-1688 # 1c690 <__fsym___cmd_wifi_power_cmd_name+0x880>
     ed30:	9956                	add	s2,s2,s5
     ed32:	04010993          	addi	s3,sp,64
     ed36:	00072a03          	lw	s4,0(a4)
@@ -22206,7 +22206,7 @@ Disassembly of section .text:
     ef88:	40e785b3          	sub	a1,a5,a4
     ef8c:	2d01                	jal	f59c <scalbnf>
     ef8e:	0000d797          	auipc	a5,0xd
-    ef92:	70278793          	addi	a5,a5,1794 # 1c690 <__fsym___cmd_wifi_power_cmd_name+0x894>
+    ef92:	70278793          	addi	a5,a5,1794 # 1c690 <__fsym___cmd_wifi_power_cmd_name+0x880>
     ef96:	4380                	lw	s0,0(a5)
     ef98:	8a2a                	mv	s4,a0
     ef9a:	85a2                	mv	a1,s0
@@ -34785,183 +34785,183 @@ Disassembly of section .text:
    1bc38:	5554 0053 7543 7272 6e65 2074 6554 706d     TUS.Current Temp
    1bc48:	7265 7461 7275 3a65 0000 0000 454e 5458     erature:....NEXT
    1bc58:	4620 4545 4944 474e 0000 0000 3a33 3030      FEEDING....3:00
-   1bc68:	5020 004d 7161 6175 6972 6d75 755f 0069      PM.aquarium_ui.
-   1bc78:	6425 252e 3230 c264 43b0 0000 3025 6432     %d.%02d..C..%02d
-   1bc88:	253a 3230 3a64 3025 6432 0000               :%02d:%02d..
+   1bc68:	5020 004d 3a30 0000 3a31 0000 6f46 746e      PM.0:..1:..Font
+   1bc78:	4520 7272 726f 0021 7161 6175 6972 6d75      Error!.aquarium
+   1bc88:	755f 0069 6425 252e 3230 c264 43b0 0000     _ui.%d.%02d..C..
+   1bc98:	3025 6432 253a 3230 3a64 3025 6432 0000     %02d:%02d:%02d..
 
-0001bc94 <__fsym___cmd_servo_stop_cmd_desc>:
-   1bc94:	a2c1 b4bc a3cd b9d6 e6b6 fabb 0000 0000     ................
+0001bca8 <__fsym___cmd_servo_stop_cmd_desc>:
+   1bca8:	a2c1 b4bc a3cd b9d6 e6b6 fabb 0000 0000     ................
 
-0001bca4 <__fsym___cmd_servo_stop_cmd_name>:
-   1bca4:	5f5f 6d63 5f64 6573 7672 5f6f 7473 706f     __cmd_servo_stop
-   1bcb4:	635f 646d 0000 0000                         _cmd....
+0001bcb8 <__fsym___cmd_servo_stop_cmd_name>:
+   1bcb8:	5f5f 6d63 5f64 6573 7672 5f6f 7473 706f     __cmd_servo_stop
+   1bcc8:	635f 646d 0000 0000                         _cmd....
 
-0001bcbc <__fsym___cmd_servo_run_cmd_desc>:
-   1bcbc:	e8c9 c3d6 e6b6 fabb d9cb c8b6 cdba fdd0     ................
-   1bccc:	aad7 ebc3 fdca 203a 6573 7672 5f6f 7572     ......: servo_ru
-   1bcdc:	206e d9cb c8b6 c320 caeb 00fd               n .... .....
+0001bcd0 <__fsym___cmd_servo_run_cmd_desc>:
+   1bcd0:	e8c9 c3d6 e6b6 fabb d9cb c8b6 cdba fdd0     ................
+   1bce0:	aad7 ebc3 fdca 203a 6573 7672 5f6f 7572     ......: servo_ru
+   1bcf0:	206e d9cb c8b6 c320 caeb 00fd               n .... .....
 
-0001bce8 <__fsym___cmd_servo_run_cmd_name>:
-   1bce8:	5f5f 6d63 5f64 6573 7672 5f6f 7572 5f6e     __cmd_servo_run_
-   1bcf8:	6d63 0064 5750 b64d bbe6 c4fa bfa3 b3e9     cmd.PWM.........
-   1bd08:	caf5 bbbc 0aaf 0000 6573 7672 006f 0000     ........servo...
-   1bd18:	e6b6 fabb dfcf ccb3 b4b4 a8bd a7ca dcb0     ................
-   1bd28:	a1a3 000a c3d3 a8b7 203a 6573 7672 5f6f     ........: servo_
-   1bd38:	7572 206e d9cb c8b6 2d28 3031 7e30 3031     run ....(-100~10
-   1bd48:	2930 c320 caeb 0afd 0000 0000 d9cb c8b6     0) .............
-   1bd58:	b6b7 a7ce 312d 3030 317e 3030 000a 0000     ....-100~100....
-   1bd68:	d6b3 f8d0 b1ca e4bc e8d0 f3b4 dad3 c330     ..............0.
-   1bd78:	0aeb 0000 e8c9 c3d6 e6b6 fabb d9cb c8b6     ................
-   1bd88:	203a 6425 202c d6b3 f8d0 203a 6425 c320     : %d, ....: %d .
-   1bd98:	0aeb 0000 e6b6 fabb d1d2 a3cd b9d6 000a     ................
-   1bda8:	e6b6 fabb f4c6 afb6 aca3 d9cb c8b6 203a     ..............: 
-   1bdb8:	6425 aca3 d6b3 f8d0 203a 6425 c320 0aeb     %d......: %d ...
-   1bdc8:	0000 0000 e6b6 fabb afb6 f7d7 eacd c9b3     ................
-   1bdd8:	aca3 d1d2 a3cd b9d6 a3a1 000a               ............
+0001bcfc <__fsym___cmd_servo_run_cmd_name>:
+   1bcfc:	5f5f 6d63 5f64 6573 7672 5f6f 7572 5f6e     __cmd_servo_run_
+   1bd0c:	6d63 0064 5750 b64d bbe6 c4fa bfa3 b3e9     cmd.PWM.........
+   1bd1c:	caf5 bbbc 0aaf 0000 6573 7672 006f 0000     ........servo...
+   1bd2c:	e6b6 fabb dfcf ccb3 b4b4 a8bd a7ca dcb0     ................
+   1bd3c:	a1a3 000a c3d3 a8b7 203a 6573 7672 5f6f     ........: servo_
+   1bd4c:	7572 206e d9cb c8b6 2d28 3031 7e30 3031     run ....(-100~10
+   1bd5c:	2930 c320 caeb 0afd 0000 0000 d9cb c8b6     0) .............
+   1bd6c:	b6b7 a7ce 312d 3030 317e 3030 000a 0000     ....-100~100....
+   1bd7c:	d6b3 f8d0 b1ca e4bc e8d0 f3b4 dad3 c330     ..............0.
+   1bd8c:	0aeb 0000 e8c9 c3d6 e6b6 fabb d9cb c8b6     ................
+   1bd9c:	203a 6425 202c d6b3 f8d0 203a 6425 c320     : %d, ....: %d .
+   1bdac:	0aeb 0000 e6b6 fabb d1d2 a3cd b9d6 000a     ................
+   1bdbc:	e6b6 fabb f4c6 afb6 aca3 d9cb c8b6 203a     ..............: 
+   1bdcc:	6425 aca3 d6b3 f8d0 203a 6425 c320 0aeb     %d......: %d ...
+   1bddc:	0000 0000 e6b6 fabb afb6 f7d7 eacd c9b3     ................
+   1bdec:	aca3 d1d2 a3cd b9d6 a3a1 000a               ............
 
-0001bde4 <__fsym___cmd_wifi_power_cmd_desc>:
-   1bde4:	d8bf c6d6 6957 6946 a3c4 e9bf e7b5 b4d4     ....WiFi........
-   1bdf4:	aabf d8b9 0000 0000                         ........
+0001bdf8 <__fsym___cmd_wifi_power_cmd_desc>:
+   1bdf8:	d8bf c6d6 6957 6946 a3c4 e9bf e7b5 b4d4     ....WiFi........
+   1be08:	aabf d8b9 0000 0000                         ........
 
-0001bdfc <__fsym___cmd_wifi_power_cmd_name>:
-   1bdfc:	5f5f 6d63 5f64 6977 6966 705f 776f 7265     __cmd_wifi_power
-   1be0c:	635f 646d 0000 0000 6957 6946 5520 5241     _cmd....WiFi UAR
-   1be1c:	2054 4f4e 2054 4f46 4e55 2144 000a 0000     T NOT FOUND!....
-   1be2c:	6977 6966 6573 006d 6977 6966 6572 7663     wifisem.wifirecv
-   1be3c:	0000 0000 c3d3 a8b7 203a 6977 6966 705f     ........: wifi_p
-   1be4c:	776f 7265 6f20 2f6e 666f 0a66 0000 0000     ower on/off.....
-   1be5c:	6e6f 0000 666f 0066 ceb2 fdca edb4 f3ce     on..off.........
-   1be6c:	203a ebc7 e4ca ebc8 6f20 206e f2bb 6f20     : ...... on .. o
-   1be7c:	6666 000a 4e4f 0000 464f 0046 6957 6946     ff..ON..OFF.WiFi
-   1be8c:	a3c4 e9bf e7b5 b4d4 203a 7325 000a 0000     ........: %s....
-   1be9c:	0000 4120 d5ca bdb5 add4 bcca fdca ddbe     .. A............
-   1beac:	203a 7325 000a 0000 6922 746e 7265 6176     : %s...."interva
-   1bebc:	226c 003a 3325 5b31 2c5e 5d7d 0000 0000     l":.%31[^,}]....
-   1becc:	6122 6f6d 6e75 2274 003a 0000 6222 696c     "amount":..."bli
-   1bedc:	6b6e 3a22 0000 0000 7422 6d69 2265 003a     nk":...."time":.
-   1beec:	3325 5b31 225e 005d d5ca bdb5 e8c9 c3d6     %31[^"].........
-   1befc:	f7b5 fbd5 203a 6e69 6574 7672 6c61 253d     ....: interval=%
-   1bf0c:	2e64 6425 202c 6d61 756f 746e 253d 2e64     d.%d, amount=%d.
-   1bf1c:	6425 202c 6c62 6e69 3d6b 6425 000a 0000     %d, blink=%d....
-   1bf2c:	d5ca bdb5 b1ca e4bc a3d0 bcd7 203a 6974     ............: ti
-   1bf3c:	656d 253d 0a73 0000 d5ca bdb5 b4ce aad6     me=%s...........
-   1bf4c:	534a 4e4f 203a 7325 000a 0000 6820 7261     JSON: %s.... har
-   1bf5c:	6664 6c75 0d74 000a 4e20 494d 4820 6e61     dfult... NMI Han
-   1bf6c:	6c64 7265 0a0d 0000 3a30 0000 3a31 0000     dler....0:..1:..
-   1bf7c:	6f46 746e 4520 7272 726f 0021 c996 0000     Font Error!.....
-   1bf8c:	c996 0000 ca6e 0000 cab8 0000 cb18 0000     ....n...........
-   1bf9c:	cb68 0000 cbae 0000 cd9e 0000 cdf4 0000     h...............
-   1bfac:	ce02 0000 ce12 0000 ce24 0000 ce38 0000     ........$...8...
-   1bfbc:	ce4e 0000 ce68 0000 ce84 0000 cea2 0000     N...h...........
-   1bfcc:	cec4 0000 003f 0000 6568 706c 0000 0000     ....?...help....
-   1bfdc:	696c 7473 0000 0000 6469 0000 6568 0078     list....id..hex.
-   1bfec:	6564 0063 7572 746e 6d69 0065 0a0d 7325     dec.runtime...%s
-   1bffc:	0028 0000 6c25 0064 5830 5825 0000 0000     (...%ld.0X%X....
-   1c00c:	253d 756c 0d3b 000a 303d 2558 3b58 0a0d     =%lu;...=0X%X;..
-   1c01c:	0000 0000 0d3b 0000 7546 636e 6974 6e6f     ....;...Function
-   1c02c:	5220 6e75 5420 6d69 3a65 6425 252e 6431      Run Time:%d.%1d
-   1c03c:	736d 0a0d 0000 0000 afba fdca edb4 f3ce     ms..............
-   1c04c:	0d21 0000 ceb2 fdca edb4 f3ce 0d21 0000     !...........!...
-   1c05c:	ceb2 fdca abcc e0b6 0d21 0000 b4ce d2d5     ........!.......
-   1c06c:	bdb5 a5c6 e4c5 c4b5 afba fdca 0d21 0000     ............!...
-   1c07c:	2d2d 2d2d 2d2d 2d2d 2d2d 2d2d 2d2d 2d2d     ----------------
-   1c08c:	2d2d 2d2d 2d2d 2d2d 5355 414d 5452 5620     --------USMART V
-   1c09c:	2e33 2d35 2d2d 2d2d 2d2d 2d2d 2d2d 2d2d     3.5-------------
-   1c0ac:	2d2d 2d2d 2d2d 2d2d 2d2d 202d 000d 0000     ----------- ....
-   1c0bc:	2020 2020 5355 414d 5452 c7ca c9d3 4c41         USMART....AL
-   1c0cc:	4549 544e 4b45 aabf a2b7 c4b5 bbd2 f6b8     IENTEK..........
-   1c0dc:	e9c1 c9c7 c4b5 aeb4 dabf f7b5 d4ca a5bb     ................
-   1c0ec:	bbbd e9d7 febc cd2c b9a8 20fd 000d 0000     ......,.... ....
-   1c0fc:	fccb c42c bfe3 d2c9 cdd4 b9a8 b4fd bfae     ..,.............
-   1c10c:	d6da cafa b5d6 d3f7 b3c3 d0cc c0f2 c3ef     ................
-   1c11c:	b5e6 c8c4 bace bace caaf 2cfd a2b2 b4d6     ...........,....
-   1c12c:	d0d0 d22e b4f2 2ccb e3c4 c9bf 000d 0000     .......,........
-   1c13c:	d4d2 e6cb e2d2 fcb8 c4b8 afba fdca c4b5     ................
-   1c14c:	e4ca ebc8 ceb2 fdca d628 b3a7 cad6 d7fd     ........(.......
-   1c15c:	28d6 3031 312f bd36 d6f8 2cc6 a7d6 d6b3     .(10/16....,....
-   1c16c:	bab8 fdca a129 d7a2 b7d6 b4fb 0dae 0000     ....)...........
-   1c17c:	a2a1 afba fdca ebc8 dabf d8b5 b7d6 c8b5     ................
-   1c18c:	f7d7 aace ceb2 fdca 2c29 a5b5 f6b8 afba     ........),......
-   1c19c:	fdca eed7 e0b6 a7d6 d6b3 3031 f6b8 e4ca     ..........10....
-   1c1ac:	ebc8 ceb2 fdca b22c d6a2 b3a7 0dd6 0000     ......,.........
-   1c1bc:	afba fdca b5b7 d8bb b5d6 d4cf beca d62e     ................
-   1c1cc:	b3a7 b2d6 cace cffd cad4 bdbe d6f8 c9c6     ................
-   1c1dc:	d6e8 b9c3 c4a6 2cdc a7d6 d6b3 f8bd c6d6     .......,........
-   1c1ec:	aad7 bbbb a6b9 dcc4 0d2e 0000 bcbc f5ca     ................
-   1c1fc:	a7d6 d6b3 773a 7777 6f2e 6570 656e 7664     ....:www.openedv
-   1c20c:	632e 6d6f 000d 0000 5355 414d 5452 d0d3     .com....USMART..
-   1c21c:	b837 cff6 cdb5 c3b3 c1fc 28ee d8b1 ebd0     7..........(....
-   1c22c:	a1d0 b4d0 3a29 000d 3a3f 2020 2020 2020     ....):..?:      
-   1c23c:	f1bb a1c8 efb0 fad6 c5d0 a2cf 000d 0000     ................
-   1c24c:	6568 706c 203a 2020 f1bb a1c8 efb0 fad6     help:   ........
-   1c25c:	c5d0 a2cf 000d 0000 696c 7473 203a 2020     ........list:   
-   1c26c:	c9bf c3d3 c4b5 afba fdca d0c1 edb1 0a0d     ................
-   1c27c:	0000 0000 6469 203a 2020 2020 c9bf c3d3     ....id:     ....
-   1c28c:	afba fdca c4b5 4449 d0c1 edb1 0a0d 0000     ......ID........
-   1c29c:	6568 3a78 2020 2020 ceb2 fdca 3631 f8bd     hex:    ....16..
-   1c2ac:	c6d6 d4cf beca ba2c b8f3 bffa b8d5 2bf1     ......,........+
-   1c2bc:	fdca d6d7 b4bc b4d6 d0d0 f8bd c6d6 aad7     ................
-   1c2cc:	bbbb 0a0d 0000 0000 6564 3a63 2020 2020     ........dec:    
-   1c2dc:	ceb2 fdca 3031 f8bd c6d6 d4cf beca ba2c     ....10........,.
-   1c2ec:	b8f3 bffa b8d5 2bf1 fdca d6d7 b4bc b4d6     .......+........
-   1c2fc:	d0d0 f8bd c6d6 aad7 bbbb 0a0d 0000 0000     ................
-   1c30c:	7572 746e 6d69 3a65 2c31 aabf f4c6 afba     runtime:1,......
-   1c31c:	fdca cbd4 d0d0 c6bc b1ca 303b b92c b1d8     ..........;0,...
-   1c32c:	bad5 caaf d4fd d0cb bcd0 cac6 3bb1 0a0d     .............;..
-   1c33c:	0000 0000 ebc7 b4b0 d5d5 ccb3 f2d0 e0b1     ................
-   1c34c:	b4d0 f1b8 bdca e4ca ebc8 afba fdca fbc3     ................
-   1c35c:	b0bc ceb2 fdca a2b2 d4d2 d8bb b5b3 fcbc     ................
-   1c36c:	e1bd f8ca 0d2e 0000 2d2d 2d2d 2d2d 2d2d     ........--------
-   1c37c:	2d2d 2d2d 2d2d 2d2d 2d2d 2d2d 2d2d 2d2d     ----------------
-   1c38c:	2d2d fdd5 e3b5 add4 d3d7 2d2d 2d2d 2d2d     --........------
-   1c39c:	2d2d 2d2d 2d2d 2d2d 2d2d 2d2d 2d2d 2d2d     ----------------
-   1c3ac:	2d2d 202d 000d 0000 2d2d 2d2d 2d2d 2d2d     --- ....--------
-   1c3bc:	2d2d 2d2d 2d2d 2d2d 2d2d 2d2d 2d2d 2d2d     ----------------
-   1c3cc:	ba2d caaf c7fd b5e5 2da5 2d2d 2d2d 2d2d     -........-------
-   1c3dc:	2d2d 2d2d 2d2d 2d2d 2d2d 2d2d 2d2d 2d2d     ----------------
-   1c3ec:	2d2d 2d2d 0d20 0000 7325 0a0d 0000 0000     ---- ...%s......
-   1c3fc:	2d2d 2d2d 2d2d 2d2d 2d2d 2d2d 2d2d 2d2d     ----------------
-   1c40c:	2d2d 2d2d 2d2d 2d2d ba2d caaf 20fd 4449     ---------.... ID
-   1c41c:	2d20 2d2d 2d2d 2d2d 2d2d 2d2d 2d2d 2d2d      ---------------
-   1c42c:	2d2d 2d2d 2d2d 2d2d 2d2d 2d2d 0d20 0000     ------------ ...
-   1c43c:	7325 6920 2064 7369 0d3a 300a 2558 3830     %s id is:..0X%08
-   1c44c:	0d58 000a 4548 3a58 5830 5825 0a0d 0000     X...HEX:0X%X....
-   1c45c:	3631 f8bd c6d6 ceb2 fdca d4cf beca 0d21     16............!.
-   1c46c:	0000 0000 4544 3a43 6c25 0d75 000a 0000     ....DEC:%lu.....
-   1c47c:	3031 f8bd c6d6 ceb2 fdca d4cf beca 0d21     10............!.
-   1c48c:	0000 0000 7552 206e 6954 656d 4320 6c61     ....Run Time Cal
-   1c49c:	7563 616c 6974 6e6f 4f20 0d4e 0000 0000     culation ON.....
-   1c4ac:	7552 206e 6954 656d 4320 6c61 7563 616c     Run Time Calcula
-   1c4bc:	6974 6e6f 4f20 4646 000d 0000 6975 746e     tion OFF....uint
-   1c4cc:	3233 745f 7220 6165 5f64 6461 7264 7528     32_t read_addr(u
-   1c4dc:	6e69 3374 5f32 2074 6461 7264 0029 0000     int32_t addr)...
-   1c4ec:	6f76 6469 7720 6972 6574 615f 6464 2872     void write_addr(
-   1c4fc:	6975 746e 3233 745f 6120 6464 2c72 7520     uint32_t addr, u
-   1c50c:	6e69 3374 5f32 2074 6176 296c 0000 0000     int32_t val)....
-   1c51c:	6f76 6469 6420 6c65 7961 6d5f 2873 6975     void delay_ms(ui
-   1c52c:	746e 3631 745f 6e20 736d 0029 6f76 6469     nt16_t nms).void
-   1c53c:	6420 6c65 7961 755f 2873 6975 746e 3233      delay_us(uint32
-   1c54c:	745f 6e20 7375 0029 6f76 6469 7420 7865     _t nus).void tex
-   1c55c:	5f74 6873 776f 735f 7274 6e69 2867 6975     t_show_string(ui
-   1c56c:	746e 3631 745f 7820 202c 6975 746e 3631     nt16_t x, uint16
-   1c57c:	745f 7920 202c 6975 746e 3631 745f 7720     _t y, uint16_t w
-   1c58c:	6469 6874 202c 6975 746e 3631 745f 6820     idth, uint16_t h
-   1c59c:	6965 6867 2c74 6320 6168 2072 732a 7274     eight, char *str
-   1c5ac:	202c 6975 746e 5f38 2074 6973 657a 202c     , uint8_t size, 
-   1c5bc:	6975 746e 5f38 2074 6f6d 6564 202c 6975     uint8_t mode, ui
-   1c5cc:	746e 3631 745f 6320 6c6f 726f 0029 0000     nt16_t color)...
-   1c5dc:	6f76 6469 7420 7865 5f74 6873 776f 735f     void text_show_s
-   1c5ec:	7274 6e69 5f67 696d 6464 656c 7528 6e69     tring_middle(uin
-   1c5fc:	3174 5f36 2074 2c78 7520 6e69 3174 5f36     t16_t x, uint16_
-   1c60c:	2074 2c79 6320 6168 2072 732a 7274 202c     t y, char *str, 
-   1c61c:	6975 746e 5f38 2074 6973 657a 202c 6975     uint8_t size, ui
-   1c62c:	746e 3631 745f 7720 6469 6874 202c 6975     nt16_t width, ui
-   1c63c:	746e 3631 745f 6320 6c6f 726f 0029 0000     nt16_t color)...
-   1c64c:	6f76 6469 0000 0000 76eb 4590 4658 5441     void.....v.EXFAT
-   1c65c:	2020 0020 4146 3354 2032 2020 0000 0000        .FAT32   ....
-   1c66c:	6d66 646f 0066 0000 0f80 3fc9 4443 3735     fmodf......?CD57
-   1c67c:	4400 3735 a308 2e85 f984 3f22 a300 2e85     .D57......"?....
-   1c68c:	3132 248d 0000 4380                         21.$...C
+0001be10 <__fsym___cmd_wifi_power_cmd_name>:
+   1be10:	5f5f 6d63 5f64 6977 6966 705f 776f 7265     __cmd_wifi_power
+   1be20:	635f 646d 0000 0000 6957 6946 5520 5241     _cmd....WiFi UAR
+   1be30:	2054 4f4e 2054 4f46 4e55 2144 000a 0000     T NOT FOUND!....
+   1be40:	6977 6966 6573 006d 6977 6966 6572 7663     wifisem.wifirecv
+   1be50:	0000 0000 c3d3 a8b7 203a 6977 6966 705f     ........: wifi_p
+   1be60:	776f 7265 6f20 2f6e 666f 0a66 0000 0000     ower on/off.....
+   1be70:	6e6f 0000 666f 0066 ceb2 fdca edb4 f3ce     on..off.........
+   1be80:	203a ebc7 e4ca ebc8 6f20 206e f2bb 6f20     : ...... on .. o
+   1be90:	6666 000a 4e4f 0000 464f 0046 6957 6946     ff..ON..OFF.WiFi
+   1bea0:	a3c4 e9bf e7b5 b4d4 203a 7325 000a 0000     ........: %s....
+   1beb0:	0000 4120 d5ca bdb5 add4 bcca fdca ddbe     .. A............
+   1bec0:	203a 7325 000a 0000 6922 746e 7265 6176     : %s...."interva
+   1bed0:	226c 003a 3325 5b31 2c5e 5d7d 0000 0000     l":.%31[^,}]....
+   1bee0:	6122 6f6d 6e75 2274 003a 0000 6222 696c     "amount":..."bli
+   1bef0:	6b6e 3a22 0000 0000 7422 6d69 2265 003a     nk":...."time":.
+   1bf00:	3325 5b31 225e 005d d5ca bdb5 e8c9 c3d6     %31[^"].........
+   1bf10:	f7b5 fbd5 203a 6e69 6574 7672 6c61 253d     ....: interval=%
+   1bf20:	2e64 6425 202c 6d61 756f 746e 253d 2e64     d.%d, amount=%d.
+   1bf30:	6425 202c 6c62 6e69 3d6b 6425 000a 0000     %d, blink=%d....
+   1bf40:	d5ca bdb5 b1ca e4bc a3d0 bcd7 203a 6974     ............: ti
+   1bf50:	656d 253d 0a73 0000 d5ca bdb5 b4ce aad6     me=%s...........
+   1bf60:	534a 4e4f 203a 7325 000a 0000 6820 7261     JSON: %s.... har
+   1bf70:	6664 6c75 0d74 000a 4e20 494d 4820 6e61     dfult... NMI Han
+   1bf80:	6c64 7265 0a0d 0000 c996 0000 c996 0000     dler............
+   1bf90:	ca6e 0000 cab8 0000 cb18 0000 cb68 0000     n...........h...
+   1bfa0:	cbae 0000 cd9e 0000 cdf4 0000 ce02 0000     ................
+   1bfb0:	ce12 0000 ce24 0000 ce38 0000 ce4e 0000     ....$...8...N...
+   1bfc0:	ce68 0000 ce84 0000 cea2 0000 cec4 0000     h...............
+   1bfd0:	003f 0000 6568 706c 0000 0000 696c 7473     ?...help....list
+   1bfe0:	0000 0000 6469 0000 6568 0078 6564 0063     ....id..hex.dec.
+   1bff0:	7572 746e 6d69 0065 0a0d 7325 0028 0000     runtime...%s(...
+   1c000:	6c25 0064 5830 5825 0000 0000 253d 756c     %ld.0X%X....=%lu
+   1c010:	0d3b 000a 303d 2558 3b58 0a0d 0000 0000     ;...=0X%X;......
+   1c020:	0d3b 0000 7546 636e 6974 6e6f 5220 6e75     ;...Function Run
+   1c030:	5420 6d69 3a65 6425 252e 6431 736d 0a0d      Time:%d.%1dms..
+   1c040:	0000 0000 afba fdca edb4 f3ce 0d21 0000     ............!...
+   1c050:	ceb2 fdca edb4 f3ce 0d21 0000 ceb2 fdca     ........!.......
+   1c060:	abcc e0b6 0d21 0000 b4ce d2d5 bdb5 a5c6     ....!...........
+   1c070:	e4c5 c4b5 afba fdca 0d21 0000 2d2d 2d2d     ........!...----
+   1c080:	2d2d 2d2d 2d2d 2d2d 2d2d 2d2d 2d2d 2d2d     ----------------
+   1c090:	2d2d 2d2d 5355 414d 5452 5620 2e33 2d35     ----USMART V3.5-
+   1c0a0:	2d2d 2d2d 2d2d 2d2d 2d2d 2d2d 2d2d 2d2d     ----------------
+   1c0b0:	2d2d 2d2d 2d2d 202d 000d 0000 2020 2020     ------- ....    
+   1c0c0:	5355 414d 5452 c7ca c9d3 4c41 4549 544e     USMART....ALIENT
+   1c0d0:	4b45 aabf a2b7 c4b5 bbd2 f6b8 e9c1 c9c7     EK..............
+   1c0e0:	c4b5 aeb4 dabf f7b5 d4ca a5bb bbbd e9d7     ................
+   1c0f0:	febc cd2c b9a8 20fd 000d 0000 fccb c42c     ..,.... ......,.
+   1c100:	bfe3 d2c9 cdd4 b9a8 b4fd bfae d6da cafa     ................
+   1c110:	b5d6 d3f7 b3c3 d0cc c0f2 c3ef b5e6 c8c4     ................
+   1c120:	bace bace caaf 2cfd a2b2 b4d6 d0d0 d22e     .......,........
+   1c130:	b4f2 2ccb e3c4 c9bf 000d 0000 d4d2 e6cb     ...,............
+   1c140:	e2d2 fcb8 c4b8 afba fdca c4b5 e4ca ebc8     ................
+   1c150:	ceb2 fdca d628 b3a7 cad6 d7fd 28d6 3031     ....(........(10
+   1c160:	312f bd36 d6f8 2cc6 a7d6 d6b3 bab8 fdca     /16....,........
+   1c170:	a129 d7a2 b7d6 b4fb 0dae 0000 a2a1 afba     )...............
+   1c180:	fdca ebc8 dabf d8b5 b7d6 c8b5 f7d7 aace     ................
+   1c190:	ceb2 fdca 2c29 a5b5 f6b8 afba fdca eed7     ....),..........
+   1c1a0:	e0b6 a7d6 d6b3 3031 f6b8 e4ca ebc8 ceb2     ......10........
+   1c1b0:	fdca b22c d6a2 b3a7 0dd6 0000 afba fdca     ..,.............
+   1c1c0:	b5b7 d8bb b5d6 d4cf beca d62e b3a7 b2d6     ................
+   1c1d0:	cace cffd cad4 bdbe d6f8 c9c6 d6e8 b9c3     ................
+   1c1e0:	c4a6 2cdc a7d6 d6b3 f8bd c6d6 aad7 bbbb     ...,............
+   1c1f0:	a6b9 dcc4 0d2e 0000 bcbc f5ca a7d6 d6b3     ................
+   1c200:	773a 7777 6f2e 6570 656e 7664 632e 6d6f     :www.openedv.com
+   1c210:	000d 0000 5355 414d 5452 d0d3 b837 cff6     ....USMART..7...
+   1c220:	cdb5 c3b3 c1fc 28ee d8b1 ebd0 a1d0 b4d0     .......(........
+   1c230:	3a29 000d 3a3f 2020 2020 2020 f1bb a1c8     ):..?:      ....
+   1c240:	efb0 fad6 c5d0 a2cf 000d 0000 6568 706c     ............help
+   1c250:	203a 2020 f1bb a1c8 efb0 fad6 c5d0 a2cf     :   ............
+   1c260:	000d 0000 696c 7473 203a 2020 c9bf c3d3     ....list:   ....
+   1c270:	c4b5 afba fdca d0c1 edb1 0a0d 0000 0000     ................
+   1c280:	6469 203a 2020 2020 c9bf c3d3 afba fdca     id:     ........
+   1c290:	c4b5 4449 d0c1 edb1 0a0d 0000 6568 3a78     ..ID........hex:
+   1c2a0:	2020 2020 ceb2 fdca 3631 f8bd c6d6 d4cf         ....16......
+   1c2b0:	beca ba2c b8f3 bffa b8d5 2bf1 fdca d6d7     ..,........+....
+   1c2c0:	b4bc b4d6 d0d0 f8bd c6d6 aad7 bbbb 0a0d     ................
+   1c2d0:	0000 0000 6564 3a63 2020 2020 ceb2 fdca     ....dec:    ....
+   1c2e0:	3031 f8bd c6d6 d4cf beca ba2c b8f3 bffa     10........,.....
+   1c2f0:	b8d5 2bf1 fdca d6d7 b4bc b4d6 d0d0 f8bd     ...+............
+   1c300:	c6d6 aad7 bbbb 0a0d 0000 0000 7572 746e     ............runt
+   1c310:	6d69 3a65 2c31 aabf f4c6 afba fdca cbd4     ime:1,..........
+   1c320:	d0d0 c6bc b1ca 303b b92c b1d8 bad5 caaf     ......;0,.......
+   1c330:	d4fd d0cb bcd0 cac6 3bb1 0a0d 0000 0000     .........;......
+   1c340:	ebc7 b4b0 d5d5 ccb3 f2d0 e0b1 b4d0 f1b8     ................
+   1c350:	bdca e4ca ebc8 afba fdca fbc3 b0bc ceb2     ................
+   1c360:	fdca a2b2 d4d2 d8bb b5b3 fcbc e1bd f8ca     ................
+   1c370:	0d2e 0000 2d2d 2d2d 2d2d 2d2d 2d2d 2d2d     ....------------
+   1c380:	2d2d 2d2d 2d2d 2d2d 2d2d 2d2d 2d2d fdd5     --------------..
+   1c390:	e3b5 add4 d3d7 2d2d 2d2d 2d2d 2d2d 2d2d     ......----------
+   1c3a0:	2d2d 2d2d 2d2d 2d2d 2d2d 2d2d 2d2d 202d     --------------- 
+   1c3b0:	000d 0000 2d2d 2d2d 2d2d 2d2d 2d2d 2d2d     ....------------
+   1c3c0:	2d2d 2d2d 2d2d 2d2d 2d2d 2d2d ba2d caaf     -------------...
+   1c3d0:	c7fd b5e5 2da5 2d2d 2d2d 2d2d 2d2d 2d2d     .....-----------
+   1c3e0:	2d2d 2d2d 2d2d 2d2d 2d2d 2d2d 2d2d 2d2d     ----------------
+   1c3f0:	0d20 0000 7325 0a0d 0000 0000 2d2d 2d2d      ...%s......----
+   1c400:	2d2d 2d2d 2d2d 2d2d 2d2d 2d2d 2d2d 2d2d     ----------------
+   1c410:	2d2d 2d2d ba2d caaf 20fd 4449 2d20 2d2d     -----.... ID ---
+   1c420:	2d2d 2d2d 2d2d 2d2d 2d2d 2d2d 2d2d 2d2d     ----------------
+   1c430:	2d2d 2d2d 2d2d 2d2d 0d20 0000 7325 6920     -------- ...%s i
+   1c440:	2064 7369 0d3a 300a 2558 3830 0d58 000a     d is:..0X%08X...
+   1c450:	4548 3a58 5830 5825 0a0d 0000 3631 f8bd     HEX:0X%X....16..
+   1c460:	c6d6 ceb2 fdca d4cf beca 0d21 0000 0000     ..........!.....
+   1c470:	4544 3a43 6c25 0d75 000a 0000 3031 f8bd     DEC:%lu.....10..
+   1c480:	c6d6 ceb2 fdca d4cf beca 0d21 0000 0000     ..........!.....
+   1c490:	7552 206e 6954 656d 4320 6c61 7563 616c     Run Time Calcula
+   1c4a0:	6974 6e6f 4f20 0d4e 0000 0000 7552 206e     tion ON.....Run 
+   1c4b0:	6954 656d 4320 6c61 7563 616c 6974 6e6f     Time Calculation
+   1c4c0:	4f20 4646 000d 0000 6975 746e 3233 745f      OFF....uint32_t
+   1c4d0:	7220 6165 5f64 6461 7264 7528 6e69 3374      read_addr(uint3
+   1c4e0:	5f32 2074 6461 7264 0029 0000 6f76 6469     2_t addr)...void
+   1c4f0:	7720 6972 6574 615f 6464 2872 6975 746e      write_addr(uint
+   1c500:	3233 745f 6120 6464 2c72 7520 6e69 3374     32_t addr, uint3
+   1c510:	5f32 2074 6176 296c 0000 0000 6f76 6469     2_t val)....void
+   1c520:	6420 6c65 7961 6d5f 2873 6975 746e 3631      delay_ms(uint16
+   1c530:	745f 6e20 736d 0029 6f76 6469 6420 6c65     _t nms).void del
+   1c540:	7961 755f 2873 6975 746e 3233 745f 6e20     ay_us(uint32_t n
+   1c550:	7375 0029 6f76 6469 7420 7865 5f74 6873     us).void text_sh
+   1c560:	776f 735f 7274 6e69 2867 6975 746e 3631     ow_string(uint16
+   1c570:	745f 7820 202c 6975 746e 3631 745f 7920     _t x, uint16_t y
+   1c580:	202c 6975 746e 3631 745f 7720 6469 6874     , uint16_t width
+   1c590:	202c 6975 746e 3631 745f 6820 6965 6867     , uint16_t heigh
+   1c5a0:	2c74 6320 6168 2072 732a 7274 202c 6975     t, char *str, ui
+   1c5b0:	746e 5f38 2074 6973 657a 202c 6975 746e     nt8_t size, uint
+   1c5c0:	5f38 2074 6f6d 6564 202c 6975 746e 3631     8_t mode, uint16
+   1c5d0:	745f 6320 6c6f 726f 0029 0000 6f76 6469     _t color)...void
+   1c5e0:	7420 7865 5f74 6873 776f 735f 7274 6e69      text_show_strin
+   1c5f0:	5f67 696d 6464 656c 7528 6e69 3174 5f36     g_middle(uint16_
+   1c600:	2074 2c78 7520 6e69 3174 5f36 2074 2c79     t x, uint16_t y,
+   1c610:	6320 6168 2072 732a 7274 202c 6975 746e      char *str, uint
+   1c620:	5f38 2074 6973 657a 202c 6975 746e 3631     8_t size, uint16
+   1c630:	745f 7720 6469 6874 202c 6975 746e 3631     _t width, uint16
+   1c640:	745f 6320 6c6f 726f 0029 0000 6f76 6469     _t color)...void
+   1c650:	0000 0000 76eb 4590 4658 5441 2020 0020     .....v.EXFAT   .
+   1c660:	4146 3354 2032 2020 0000 0000 6d66 646f     FAT32   ....fmod
+   1c670:	0066 0000 0f80 3fc9 4443 3735 4400 3735     f......?CD57.D57
+   1c680:	a308 2e85 f984 3f22 a300 2e85 3132 248d     ......"?....21.$
+   1c690:	0000 4380                                   ...C
 
 0001c694 <npio2_hw>:
    1c694:	0f00 3fc9 0f00 4049 cb00 4096 0f00 40c9     ...?..I@...@...@
@@ -35268,13 +35268,13 @@ Disassembly of section .text:
    1d248:	b958 0001 b934 0001 a9d4 0000               X...4.......
 
 0001d254 <__fsym___cmd_servo_stop_cmd>:
-   1d254:	bca4 0001 bc94 0001 b358 0000               ........X...
+   1d254:	bcb8 0001 bca8 0001 b3da 0000               ............
 
 0001d260 <__fsym___cmd_servo_run_cmd>:
-   1d260:	bce8 0001 bcbc 0001 b456 0000               ........V...
+   1d260:	bcfc 0001 bcd0 0001 b4d8 0000               ............
 
 0001d26c <__fsym___cmd_wifi_power_cmd>:
-   1d26c:	bdfc 0001 bde4 0001 b84a 0000               ........J...
+   1d26c:	be10 0001 bdf8 0001 b8cc 0000               ............
 
 0001d278 <__rt_init_desc_rti_start>:
    1d278:	6518 0001 05ea 0000                         .e......

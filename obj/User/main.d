@@ -36,17 +36,6 @@ User/main.o: ../User/main.c \
  c:/Users/lhxsy/mounriver-studio-projects/CH32V307-RT-Thread/rtthread/include/rtm.h \
  c:/Users/lhxsy/mounriver-studio-projects/CH32V307-RT-Thread/rtthread/components/finsh/finsh_api.h \
  c:/Users/lhxsy/mounriver-studio-projects/CH32V307-RT-Thread/rtthread/include/rthw.h \
- c:/Users/lhxsy/mounriver-studio-projects/CH32V307-RT-Thread/rtthread/components/drivers/include/drivers/pin.h \
- c:/Users/lhxsy/mounriver-studio-projects/CH32V307-RT-Thread/rtthread/components/drivers/include/rtdevice.h \
- c:/Users/lhxsy/mounriver-studio-projects/CH32V307-RT-Thread/rtthread/components/drivers/include/ipc/ringbuffer.h \
- c:/Users/lhxsy/mounriver-studio-projects/CH32V307-RT-Thread/rtthread/components/drivers/include/ipc/completion.h \
- c:/Users/lhxsy/mounriver-studio-projects/CH32V307-RT-Thread/rtthread/components/drivers/include/ipc/dataqueue.h \
- c:/Users/lhxsy/mounriver-studio-projects/CH32V307-RT-Thread/rtthread/components/drivers/include/ipc/workqueue.h \
- c:/Users/lhxsy/mounriver-studio-projects/CH32V307-RT-Thread/rtthread/components/drivers/include/ipc/waitqueue.h \
- c:/Users/lhxsy/mounriver-studio-projects/CH32V307-RT-Thread/rtthread/components/drivers/include/ipc/pipe.h \
- c:/Users/lhxsy/mounriver-studio-projects/CH32V307-RT-Thread/rtthread/components/drivers/include/ipc/poll.h \
- c:/Users/lhxsy/mounriver-studio-projects/CH32V307-RT-Thread/rtthread/components/drivers/include/drivers/serial.h \
- c:/Users/lhxsy/mounriver-studio-projects/CH32V307-RT-Thread/rtthread/components/drivers/include/drivers/pin.h \
  ../User/ws2812b/ws2812.h ../User/ws2812b/rainbow.h \
  ../User/ws2812b/ws2812.h \
  c:/Users/lhxsy/mounriver-studio-projects/CH32V307-RT-Thread/drivers/BSP/LCD/lcd.h \
@@ -69,7 +58,18 @@ User/main.o: ../User/main.c \
  c:\users\lhxsy\mounriver-studio-projects\ch32v307-rt-thread\middlewares\picture\tjpgdcnf.h \
  c:\users\lhxsy\mounriver-studio-projects\ch32v307-rt-thread\drivers\bsp\led\led.h \
  c:\users\lhxsy\mounriver-studio-projects\ch32v307-rt-thread\drivers\bsp\adc\temp_adc.h \
- ../User/WIFI.h ../User/PWM.h \
+ ../User/WIFI.h \
+ c:/Users/lhxsy/mounriver-studio-projects/CH32V307-RT-Thread/rtthread/components/drivers/include/rtdevice.h \
+ c:/Users/lhxsy/mounriver-studio-projects/CH32V307-RT-Thread/rtthread/components/drivers/include/ipc/ringbuffer.h \
+ c:/Users/lhxsy/mounriver-studio-projects/CH32V307-RT-Thread/rtthread/components/drivers/include/ipc/completion.h \
+ c:/Users/lhxsy/mounriver-studio-projects/CH32V307-RT-Thread/rtthread/components/drivers/include/ipc/dataqueue.h \
+ c:/Users/lhxsy/mounriver-studio-projects/CH32V307-RT-Thread/rtthread/components/drivers/include/ipc/workqueue.h \
+ c:/Users/lhxsy/mounriver-studio-projects/CH32V307-RT-Thread/rtthread/components/drivers/include/ipc/waitqueue.h \
+ c:/Users/lhxsy/mounriver-studio-projects/CH32V307-RT-Thread/rtthread/components/drivers/include/ipc/pipe.h \
+ c:/Users/lhxsy/mounriver-studio-projects/CH32V307-RT-Thread/rtthread/components/drivers/include/ipc/poll.h \
+ c:/Users/lhxsy/mounriver-studio-projects/CH32V307-RT-Thread/rtthread/components/drivers/include/drivers/serial.h \
+ c:/Users/lhxsy/mounriver-studio-projects/CH32V307-RT-Thread/rtthread/components/drivers/include/drivers/pin.h \
+ ../User/PWM.h \
  c:/Users/lhxsy/mounriver-studio-projects/CH32V307-RT-Thread/drivers/drv_pwm.h \
  c:/Users/lhxsy/mounriver-studio-projects/CH32V307-RT-Thread/rtthread/components/finsh/shell.h \
  c:/Users/lhxsy/mounriver-studio-projects/CH32V307-RT-Thread/rtthread/components/finsh/finsh.h \
@@ -150,28 +150,6 @@ c:/Users/lhxsy/mounriver-studio-projects/CH32V307-RT-Thread/rtthread/components/
 
 c:/Users/lhxsy/mounriver-studio-projects/CH32V307-RT-Thread/rtthread/include/rthw.h:
 
-c:/Users/lhxsy/mounriver-studio-projects/CH32V307-RT-Thread/rtthread/components/drivers/include/drivers/pin.h:
-
-c:/Users/lhxsy/mounriver-studio-projects/CH32V307-RT-Thread/rtthread/components/drivers/include/rtdevice.h:
-
-c:/Users/lhxsy/mounriver-studio-projects/CH32V307-RT-Thread/rtthread/components/drivers/include/ipc/ringbuffer.h:
-
-c:/Users/lhxsy/mounriver-studio-projects/CH32V307-RT-Thread/rtthread/components/drivers/include/ipc/completion.h:
-
-c:/Users/lhxsy/mounriver-studio-projects/CH32V307-RT-Thread/rtthread/components/drivers/include/ipc/dataqueue.h:
-
-c:/Users/lhxsy/mounriver-studio-projects/CH32V307-RT-Thread/rtthread/components/drivers/include/ipc/workqueue.h:
-
-c:/Users/lhxsy/mounriver-studio-projects/CH32V307-RT-Thread/rtthread/components/drivers/include/ipc/waitqueue.h:
-
-c:/Users/lhxsy/mounriver-studio-projects/CH32V307-RT-Thread/rtthread/components/drivers/include/ipc/pipe.h:
-
-c:/Users/lhxsy/mounriver-studio-projects/CH32V307-RT-Thread/rtthread/components/drivers/include/ipc/poll.h:
-
-c:/Users/lhxsy/mounriver-studio-projects/CH32V307-RT-Thread/rtthread/components/drivers/include/drivers/serial.h:
-
-c:/Users/lhxsy/mounriver-studio-projects/CH32V307-RT-Thread/rtthread/components/drivers/include/drivers/pin.h:
-
 ../User/ws2812b/ws2812.h:
 
 ../User/ws2812b/rainbow.h:
@@ -219,6 +197,26 @@ c:\users\lhxsy\mounriver-studio-projects\ch32v307-rt-thread\drivers\bsp\led\led.
 c:\users\lhxsy\mounriver-studio-projects\ch32v307-rt-thread\drivers\bsp\adc\temp_adc.h:
 
 ../User/WIFI.h:
+
+c:/Users/lhxsy/mounriver-studio-projects/CH32V307-RT-Thread/rtthread/components/drivers/include/rtdevice.h:
+
+c:/Users/lhxsy/mounriver-studio-projects/CH32V307-RT-Thread/rtthread/components/drivers/include/ipc/ringbuffer.h:
+
+c:/Users/lhxsy/mounriver-studio-projects/CH32V307-RT-Thread/rtthread/components/drivers/include/ipc/completion.h:
+
+c:/Users/lhxsy/mounriver-studio-projects/CH32V307-RT-Thread/rtthread/components/drivers/include/ipc/dataqueue.h:
+
+c:/Users/lhxsy/mounriver-studio-projects/CH32V307-RT-Thread/rtthread/components/drivers/include/ipc/workqueue.h:
+
+c:/Users/lhxsy/mounriver-studio-projects/CH32V307-RT-Thread/rtthread/components/drivers/include/ipc/waitqueue.h:
+
+c:/Users/lhxsy/mounriver-studio-projects/CH32V307-RT-Thread/rtthread/components/drivers/include/ipc/pipe.h:
+
+c:/Users/lhxsy/mounriver-studio-projects/CH32V307-RT-Thread/rtthread/components/drivers/include/ipc/poll.h:
+
+c:/Users/lhxsy/mounriver-studio-projects/CH32V307-RT-Thread/rtthread/components/drivers/include/drivers/serial.h:
+
+c:/Users/lhxsy/mounriver-studio-projects/CH32V307-RT-Thread/rtthread/components/drivers/include/drivers/pin.h:
 
 ../User/PWM.h:
 

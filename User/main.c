@@ -5,11 +5,10 @@
 * Date               : 2025/05/27
 * Description        : CH32V307 + RT-Thread 主程序
 *********************************************************************************/
-
+// 包含RTT文件
 #include "ch32v30x.h"
 #include <rtthread.h>
 #include <rthw.h>
-#include "drivers/pin.h"
 
 // 包含灯条模块头文件
 #include "ws2812b/ws2812.h"
@@ -43,24 +42,12 @@ int main(void)
     // 初始化WIFI和电机
     pwm_module_init();  
     wifi_module_init(); 
-
-    my_mem_init(SRAMIN);                                /* 初始化内部SRAM内存池 */
-    exfuns_init();                                      /* 为fatfs相关变量申请内存 */
-    f_mount(fs[0], "0:", 1);                            /* 挂载SD卡 */
-    f_mount(fs[1], "1:", 1);                            /* 挂载FLASH */
-
-    while (fonts_init())                                /* 检查字库 */
-    {
-        lcd_show_string(30, 50, 200, 16, 16, "Font Error!", RED);
-        rt_thread_mdelay(200);
-        lcd_fill(30, 50, 240, 66, WHITE);               /* 清除显示 */
-        rt_thread_mdelay(200);
-    }
+    
+    // 初始化温度显示
+    adc_temperature_init();
 
     // 初始化屏幕模块并创建鱼缸UI显示线程
     screen_init();
-
-    adc_temperature_init();                             /* 初始化内部温度传感器 */
 
     // 主循环
     while(1)

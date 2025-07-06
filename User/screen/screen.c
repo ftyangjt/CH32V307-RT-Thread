@@ -116,6 +116,19 @@ void update_temperature_display(void)
  */
 rt_thread_t screen_init(void)
 {
+    my_mem_init(SRAMIN);                                /* 初始化内部SRAM内存池 */
+    exfuns_init();                                      /* 为fatfs相关变量申请内存 */
+    f_mount(fs[0], "0:", 1);                            /* 挂载SD卡 */
+    f_mount(fs[1], "1:", 1);                            /* 挂载FLASH */
+
+    while (fonts_init())                                /* 检查字库 */
+    {
+        lcd_show_string(30, 50, 200, 16, 16, "Font Error!", RED);
+        rt_thread_mdelay(200);
+        lcd_fill(30, 50, 240, 66, WHITE);               /* 清除显示 */
+        rt_thread_mdelay(200);
+    }
+    
     rt_thread_t ui_tid = rt_thread_create("aquarium_ui",
                                           pic_show_thread_entry,
                                           RT_NULL,
