@@ -18,18 +18,17 @@ static struct rt_semaphore cardinal_main_sem;
 //导出给外部（如main.c）使用
 struct rt_semaphore *g_cardinal_main_sem = &cardinal_main_sem;
 
-
-//舵机线程信号量
+//其它信号量
 struct rt_semaphore cardinal_servo_sem;
 struct rt_semaphore *g_cardinal_servo_sem = &cardinal_servo_sem; //指针，被其它线程extern
 struct rt_semaphore cardinal_servo_done_sem;
 struct rt_semaphore *g_cardinal_servo_done_sem = &cardinal_servo_done_sem;
 
-//手动测试触发相关全局变量
+//手动触发 相关全局变量
 static int g_cardinal_test_amount = 1;
 static rt_bool_t g_cardinal_test_flag = RT_FALSE;
 
-//仅检测时间是否到达任务点，不流逝时间
+//它，仅检测时间是否到达任务点，不流逝时间
 static void cardinal_time_thread(void *parameter)
 {
     int last_hour = -1, last_minute = -1;
@@ -51,7 +50,7 @@ static void cardinal_time_thread(void *parameter)
     }
 }
 
-// 主控线程
+//主控线程函数
 static void cardinal_main_thread(void *parameter)
 {
     while (1)
@@ -77,12 +76,11 @@ static void cardinal_main_thread(void *parameter)
         g_servo_param.duration_sec = 2;
         // 唤醒舵机线程
         rt_sem_release(&cardinal_servo_sem);
-
         rt_sem_take(&cardinal_servo_done_sem, RT_WAITING_FOREVER);
     }
 }
 
-// Cardinal模块初始化
+//Cardinal模块总初始化
 void cardinal_module_init(void)
 {
     rt_sem_init(&cardinal_main_sem, "cardsem", 0, RT_IPC_FLAG_FIFO);
@@ -119,9 +117,9 @@ static void cardinal_trigger(int argc, char **argv)
     }
     
     //设置测试参数
-    rt_base_t level = rt_hw_interrupt_disable();
     g_cardinal_test_amount = amount;
     g_cardinal_test_flag = RT_TRUE;
+    rt_base_t level = rt_hw_interrupt_disable();
     rt_hw_interrupt_enable(level);
     
     // 释放信号量触发主控线程
@@ -129,6 +127,19 @@ static void cardinal_trigger(int argc, char **argv)
     rt_kprintf("[Cardinal] 控制台手动触发主控线程, amount=%d\n", amount);
 }
 MSH_CMD_EXPORT(cardinal_trigger, 手动触发主控线程: cardinal_trigger [amount]);
+
+
+
+
+
+
+
+
+
+
+
+
+//校准
 
 // 由WIFI调用，校准时间
 void cardinal_set_time(int hour, int minute)
@@ -139,7 +150,7 @@ void cardinal_set_time(int hour, int minute)
 }
 
 // 由WIFI调用，更新定时任务表
-// json示例: {"6":{"amount":5},"8":{"amount":1},"16":{"amount":1}}
+// json: {"6":{"amount":5},"8":{"amount":1},"16":{"amount":1}}
 void cardinal_update_tasks(const char *json)
 {
     for (int h = 0; h < 24; h++)

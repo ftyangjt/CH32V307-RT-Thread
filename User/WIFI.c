@@ -124,7 +124,7 @@ static void wifi_parse_json(const char *json)
     //定时任务表JSON（{"6":{"amount":5},"8":{"amount":1},"16":{"amount":1}}）
     if (json[0] == '{' && strstr(json, "\"amount\":"))
     {
-        // 新增：调用Cardinal更新任务表
+        //调用Cardinal更新任务表
         cardinal_update_tasks(json);
     }
 

@@ -51,7 +51,6 @@ static void servo_thread_entry(void *parameter)
     struct rt_semaphore *servo_sem = g_cardinal_servo_sem;
     extern struct rt_semaphore *g_cardinal_servo_done_sem;
 
-    int last_speed = -999;
     while (1)
     {
         // 等待主控线程释放信号量
@@ -71,7 +70,7 @@ static void servo_thread_entry(void *parameter)
             for (int i = 0; i < 100 ; i++)
             {
                 rt_thread_mdelay(20);
-            } //等待TIM调正好PWM
+            } //等待TIM调正好PWM！！！！！！！！！！！！！
 
             TIM_CCxCmd(TIM10, TIM_Channel_1, ENABLE);
 
@@ -80,9 +79,7 @@ static void servo_thread_entry(void *parameter)
                 rt_thread_mdelay(20);
             }
 
-            // 停止
-            // TIM_SetCompare1(TIM10, servo_speed_to_pulse(0));
-            // 关闭PWM输出，防止舵机持续振动
+            //关闭PWM输出，防止舵机持续振动
             TIM_CCxCmd(TIM10, TIM_Channel_1, DISABLE);
             g_servo_param.speed = 0;
             g_servo_param.duration_sec = 0;
