@@ -29,4 +29,7 @@ void rainbow_set_speed(uint8_t speed_level);
 // 设置彩虹效果亮度
 void rainbow_set_brightness(uint8_t brightness);
 
+// 停止白色灯光效果
+void white_mode_stop(void);
+
 #endif /* __RAINBOW_H */
