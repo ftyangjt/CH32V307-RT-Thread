@@ -7,6 +7,7 @@
 #include <stdio.h>
 #include <finsh.h>
 #include "drivers/pin.h"
+#include "Cardinal.h" // 新增
 
 #define WIFI_UART_NAME "uart2"
 #define WIFI_RECV_BUF_SIZE 128
@@ -112,6 +113,19 @@ static void wifi_parse_json(const char *json)
         // 跳过可能的空格和引号
         while (*p == ' ' || *p == '\"') p++;
         sscanf(p, "%31[^\"]", time_str);
+        // 新增：调用Cardinal校准时间
+        int hour = 0, minute = 0;
+        if (sscanf(time_str, "%d:%d", &hour, &minute) == 2)
+        {
+            cardinal_set_time(hour, minute);
+        }
+    }
+
+    //定时任务表JSON（{"6":{"amount":5},"8":{"amount":1},"16":{"amount":1}}）
+    if (json[0] == '{' && strstr(json, "\"amount\":"))
+    {
+        //调用Cardinal更新任务表
+        cardinal_update_tasks(json);
     }
 
     if (set_flag)
@@ -135,7 +149,7 @@ static void wifi_parse_json(const char *json)
     {
         rt_kprintf("收到时间校准: time=%s\n", time_str);
     }
-    if (!set_flag && !calibrate_flag)
+    if (!set_flag && !calibrate_flag && !(json[0] == '{' && strstr(json, "\"amount\":")))
     {
         rt_kprintf("收到未知JSON: %s\n", json);
     }

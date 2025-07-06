@@ -5,6 +5,7 @@
 
 # Add inputs and outputs from these tool invocations to the build variables 
 C_SRCS += \
+../User/Cardinal.c \
 ../User/PWM.c \
 ../User/WIFI.c \
 ../User/ch32v30x_it.c \
@@ -12,6 +13,7 @@ C_SRCS += \
 ../User/system_ch32v30x.c 
 
 C_DEPS += \
+./User/Cardinal.d \
 ./User/PWM.d \
 ./User/WIFI.d \
 ./User/ch32v30x_it.d \
@@ -19,6 +21,7 @@ C_DEPS += \
 ./User/system_ch32v30x.d 
 
 OBJS += \
+./User/Cardinal.o \
 ./User/PWM.o \
 ./User/WIFI.o \
 ./User/ch32v30x_it.o \

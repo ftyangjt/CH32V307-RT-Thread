@@ -23,6 +23,7 @@
 #include "PWM.h"
 #include "drv_pwm.h"
 #include "shell.h"
+#include "Cardinal.h"
 
 // 包含温度头文件
 #include "BSP/ADC/temp_adc.h"
@@ -42,6 +43,7 @@ int main(void)
     // 初始化WIFI和电机
     pwm_module_init();  
     wifi_module_init(); 
+    cardinal_module_init(); //主控线程
     
     // 初始化温度显示
     adc_temperature_init();

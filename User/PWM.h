@@ -11,7 +11,6 @@ typedef struct
     int duration_sec;   // 持续时间（秒）
 } servo_param_t;
 
-// 全局舵机参数变量声明
 extern servo_param_t g_servo_param;
 
 // PWM初始化函数声明

@@ -74,6 +74,7 @@ User/main.o: ../User/main.c \
  c:/Users/lhxsy/mounriver-studio-projects/CH32V307-RT-Thread/rtthread/components/finsh/shell.h \
  c:/Users/lhxsy/mounriver-studio-projects/CH32V307-RT-Thread/rtthread/components/finsh/finsh.h \
  c:/Users/lhxsy/mounriver-studio-projects/CH32V307-RT-Thread/rtthread/components/finsh/finsh_api.h \
+ ../User/Cardinal.h \
  c:/Users/lhxsy/mounriver-studio-projects/CH32V307-RT-Thread/drivers/BSP/ADC/temp_adc.h
 
 c:/Users/lhxsy/mounriver-studio-projects/CH32V307-RT-Thread/Peripheral/inc/ch32v30x.h:
@@ -227,5 +228,7 @@ c:/Users/lhxsy/mounriver-studio-projects/CH32V307-RT-Thread/rtthread/components/
 c:/Users/lhxsy/mounriver-studio-projects/CH32V307-RT-Thread/rtthread/components/finsh/finsh.h:
 
 c:/Users/lhxsy/mounriver-studio-projects/CH32V307-RT-Thread/rtthread/components/finsh/finsh_api.h:
+
+../User/Cardinal.h:
 
 c:/Users/lhxsy/mounriver-studio-projects/CH32V307-RT-Thread/drivers/BSP/ADC/temp_adc.h:
