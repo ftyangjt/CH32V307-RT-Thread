@@ -48,6 +48,7 @@ User/main.o: ../User/main.c \
  c:/Users/lhxsy/mounriver-studio-projects/CH32V307-RT-Thread/rtthread/components/drivers/include/drivers/serial.h \
  c:/Users/lhxsy/mounriver-studio-projects/CH32V307-RT-Thread/rtthread/components/drivers/include/drivers/pin.h \
  ../User/ws2812b/ws2812.h ../User/ws2812b/rainbow.h \
+ ../User/ws2812b/ws2812.h \
  c:/Users/lhxsy/mounriver-studio-projects/CH32V307-RT-Thread/drivers/BSP/LCD/lcd.h \
  c:\users\lhxsy\mounriver-studio-projects\ch32v307-rt-thread\drivers\system\sys\sys.h \
  ../User/screen/screen.h \
@@ -174,6 +175,8 @@ c:/Users/lhxsy/mounriver-studio-projects/CH32V307-RT-Thread/rtthread/components/
 ../User/ws2812b/ws2812.h:
 
 ../User/ws2812b/rainbow.h:
+
+../User/ws2812b/ws2812.h:
 
 c:/Users/lhxsy/mounriver-studio-projects/CH32V307-RT-Thread/drivers/BSP/LCD/lcd.h:
 
