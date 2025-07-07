@@ -8,6 +8,110 @@
 
 #include "screen.h"
 
+// 提取RGB565分量
+#define RGB565_R(c) (((c) >> 11) & 0x1F)
+#define RGB565_G(c) (((c) >> 5) & 0x3F)
+#define RGB565_B(c) ((c) & 0x1F)
+
+// 合成RGB565
+#define RGB565(r,g,b) (((r)<<11)|((g)<<5)|(b))
+
+// 线性插值
+static uint16_t color_lerp(uint16_t c1, uint16_t c2, float t)
+{
+    int r = RGB565_R(c1) + (RGB565_R(c2) - RGB565_R(c1)) * t;
+    int g = RGB565_G(c1) + (RGB565_G(c2) - RGB565_G(c1)) * t;
+    int b = RGB565_B(c1) + (RGB565_B(c2) - RGB565_B(c1)) * t;
+    return RGB565(r, g, b);
+}
+
+#define BG_TOP    0x21CA   // 深蓝
+#define BG_BOTTOM 0x4F7D   // 浅蓝
+
+void lcd_draw_gradient_bg(void)
+{
+    for(int y=0; y<320; y++)
+    {
+        float t = (float)y / 319.0f;
+        uint16_t color = color_lerp(BG_TOP, BG_BOTTOM, t);
+        lcd_fill(0, y, 479, y, color); // 填充一行
+    }
+}
+
+/**
+ * @brief       在右下角绘制鱼的轮廓
+ * @param       无
+ * @retval      无
+ */
+void draw_fish_outline(void)
+{
+    uint32_t fish_color = LIGHT_BG; // 使用浅色作为鱼的颜色
+    
+    // 鱼身体轮廓（椭圆形）
+    // 上半部分轮廓
+    for(int x = 390; x <= 450; x++)
+    {
+        int y_offset = (int)(15 * sqrt(1 - pow((x - 420.0) / 30.0, 2)));
+        lcd_draw_point(x, 250 - y_offset, fish_color); // 上轮廓
+        lcd_draw_point(x, 250 + y_offset, fish_color); // 下轮廓
+    }
+    
+    // 鱼头部（圆弧）
+    for(int angle = -60; angle <= 60; angle++)
+    {
+        float rad = angle * 3.14159 / 180.0;
+        int x = 450 + (int)(15 * cos(rad));
+        int y = 250 + (int)(15 * sin(rad));
+        if(x >= 380 && x < 480 && y >= 220 && y < 320)
+            lcd_draw_point(x, y, fish_color);
+    }
+    
+    // 鱼尾巴（三角形）
+    // 上尾翼
+    for(int i = 0; i <= 20; i++)
+    {
+        int x = 390 - i;
+        int y = 235 - i;
+        if(x >= 380 && y >= 220)
+            lcd_draw_point(x, y, fish_color);
+    }
+    
+    // 下尾翼
+    for(int i = 0; i <= 20; i++)
+    {
+        int x = 390 - i;
+        int y = 265 + i;
+        if(x >= 380 && y < 320)
+            lcd_draw_point(x, y, fish_color);
+    }
+    
+    // 尾翼连接线
+    for(int x = 370; x <= 390; x++)
+    {
+        if(x >= 380)
+        {
+            lcd_draw_point(x, 235 - (390-x), fish_color); // 上尾翼边
+            lcd_draw_point(x, 265 + (390-x), fish_color); // 下尾翼边
+        }
+    }
+    
+    // 鱼眼睛
+    for(int dx = -2; dx <= 2; dx++)
+    {
+        for(int dy = -2; dy <= 2; dy++)
+        {
+            if(dx*dx + dy*dy <= 4)
+                lcd_draw_point(440 + dx, 245 + dy, BG_TOP); // 用深色画眼睛
+        }
+    }
+    
+    // 鱼鳃（弧线）
+    for(int i = 0; i <= 10; i++)
+    {
+        lcd_draw_point(435, 240 + i, fish_color);
+    }
+}
+
 /**
  * @brief       显示鱼缸状态UI界面
  * @param       无
@@ -15,7 +119,7 @@
  */
 void display_aquarium_ui(void)
 {   
-    lcd_clear(DARK_BLUE);
+    lcd_draw_gradient_bg();
 
     // 顶部时间（左上角，大号字体）
     text_show_string(25, 33, 160, 53, "10:25:00", 32, 1, LIGHT_BG);
@@ -52,15 +156,15 @@ void pic_show_thread_entry(void *parameter)
 {
     // 初始化图片库
     piclib_init();
-    
-    // 显示鱼缸状态UI
-    display_aquarium_ui();
 
     // 初始时间（可根据实际需求修改）
     int hour = 10, min = 25, sec = 0;
 
     while (1)
     {
+        // 刷新UI界面
+        display_aquarium_ui();
+
         // 更新时间显示
         update_time_display(hour, min, sec);
 

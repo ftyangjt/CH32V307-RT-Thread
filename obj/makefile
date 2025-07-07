@@ -80,7 +80,7 @@ main-build: CH32V307-RT-Thread.elf secondary-outputs
 
 # Tool invocations
 CH32V307-RT-Thread.elf: $(OBJS) $(USER_OBJS)
-	@	riscv-none-embed-gcc -march=rv32imacxw -mabi=ilp32 -msmall-data-limit=8 -msave-restore -fmax-errors=20 -Os -fmessage-length=0 -fsigned-char -ffunction-sections -fdata-sections -fno-common -Wunused -Wuninitialized -g -T "c:/Users/wydnm/Desktop/GIT/NEW/CH32V307-RT-Thread/Ld/Link.ld" -nostartfiles -Xlinker --gc-sections -Xlinker --print-memory-usage -Wl,-Map,"CH32V307-RT-Thread.map" --specs=nano.specs --specs=nosys.specs -o "CH32V307-RT-Thread.elf" $(OBJS) $(USER_OBJS) $(LIBS)
+	@	riscv-none-embed-gcc -march=rv32imacxw -mabi=ilp32 -msmall-data-limit=8 -msave-restore -fmax-errors=20 -Os -fmessage-length=0 -fsigned-char -ffunction-sections -fdata-sections -fno-common -Wunused -Wuninitialized -g -T "c:/Users/lhxsy/mounriver-studio-projects/CH32V307-RT-Thread/Ld/Link.ld" -nostartfiles -Xlinker --gc-sections -Wl,-Map,"CH32V307-RT-Thread.map" --specs=nano.specs --specs=nosys.specs -o "CH32V307-RT-Thread.elf" $(OBJS) $(USER_OBJS) $(LIBS)
 CH32V307-RT-Thread.hex: CH32V307-RT-Thread.elf
 	@	riscv-none-embed-objcopy -O ihex "CH32V307-RT-Thread.elf" "CH32V307-RT-Thread.hex"
 CH32V307-RT-Thread.lst: CH32V307-RT-Thread.elf
