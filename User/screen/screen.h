@@ -33,6 +33,7 @@
 #include "string.h"
 #include "stdio.h"
 #include "./BSP/ADC/temp_adc.h"
+#include <math.h>
 
 // 函数声明
 void pic_show_thread_entry(void *parameter);
