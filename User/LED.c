@@ -4,7 +4,7 @@
 #include <stdint.h>
 #include "Cardinal.h"
 #include <math.h>
-#include <stdlib.h> // æ·»åŠ stdlib.hç”¨äºatoi
+#include <stdlib.h> // Ìí¼Óstdlib.hÓÃÓÚatoi
 
 
 static rt_thread_t breathing_thread = RT_NULL;
@@ -13,41 +13,68 @@ static struct {
     uint8_t r;
     uint8_t g; 
     uint8_t b;
-    uint8_t max_brightness;  // æœ€å¤§äº®åº¦ç™¾åˆ†æ¯”(0-100)
-    uint32_t cycle_time_ms;  // å‘¼å¸å‘¨æœŸæ—¶é—´(æ¯«ç§’)
-} breathing_config = {255, 255, 255, 100, 2500};  // é»˜è®¤ç™½è‰²ï¼Œ100%æœ€å¤§äº®åº¦ï¼Œ2.5ç§’å‘¨æœŸ
+    uint8_t max_brightness;  // ×î´óÁÁ¶È°Ù·Ö±È(0-100)
+    uint32_t cycle_time_ms;  // ºôÎüÖÜÆÚÊ±¼ä(ºÁÃë)
+} breathing_config = {255, 255, 255, 100, 3000};  // Ä¬ÈÏ°×É«£¬100%×î´óÁÁ¶È£¬3ÃëÖÜÆÚ
 ;
 extern struct rt_semaphore *g_breathing_sem;
 extern struct rt_semaphore *g_breathing_done_sem;
-
-/* å‘¼å¸ç¯æ•ˆæœçº¿ç¨‹ */
+/* ºôÎüµÆĞ§¹ûÏß³Ì */
 static void breathing_thread_entry()
 {
     
     uint8_t color_data[WS2812_LED_NUM * 3];
-    //ä½¿ç”¨æ­£å¼¦æ³¢è®¡ç®—å½“å‰äº®åº¦ç™¾åˆ†æ¯”(0-max_brightness)
+    //Ê¹ÓÃÕıÏÒ²¨¼ÆËãµ±Ç°ÁÁ¶È°Ù·Ö±È(0-max_brightness)
     float brightness_factor = 0.0f;
     uint8_t current_brightness = 0;
     uint8_t r, g, b;
     
     while (1) {
-        //æ°¸è¿œç­‰å¾…ä¸»æ§çº¿ç¨‹ä¿¡å·é‡
+        //ÓÀÔ¶µÈ´ıÖ÷¿ØÏß³ÌĞÅºÅÁ¿
         rt_sem_take(g_breathing_sem, RT_WAITING_FOREVER);
+        if(g_light == 1){
+            breathing_config.r = 255;
+            breathing_config.g = 255;
+            breathing_config.b = 255;
+            breathing_config.max_brightness = 100;
+            breathing_config.cycle_time_ms = 3000;
+        }
+        if(g_light == 2){
+            breathing_config.r = 255;
+            breathing_config.g = 150;
+            breathing_config.b = 150;
+            breathing_config.max_brightness = 100;
+            breathing_config.cycle_time_ms = 1500;
+        }        
+        if(g_light == 3){
+            breathing_config.r = 255;
+            breathing_config.g = 255;
+            breathing_config.b = 255;
+            breathing_config.max_brightness = 100;
+            breathing_config.cycle_time_ms = 3000;
+        }        
+        if(g_light == 4){
+            breathing_config.r = 255;
+            breathing_config.g = 255;
+            breathing_config.b = 255;
+            breathing_config.max_brightness = 100;
+            breathing_config.cycle_time_ms = 3000;
+        }
         float angle = 0.0f;
-        float step = 2 * PI / (breathing_config.cycle_time_ms / 20.0f); // æ¯20msæ›´æ–°ä¸€æ¬¡ï¼Œè®¡ç®—æ­¥é•¿
+        float step = 2 * PI / (breathing_config.cycle_time_ms / 20.0f); // Ã¿20ms¸üĞÂÒ»´Î£¬¼ÆËã²½³¤
         uint32_t run_time = 0;
-        rt_kprintf("ç¯å…‰çº¿ç¨‹å¯åŠ¨\n");
-        while (run_time < 5000) { // è¿è¡Œ5ç§’
-            // ä½¿ç”¨æ­£å¼¦æ³¢è®¡ç®—å½“å‰äº®åº¦ç™¾åˆ†æ¯”(0-max_brightness)
-            brightness_factor = (sinf(angle) + 1.0f) / 2.0f;  // å°†-1åˆ°1çš„æ­£å¼¦å€¼æ˜ å°„åˆ°0åˆ°1
+        rt_kprintf("µÆ¹âÏß³ÌÆô¶¯\n");
+        while (run_time < 5000) { // ÔËĞĞ5Ãë
+            // Ê¹ÓÃÕıÏÒ²¨¼ÆËãµ±Ç°ÁÁ¶È°Ù·Ö±È(0-max_brightness)
+            brightness_factor = (sinf(angle) + 1.0f) / 2.0f;  // ½«-1µ½1µÄÕıÏÒÖµÓ³Éäµ½0µ½1
             current_brightness = (uint8_t)(breathing_config.max_brightness * brightness_factor);
             
-            // æ ¹æ®äº®åº¦è°ƒæ•´RGBå€¼
+            // ¸ù¾İÁÁ¶Èµ÷ÕûRGBÖµ
             r = (uint8_t)((breathing_config.r * current_brightness) / 100);
             g = (uint8_t)((breathing_config.g * current_brightness) / 100);
             b = (uint8_t)((breathing_config.b * current_brightness) / 100);
             
-            // å¡«å……æ‰€æœ‰LED
+            // Ìî³äËùÓĞLED
             for (int i = 0; i < WS2812_LED_NUM; i++) {
                 color_data[i * 3 + 0] = r; // R
                 color_data[i * 3 + 1] = g; // G
@@ -57,26 +84,26 @@ static void breathing_thread_entry()
             
             ws2812_update(color_data);
             
-            // æ›´æ–°è§’åº¦
+            // ¸üĞÂ½Ç¶È
             angle += step;
             if (angle >= 2 * PI) {
                 angle -= 2 * PI;
             }
             
-            rt_thread_mdelay(20); // 20msåˆ·æ–°ä¸€æ¬¡
+            rt_thread_mdelay(20); // 20msË¢ĞÂÒ»´Î
             run_time += 20;
         }
 
-        // å…³é—­æ‰€æœ‰LED
+        // ¹Ø±ÕËùÓĞLED
         for (int i = 0; i < WS2812_LED_NUM * 3; i++) color_data[i] = 0;
         ws2812_update(color_data);
 
-        // é€šçŸ¥ä¸»æ§çº¿ç¨‹ç¯å…‰å·²å®Œæˆ
+        // Í¨ÖªÖ÷¿ØÏß³ÌµÆ¹âÒÑÍê³É
         rt_sem_release(g_breathing_done_sem);
     }
 }
 
-/* å¯åŠ¨å‘¼å¸ç¯æ•ˆæœ */
+/* Æô¶¯ºôÎüµÆĞ§¹û */
 void breathing_start()
 {
     breathing_thread = rt_thread_create("breathing",
@@ -87,9 +114,9 @@ void breathing_start()
                                         10);
     if (breathing_thread != RT_NULL) {
         rt_thread_startup(breathing_thread);
-        rt_kprintf("å‘¼å¸ç¯æ•ˆæœå·²å¯åŠ¨\n");
+        rt_kprintf("ºôÎüµÆĞ§¹ûÒÑÆô¶¯\n");
     } else {
-        rt_kprintf("å‘¼å¸ç¯çº¿ç¨‹åˆ›å»ºå¤±è´¥ï¼\n");
+        rt_kprintf("ºôÎüµÆÏß³Ì´´½¨Ê§°Ü£¡\n");
     }
 }
 
@@ -108,7 +135,7 @@ void breathing_start()
 
 
 
-/* è®¾ç½®å‘¼å¸ç¯é¢œè‰²å’Œæœ€å¤§äº®åº¦ */
+/* ÉèÖÃºôÎüµÆÑÕÉ«ºÍ×î´óÁÁ¶È */
 void breathing_set_color(uint8_t r, uint8_t g, uint8_t b, uint8_t max_brightness)
 {
     breathing_config.r = r;
@@ -118,13 +145,13 @@ void breathing_set_color(uint8_t r, uint8_t g, uint8_t b, uint8_t max_brightness
     if (max_brightness > 100) max_brightness = 100;
     breathing_config.max_brightness = max_brightness;
     
-    rt_kprintf("å‘¼å¸ç¯é¢œè‰²å·²è®¾ç½®ä¸ºRGB:(%d,%d,%d)ï¼Œæœ€å¤§äº®åº¦:%d%%\n", r, g, b, max_brightness);
+    rt_kprintf("ºôÎüµÆÑÕÉ«ÒÑÉèÖÃÎªRGB:(%d,%d,%d)£¬×î´óÁÁ¶È:%d%%\n", r, g, b, max_brightness);
 }
 
-/* MSHå‘½ä»¤ï¼šå¯åŠ¨å‘¼å¸ç¯æ•ˆæœ */
+/* MSHÃüÁî£ºÆô¶¯ºôÎüµÆĞ§¹û */
 static int cmd_breathing(int argc, char **argv)
 {
-    int cycle_time = 3; // é»˜è®¤3ç§’å‘¨æœŸ
+    int cycle_time = 3; // Ä¬ÈÏ3ÃëÖÜÆÚ
     
     if (argc > 1) {
         cycle_time = str_to_int(argv[1]);
@@ -136,12 +163,12 @@ static int cmd_breathing(int argc, char **argv)
 MSH_CMD_EXPORT(cmd_breathing, start breathing effect [cycle_time_seconds]);
 
 
-/* MSHå‘½ä»¤ï¼šè®¾ç½®å‘¼å¸ç¯é¢œè‰²å’Œäº®åº¦ */
+/* MSHÃüÁî£ºÉèÖÃºôÎüµÆÑÕÉ«ºÍÁÁ¶È */
 static int cmd_breathing_color(int argc, char **argv)
 {
     if (argc < 4) {
-        rt_kprintf("ç”¨æ³•: breathing_color r g b [max_brightness]\n");
-        rt_kprintf("ç¤ºä¾‹: breathing_color 255 0 0 80  è®¾ç½®ä¸ºçº¢è‰²ï¼Œæœ€å¤§äº®åº¦80%%\n");
+        rt_kprintf("ÓÃ·¨: breathing_color r g b [max_brightness]\n");
+        rt_kprintf("Ê¾Àı: breathing_color 255 0 0 80  ÉèÖÃÎªºìÉ«£¬×î´óÁÁ¶È80%%\n");
         return -RT_ERROR;
     }
     
@@ -149,12 +176,12 @@ static int cmd_breathing_color(int argc, char **argv)
     int g = str_to_int(argv[2]);
     int b = str_to_int(argv[3]);
     
-    // æ£€æŸ¥RGBèŒƒå›´
+    // ¼ì²éRGB·¶Î§
     if (r < 0) r = 0; if (r > 255) r = 255;
     if (g < 0) g = 0; if (g > 255) g = 255;
     if (b < 0) b = 0; if (b > 255) b = 255;
     
-    int max_brightness = 100; // é»˜è®¤æœ€å¤§äº®åº¦
+    int max_brightness = 100; // Ä¬ÈÏ×î´óÁÁ¶È
     if (argc > 4) {
         max_brightness = str_to_int(argv[4]);
         if (max_brightness < 0) max_brightness = 0;

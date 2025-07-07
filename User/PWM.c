@@ -4,34 +4,34 @@
 #include <stdlib.h>
 #include "Cardinal.h"
 
-// èˆµæœºå‚æ•°ç»“æ„ä½“ï¼šé€Ÿåº¦ï¼ˆ-100~100ï¼‰ï¼ŒæŒç»­æ—¶é—´ï¼ˆç§’ï¼‰
+// ¶æ»ú²ÎÊı½á¹¹Ìå£ºËÙ¶È£¨-100~100£©£¬³ÖĞøÊ±¼ä£¨Ãë£©
 typedef struct
 {
     int speed;
     int duration_sec;
 } servo_param_t;
 
-servo_param_t g_servo_param = {10, 3600}; // æµ‹è¯•ï¼šä¸è¦åœä¸‹æ¥
+servo_param_t g_servo_param = {10, 3600}; // ²âÊÔ£º²»ÒªÍ£ÏÂÀ´
 
 
-// æŸ¥FS90Rå‚æ•°ï¼Œå¾—åˆ°ï¼š
-// FS90Ræ˜¯360åº¦è¿ç»­æ—‹è½¬èˆµæœºï¼Œé€šè¿‡å ç©ºæ¯”æ§åˆ¶æ—‹è½¬é€Ÿåº¦å’Œæ–¹å‘
-#define SERVO_PERIOD      20000  // 20mså‘¨æœŸï¼Œå•ä½us
-#define SERVO_MIN_PULSE    900   // 0.9msï¼Œæœ€å¤§é€†æ—¶é’ˆæ—‹è½¬
-#define SERVO_STOP_PULSE  1500   // 1.5msï¼Œåœæ­¢
-#define SERVO_MAX_PULSE   2100   // 2.1msï¼Œæœ€å¤§é¡ºæ—¶é’ˆæ—‹è½¬
+// ²éFS90R²ÎÊı£¬µÃµ½£º
+// FS90RÊÇ360¶ÈÁ¬ĞøĞı×ª¶æ»ú£¬Í¨¹ıÕ¼¿Õ±È¿ØÖÆĞı×ªËÙ¶ÈºÍ·½Ïò
+#define SERVO_PERIOD      20000  // 20msÖÜÆÚ£¬µ¥Î»us
+#define SERVO_MIN_PULSE    900   // 0.9ms£¬×î´óÄæÊ±ÕëĞı×ª
+#define SERVO_STOP_PULSE  1500   // 1.5ms£¬Í£Ö¹
+#define SERVO_MAX_PULSE   2100   // 2.1ms£¬×î´óË³Ê±ÕëĞı×ª
 
-// æ­»åŒºä¸æœ€å°é€Ÿåº¦å®šä¹‰
-#define SERVO_DEADZONE      10    // æ­»åŒºé˜ˆå€¼ï¼ˆFS90Ræ­»åŒºè¾ƒå°ï¼‰
-#define SERVO_MIN_RUN_SPEED 15    // æœ€å°æœ‰æ•ˆé€Ÿåº¦
+// ËÀÇøÓë×îĞ¡ËÙ¶È¶¨Òå
+#define SERVO_DEADZONE      10    // ËÀÇøãĞÖµ£¨FS90RËÀÇø½ÏĞ¡£©
+#define SERVO_MIN_RUN_SPEED 15    // ×îĞ¡ÓĞĞ§ËÙ¶È
 
-//æ ¹æ®å‚æ•°ï¼Œå°†é€Ÿåº¦è½¬æ¢ä¸ºé«˜ç”µå¹³æ—¶é—´çš„å‡½æ•°ï¼ˆå¸¦æ­»åŒºä¸æœ€å°é€Ÿåº¦é™åˆ¶ï¼‰
+//¸ù¾İ²ÎÊı£¬½«ËÙ¶È×ª»»Îª¸ßµçÆ½Ê±¼äµÄº¯Êı£¨´øËÀÇøÓë×îĞ¡ËÙ¶ÈÏŞÖÆ£©
 static uint16_t servo_speed_to_pulse(int speed)
 {
-    // æ­»åŒºå¤„ç†
+    // ËÀÇø´¦Àí
     if (speed > -SERVO_DEADZONE && speed < SERVO_DEADZONE)
         return SERVO_STOP_PULSE;
-    // æœ€å°é€Ÿåº¦é™åˆ¶
+    // ×îĞ¡ËÙ¶ÈÏŞÖÆ
     if (speed > 0 && speed < SERVO_MIN_RUN_SPEED)
         speed = SERVO_MIN_RUN_SPEED;
     if (speed < 0 && speed > -SERVO_MIN_RUN_SPEED)
@@ -45,7 +45,7 @@ static uint16_t servo_speed_to_pulse(int speed)
         return SERVO_STOP_PULSE - (SERVO_STOP_PULSE - SERVO_MIN_PULSE) * (-speed) / 100;
 }
 
-// èˆµæœºæ§åˆ¶çº¿ç¨‹å…¥å£
+// ¶æ»ú¿ØÖÆÏß³ÌÈë¿Ú
 static void servo_thread_entry(void *parameter)
 {
     struct rt_semaphore *servo_sem = g_cardinal_servo_sem;
@@ -53,16 +53,16 @@ static void servo_thread_entry(void *parameter)
 
     while (1)
     {
-        // ç­‰å¾…ä¸»æ§çº¿ç¨‹é‡Šæ”¾ä¿¡å·é‡
+        // µÈ´ıÖ÷¿ØÏß³ÌÊÍ·ÅĞÅºÅÁ¿
         rt_sem_take(servo_sem, RT_WAITING_FOREVER);
-        // å¯åŠ¨PWMè¾“å‡º
+        // Æô¶¯PWMÊä³ö
 
         if (g_servo_param.speed != 0 && g_servo_param.duration_sec > 0)
         {
             int speed = g_servo_param.speed;
             int duration = g_servo_param.duration_sec;
             uint16_t pulse = servo_speed_to_pulse(speed);
-            rt_kprintf("èˆµæœºå¯åŠ¨ï¼Œé€Ÿåº¦: %dï¼ŒæŒç»­: %d ç§’ï¼Œè„‰å®½: %d us\n", speed, duration, pulse);
+            rt_kprintf("¶æ»úÆô¶¯£¬ËÙ¶È: %d£¬³ÖĞø: %d Ãë£¬Âö¿í: %d us\n", speed, duration, pulse);
             speed = g_servo_param.speed;
             pulse = servo_speed_to_pulse(speed);
             TIM_SetCompare1(TIM10, pulse);
@@ -70,7 +70,7 @@ static void servo_thread_entry(void *parameter)
             for (int i = 0; i < 100 ; i++)
             {
                 rt_thread_mdelay(20);
-            } //ç­‰å¾…TIMè°ƒæ­£å¥½PWMï¼ï¼ï¼ï¼ï¼ï¼ï¼ï¼ï¼ï¼ï¼ï¼ï¼
+            } //µÈ´ıTIMµ÷ÕıºÃPWM£¡£¡£¡£¡£¡£¡£¡£¡£¡£¡£¡£¡£¡
 
             TIM_CCxCmd(TIM10, TIM_Channel_1, ENABLE);
 
@@ -79,11 +79,11 @@ static void servo_thread_entry(void *parameter)
                 rt_thread_mdelay(20);
             }
 
-            //å…³é—­PWMè¾“å‡ºï¼Œé˜²æ­¢èˆµæœºæŒç»­æŒ¯åŠ¨
+            //¹Ø±ÕPWMÊä³ö£¬·ÀÖ¹¶æ»ú³ÖĞøÕñ¶¯
             TIM_CCxCmd(TIM10, TIM_Channel_1, DISABLE);
             g_servo_param.speed = 0;
             g_servo_param.duration_sec = 0;
-            rt_kprintf("èˆµæœºåŠ¨ä½œå®Œæˆï¼Œå·²åœæ­¢ã€‚\n");
+            rt_kprintf("¶æ»ú¶¯×÷Íê³É£¬ÒÑÍ£Ö¹¡£\n");
         }
 
         if (g_cardinal_servo_done_sem)
@@ -91,14 +91,14 @@ static void servo_thread_entry(void *parameter)
     }
 }
 
-//PWMåˆå§‹åŒ–
+//PWM³õÊ¼»¯
 void pwm_module_init(void)
 {
     SystemCoreClockUpdate();
-    rt_kprintf("PWMèˆµæœºæ¨¡å—åˆå§‹åŒ–ï¼ˆFS90Rï¼‰\n");
+    rt_kprintf("PWM¶æ»úÄ£¿é³õÊ¼»¯£¨FS90R£©\n");
     pwm_gpio_init_10();
     pwm_tim10_init(SERVO_PERIOD, servo_speed_to_pulse(0));
-    // åˆå§‹åŒ–æ—¶ä¸è¾“å‡ºPWMï¼Œå…³é—­é€šé“
+    // ³õÊ¼»¯Ê±²»Êä³öPWM£¬¹Ø±ÕÍ¨µÀ
     TIM_SetCompare1(TIM10, servo_speed_to_pulse(0));
     TIM_CCxCmd(TIM10, TIM_Channel_1, DISABLE);
     TIM_Cmd(TIM10, ENABLE);
@@ -106,45 +106,45 @@ void pwm_module_init(void)
     if (tid)
         rt_thread_startup(tid);
     else
-        rt_kprintf("èˆµæœºçº¿ç¨‹åˆ›å»ºå¤±è´¥ï¼\n");
+        rt_kprintf("¶æ»úÏß³Ì´´½¨Ê§°Ü£¡\n");
 }
 
-//æ§åˆ¶å°å‘½ä»¤ï¼šè®¾ç½®èˆµæœºé€Ÿåº¦å’Œæ—‹è½¬ç§’æ•°
+//¿ØÖÆÌ¨ÃüÁî£ºÉèÖÃ¶æ»úËÙ¶ÈºÍĞı×ªÃëÊı
 static void servo_run_cmd(int argc, char **argv)
 {
     if (argc != 3)
     {
-        rt_kprintf("ç”¨æ³•: servo_run é€Ÿåº¦(-100~100) ç§’æ•°\n");
+        rt_kprintf("ÓÃ·¨: servo_run ËÙ¶È(-100~100) ÃëÊı\n");
         return;
     }
     int speed = atoi(argv[1]);
     int duration = atoi(argv[2]);
     if (speed < -100 || speed > 100)
     {
-        rt_kprintf("é€Ÿåº¦èŒƒå›´-100~100\n");
+        rt_kprintf("ËÙ¶È·¶Î§-100~100\n");
         return;
     }
     if (duration <= 0)
     {
-        rt_kprintf("æŒç»­æ—¶é—´éœ€å¤§äº0ç§’\n");
+        rt_kprintf("³ÖĞøÊ±¼äĞè´óÓÚ0Ãë\n");
         return;
     }
     g_servo_param.speed = speed;
     g_servo_param.duration_sec = duration;
-    rt_kprintf("è®¾ç½®èˆµæœºé€Ÿåº¦: %d, æŒç»­: %d ç§’\n", speed, duration);
+    rt_kprintf("ÉèÖÃ¶æ»úËÙ¶È: %d, ³ÖĞø: %d Ãë\n", speed, duration);
 }
 #include <finsh.h>
-MSH_CMD_EXPORT(servo_run_cmd, è®¾ç½®èˆµæœºé€Ÿåº¦å’Œæ—‹è½¬ç§’æ•°: servo_run é€Ÿåº¦ ç§’æ•°);
+MSH_CMD_EXPORT(servo_run_cmd, ÉèÖÃ¶æ»úËÙ¶ÈºÍĞı×ªÃëÊı: servo_run ËÙ¶È ÃëÊı);
 
-//æ§åˆ¶å°å‘½ä»¤ï¼šç«‹å³åœæ­¢èˆµæœº
+//¿ØÖÆÌ¨ÃüÁî£ºÁ¢¼´Í£Ö¹¶æ»ú
 static void servo_stop_cmd(int argc, char **argv)
 {
     g_servo_param.speed = 0;
     g_servo_param.duration_sec = 0;
     TIM_SetCompare1(TIM10, servo_speed_to_pulse(0));
-    // ç«‹å³å…³é—­PWMè¾“å‡º
+    // Á¢¼´¹Ø±ÕPWMÊä³ö
     TIM_CCxCmd(TIM10, TIM_Channel_1, DISABLE);
-    rt_kprintf("èˆµæœºå·²åœæ­¢\n");
+    rt_kprintf("¶æ»úÒÑÍ£Ö¹\n");
 }
-MSH_CMD_EXPORT(servo_stop_cmd, ç«‹å³åœæ­¢èˆµæœº);
+MSH_CMD_EXPORT(servo_stop_cmd, Á¢¼´Í£Ö¹¶æ»ú);
 

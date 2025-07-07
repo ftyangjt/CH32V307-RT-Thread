@@ -18,6 +18,9 @@ typedef struct {
     int water_duration;     // 水流时间
 } cardinal_task_t;
 
+extern int g_light;
+extern int g_water;
+
 // 任务表，索引为小时（0~23）
 extern cardinal_task_t g_cardinal_tasks[24];
 

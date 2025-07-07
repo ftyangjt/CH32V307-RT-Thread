@@ -1,10 +1,10 @@
 #include <rtdevice.h>
 #include <board.h> 
 #include <rtthread.h>
-#include <drv_gpio.h> // æ·»åŠ æ­¤è¡Œ
+#include <drv_gpio.h> // Ìí¼Ó´ËĞĞ
 #include "Cardinal.h"
 
-// ç›´æ¥ä½¿ç”¨å¼•è„šç¼–å·ï¼Œéœ€æ ¹æ®å®é™…ç¡¬ä»¶ä¿®æ”¹
+// Ö±½ÓÊ¹ÓÃÒı½Å±àºÅ£¬Ğè¸ù¾İÊµ¼ÊÓ²¼şĞŞ¸Ä
 #define RELAY_PIN    87
 
 void pump_on(void)
@@ -22,26 +22,26 @@ void submersible_pump_init(void)
     rt_pin_write(RELAY_PIN, PIN_LOW);
 }
 
-// æ³µæ§åˆ¶çº¿ç¨‹
+// ±Ã¿ØÖÆÏß³Ì
 static void pump_thread_entry(void *parameter)
 {
     extern struct rt_semaphore *g_pump_sem;
     extern struct rt_semaphore *g_pump_done_sem;
     while (1)
     {
-        // ç­‰å¾…ä¿¡å·é‡
+        // µÈ´ıĞÅºÅÁ¿
         rt_sem_take(g_pump_sem, RT_WAITING_FOREVER);
 
         pump_on();
-        rt_kprintf("æ°´æ³µå·²å¼€å¯ï¼ŒæŒç»­ 3 ç§’\n");
-        rt_thread_mdelay(3000);
+        rt_kprintf("Ë®±ÃÒÑ¿ªÆô£¬³ÖĞø %d Ãë\n", g_water);
+        rt_thread_mdelay(1000 * g_water);
         pump_off();
-        rt_kprintf("æ°´æ³µå·²å…³é—­\n");
+        rt_kprintf("Ë®±ÃÒÑ¹Ø±Õ\n");
         rt_sem_release(g_pump_done_sem);
     }
 }
 
-// åˆ›å»ºæ³µæ§åˆ¶çº¿ç¨‹çš„å‡½æ•°
+// ´´½¨±Ã¿ØÖÆÏß³ÌµÄº¯Êı
 void pump_thread_init(void)
 {
     submersible_pump_init();

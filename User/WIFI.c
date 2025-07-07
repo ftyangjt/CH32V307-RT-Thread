@@ -7,11 +7,11 @@
 #include <stdio.h>
 #include <finsh.h>
 #include "drivers/pin.h"
-#include "Cardinal.h" // æ–°å¢
+#include "Cardinal.h" // ĞÂÔö
 
 #define WIFI_UART_NAME "uart2"
-#define WIFI_RECV_BUF_SIZE 128
-#define WIFI_PWR_PIN 11 //ä¸çŸ¥é“ @@@
+#define WIFI_RECV_BUF_SIZE 1024
+#define WIFI_PWR_PIN 11 //²»ÖªµÀ @@@
 
 wifi_param_t g_wifi_param = {0};
 static char wifi_recv_buf[WIFI_RECV_BUF_SIZE];
@@ -19,7 +19,7 @@ static rt_size_t wifi_data_len = 0;
 static struct rt_semaphore wifi_rx_sem;
 static rt_device_t wifi_uart = RT_NULL;
 
-// Flash å­˜å‚¨åŒºåå’Œåç§» @@@
+// Flash ´æ´¢ÇøÃûºÍÆ«ÒÆ @@@
 #define WIFI_PARAM_PART_NAME "easyflash"
 #define WIFI_PARAM_FLASH_OFFSET 0x0000
 
@@ -30,7 +30,7 @@ static void wifi_param_default(void)
     g_wifi_param.blink = 0;
 }
 
-//æ²¡æœ‰FALæ”¯æŒï¼Ÿè§£å†³æ–¹æ¡ˆï¼Ÿ @@@
+//Ã»ÓĞFALÖ§³Ö£¿½â¾ö·½°¸£¿ @@@
 void wifi_param_save(void)
 {
 #ifdef PKG_USING_FAL
@@ -50,7 +50,7 @@ void wifi_param_load(void)
     if (part)
     {
         fal_partition_read(part, WIFI_PARAM_FLASH_OFFSET, (uint8_t *)&g_wifi_param, sizeof(g_wifi_param));
-        // ç®€å•æ ¡éªŒ
+        // ¼òµ¥Ğ£Ñé
         if (g_wifi_param.interval < 0.01f || g_wifi_param.interval > 10000.0f)
             wifi_param_default();
     }
@@ -61,113 +61,34 @@ void wifi_param_load(void)
     }
 }
 
-//è§£æjson
+
+//½âÎöjson
 static void wifi_parse_json(const char *json)
 {
-    float interval = 0, amount = 0;
-    int blink = 0;
-    rt_bool_t set_flag = RT_FALSE;
-    rt_bool_t calibrate_flag = RT_FALSE;
-    char time_str[32] = {0};
-
-    //%fä¸å¯ç”¨ ï¼ï¼ï¼æ‰å‡ºæ­¤ä¸‹ç­–
-    //ç›®å‰è¿”å›å€¼çŠ¶å¦‚{"interval":12.5,"amount":1.0,"blink":3}
-    char buf[32];
-
-    // interval
-    char *p = strstr(json, "\"interval\":");
-
-
-    // time
-    p = strstr(json, "\"time\":");
-    if (p)
+    // ¼ì²âÊÇ·ñÎªÊ±¼äĞ£×¼¸ñÊ½£º[MM:SS]
+    if (json[0] == '[')
     {
-        calibrate_flag = RT_TRUE;
-        p += strlen("\"time\":");
-        // è·³è¿‡å¯èƒ½çš„ç©ºæ ¼å’Œå¼•å·
-        while (*p == ' ' || *p == '\"') p++;
-        sscanf(p, "%31[^\"]", time_str);
-        // æ–°å¢ï¼šè°ƒç”¨Cardinalæ ¡å‡†æ—¶é—´
-        int hour = 0, minute = 0;
-        if (sscanf(time_str, "%d:%d", &hour, &minute) == 2)
+        int mm, ss;
+        if (sscanf(json, "[%2d:%2d]", &mm, &ss) == 2)
         {
-            cardinal_set_time(hour, minute);
+            // µ÷ÓÃ cardinal_set_time ½øĞĞÊ±¼ä½âÎöºÍĞ£×¼
+            cardinal_set_time(mm, ss);
+            return;
         }
     }
 
-    //å®šæ—¶ä»»åŠ¡è¡¨JSONï¼ˆ{"6":{"amount":0.1,"light":"1","water":0,"minute":0},"8":{"amount":1,"light":"0","water":5,"minute":0},"16":{"amount":3.7,"light":"1","water":0,"minute":0}}ï¼‰
+    // ¼ì²âÊÇ·ñÎª¶¨Ê±ÈÎÎñ±íJSON¸ñÊ½£º°üº¬Ğ¡Ê±Êı×Ö×÷Îª¼üºÍamount×Ö¶Î
     if (json[0] == '{' && strstr(json, "\"amount\":"))
     {
-        // æ–°å¢ï¼šè§£ææ–°ç‰ˆå®šæ—¶ä»»åŠ¡è¡¨
-        // é€å°æ—¶æŸ¥æ‰¾
-        int hour;
-        const char *p = json;
-        while ((p = strchr(p, '\"')))
-        {
-            hour = atoi(p + 1);
-            char *block_start = strchr(p, '{');
-            char *block_end = strchr(block_start, '}');
-            if (block_start && block_end && block_end > block_start)
-            {
-                float amount = 0;
-                int light = 0;
-                int water = 0;
-                // amount
-                char *q = strstr(block_start, "\"amount\":");
-                if (q && q < block_end)
-                {
-                    char buf[16] = {0};
-                    q += strlen("\"amount\":");
-                    sscanf(q, "%15[^,}]", buf);
-                    amount = (float)atof(buf);
-                }
-                // light
-                q = strstr(block_start, "\"light\":");
-                if (q && q < block_end)
-                {
-                    char buf[8] = {0};
-                    q += strlen("\"light\":");
-                    // è·³è¿‡å¯èƒ½çš„å¼•å·
-                    while (*q == ' ' || *q == '\"') q++;
-                    sscanf(q, "%7[^\",]", buf); 
-                    light = atoi(buf);
-                }
-                // water
-                q = strstr(block_start, "\"water\":");
-                if (q && q < block_end)
-                {
-                    char buf[16] = {0};
-                    q += strlen("\"water\":");
-                    sscanf(q, "%15[^,}]", buf);
-                    water = atoi(buf);
-                }
-                // minute å­—æ®µæš‚ä¸å¤„ç†
-                // æ›´æ–°ä»»åŠ¡è¡¨
-                if (hour >= 0 && hour < 24)
-                {
-                    extern cardinal_task_t g_cardinal_tasks[24];
-                    g_cardinal_tasks[hour].amount = amount;
-                    g_cardinal_tasks[hour].light_mode = light;
-                    g_cardinal_tasks[hour].water_duration = water;
-                }
-                p = block_end + 1;
-            }
-            else
-            {
-                break;
-            }
-        }
-        rt_kprintf("å®šæ—¶ä»»åŠ¡è¡¨å·²æ›´æ–°\n");
+        // µ÷ÓÃCardinalÄ£¿éµÄÈÎÎñ±í¸üĞÂº¯Êı
+        cardinal_update_tasks(json);
+        return;
     }
-    if (calibrate_flag)
-    {
-        rt_kprintf("æ”¶åˆ°æ—¶é—´æ ¡å‡†: time=%s\n", time_str);
-    }
-    if (!set_flag && !calibrate_flag && !(json[0] == '{' && strstr(json, "\"amount\":")))
-    {
-        rt_kprintf("æ”¶åˆ°æœªçŸ¥JSON: %s\n", json);
-    }
+
+    // Èç¹û¶¼²»Æ¥Åä£¬Êä³öÎ´ÖªJSON
+    rt_kprintf("ÊÕµ½Î´ÖªJSON: %s\n", json);
 }
+
 
 static rt_err_t wifi_uart_rx_callback(rt_device_t dev, rt_size_t size)
 {
@@ -180,49 +101,42 @@ static void wifi_recv_thread_entry(void *parameter)
     char ch;
     while (1)
     {
+        // ×èÈûµÈ´ıĞÅºÅÁ¿£¨ÓÉÖĞ¶Ï¸ø³ö£©
         rt_sem_take(&wifi_rx_sem, RT_WAITING_FOREVER);
+
+        // ¶ÁÈ¡´®¿ÚÊı¾İ
         while (rt_device_read(wifi_uart, 0, &ch, 1) == 1)
         {
-            if (wifi_data_len < WIFI_RECV_BUF_SIZE - 1)
+            if (ch == 'E')
+            {
+                // ¶Áµ½E£¬´¦ÀíÇ°ÃæÄÚÈİ
+                wifi_recv_buf[wifi_data_len] = '\0';
+                // rt_kprintf("×ª·¢ÏûÏ¢: %s\n", wifi_recv_buf);
+                wifi_parse_json(wifi_recv_buf);
+                wifi_data_len = 0;
+                wifi_recv_buf[0] = '\0';
+            }
+            else if (wifi_data_len < WIFI_RECV_BUF_SIZE - 1)
             {
                 wifi_recv_buf[wifi_data_len++] = ch;
                 wifi_recv_buf[wifi_data_len] = '\0';
-                if (ch == '}')
-                {
-                    // æŸ¥æ‰¾ JSON èµ·å§‹
-                    char *start = strchr(wifi_recv_buf, '{');
-                    if (start)
-                    {
-                        // æ£€æŸ¥æ‹¬å·é…å¯¹ï¼Œç¡®ä¿æ˜¯å®Œæ•´JSON
-                        int brace = 0;
-                        char *p = start;
-                        while (*p)
-                        {
-                            if (*p == '{') brace++;
-                            else if (*p == '}') brace--;
-                            if (brace == 0) break;
-                            p++;
-                        }
-                        if (brace == 0 && *p == '}')
-                        {
-                            int json_len = p - start + 1;
-                            char json_buf[WIFI_RECV_BUF_SIZE] = {0};
-                            strncpy(json_buf, start, json_len);
-                            json_buf[json_len] = '\0';
-                            // rt_kprintf("æ”¶åˆ°åŸå§‹æ•°æ®: %s\n", json_buf); // åªå›æ˜¾å®Œæ•´JSON
-                            wifi_parse_json(json_buf);
-                        }
-                    }
-                    wifi_data_len = 0;
-                }
             }
             else
             {
-                wifi_data_len = 0;
+                wifi_data_len = 0; // ·ÀÖ¹Òç³ö
+                wifi_recv_buf[0] = '\0';
             }
         }
     }
 }
+
+
+void wifi_power_ctrl(rt_bool_t on)
+{
+    rt_pin_write(WIFI_PWR_PIN, on ? PIN_HIGH : PIN_LOW);
+    rt_kprintf("WiFiÄ£¿éµçÔ´: %s\n", on ? "ON" : "OFF");
+}
+
 
 void wifi_module_init(void)
 {
@@ -241,35 +155,14 @@ void wifi_module_init(void)
     rt_device_open(wifi_uart, RT_DEVICE_OFLAG_RDWR | RT_DEVICE_FLAG_INT_RX);
     rt_device_set_rx_indicate(wifi_uart, wifi_uart_rx_callback);
 
-    rt_thread_t tid = rt_thread_create("wifirecv", wifi_recv_thread_entry, RT_NULL, 1024, 5, 10);
+    rt_thread_t tid = rt_thread_create("wifirecv", wifi_recv_thread_entry, RT_NULL, 4096, 5, 10);
     if (tid)
         rt_thread_startup(tid);
 
-    // åˆå§‹åŒ–ç”µæºæ§åˆ¶å¼•è„š
+    // ³õÊ¼»¯µçÔ´¿ØÖÆÒı½Å
     rt_pin_mode(WIFI_PWR_PIN, PIN_MODE_OUTPUT);
-    wifi_power_ctrl(RT_TRUE); // é»˜è®¤ä¸Šç”µ
+    wifi_power_ctrl(RT_TRUE); // Ä¬ÈÏÉÏµç
 }
 
-void wifi_power_ctrl(rt_bool_t on)
-{
-    rt_pin_write(WIFI_PWR_PIN, on ? PIN_HIGH : PIN_LOW);
-    rt_kprintf("WiFiæ¨¡å—ç”µæº: %s\n", on ? "ON" : "OFF");
-}
 
-// æ§åˆ¶å°å‘½ä»¤ @@@
-static void wifi_power_cmd(int argc, char **argv)
-{
-    if (argc != 2)
-    {
-        rt_kprintf("ç”¨æ³•: wifi_power on/off\n");
-        return;
-    }
-    if (!strcmp(argv[1], "on"))
-        wifi_power_ctrl(RT_TRUE);
-    else if (!strcmp(argv[1], "off"))
-        wifi_power_ctrl(RT_FALSE);
-    else
-        rt_kprintf("å‚æ•°é”™è¯¯: è¯·è¾“å…¥ on æˆ– off\n");
-}
-MSH_CMD_EXPORT(wifi_power_cmd, æ§åˆ¶WiFiæ¨¡å—ç”µæºå¼€å…³);
 

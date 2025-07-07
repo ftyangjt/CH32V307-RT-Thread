@@ -8,20 +8,23 @@
 #include <finsh.h>
 #include "ws2812b/rainbow.h"
 
-//å…¨å±€æ—¶é—´å˜é‡
+//È«¾ÖÊ±¼ä±äÁ¿
 cardinal_time_t g_cardinal_time = {0, 0};
 
-//24å°æ—¶ä»»åŠ¡è¡¨
+//24Ğ¡Ê±ÈÎÎñ±í
 cardinal_task_t g_cardinal_tasks[24] = {0};
 
-//ä¸»æ§çº¿ç¨‹å¯åŠ¨ä¿¡å·é‡
+int g_light = 1;        
+int g_water = 10;
+
+//Ö÷¿ØÏß³ÌÆô¶¯ĞÅºÅÁ¿
 static struct rt_semaphore cardinal_main_sem;
-//å¯¼å‡ºç»™å¤–éƒ¨ï¼ˆå¦‚main.cï¼‰ä½¿ç”¨
+//µ¼³ö¸øÍâ²¿£¨Èçmain.c£©Ê¹ÓÃ
 struct rt_semaphore *g_cardinal_main_sem = &cardinal_main_sem;
 
-//å…¶å®ƒä¿¡å·é‡
+//ÆäËüĞÅºÅÁ¿
 struct rt_semaphore cardinal_servo_sem;
-struct rt_semaphore *g_cardinal_servo_sem = &cardinal_servo_sem; //æŒ‡é’ˆï¼Œè¢«å…¶å®ƒçº¿ç¨‹extern
+struct rt_semaphore *g_cardinal_servo_sem = &cardinal_servo_sem; //Ö¸Õë£¬±»ÆäËüÏß³Ìextern
 struct rt_semaphore cardinal_servo_done_sem;
 struct rt_semaphore *g_cardinal_servo_done_sem = &cardinal_servo_done_sem;
 
@@ -35,33 +38,51 @@ static struct rt_semaphore pump_done_sem;
 struct rt_semaphore *g_pump_sem = &pump_sem;
 struct rt_semaphore *g_pump_done_sem = &pump_done_sem;
 
-//æ‰‹åŠ¨è§¦å‘ ç›¸å…³å…¨å±€å˜é‡
+//ÊÖ¶¯´¥·¢ Ïà¹ØÈ«¾Ö±äÁ¿
 static int g_cardinal_test_amount = 1;
+static int g_cardinal_test_L = 1;
+static int g_cardinal_test_W = 10;
 static rt_bool_t g_cardinal_test_flag = RT_FALSE;
 
-//å®ƒï¼Œä»…æ£€æµ‹æ—¶é—´æ˜¯å¦åˆ°è¾¾ä»»åŠ¡ç‚¹ï¼Œä¸æµé€æ—¶é—´
+// Ôö¼ÓÈ«¾Ö±äÁ¿£¬¿ØÖÆÊ±¼äÊÇ·ñ¿É±»¸üĞÂ
+static rt_bool_t g_cardinal_time_stop = RT_FALSE;
+
+//Ëü£¬½ö¼ì²âÊ±¼äÊÇ·ñµ½´ïÈÎÎñµã£¬²»Á÷ÊÅÊ±¼ä
 static void cardinal_time_thread(void *parameter)
 {
     int last_hour = -1, last_minute = -1;
+    int last_feed_hour = -1; // ĞÂÔö±äÁ¿£¬¼ÇÂ¼ÉÏ´ÎÎ¹Ê³µÄĞ¡Ê±
     while (1)
     {
-        //æ—¶é—´æ˜¯å¦å˜åŒ–
+        
+        //Ê±¼äÊÇ·ñ±ä»¯
         if (g_cardinal_time.hour != last_hour || g_cardinal_time.minute != last_minute)
         {
             last_hour = g_cardinal_time.hour;
             last_minute = g_cardinal_time.minute;
-            // æ•´ç‚¹è§¦å‘
+            // Õûµã´¥·¢
             if (g_cardinal_time.minute == 0 && g_cardinal_tasks[g_cardinal_time.hour].amount > 0)
             {
-                // å¯åŠ¨ä¸»æ§çº¿ç¨‹
-                rt_sem_release(&cardinal_main_sem);
+                // ĞÂÔö£º±ÜÃâÍ¬Ò»Ğ¡Ê±ÖØ¸´Î¹Ê³
+                if (last_feed_hour != g_cardinal_time.hour)
+                {
+                    // Æô¶¯Ö÷¿ØÏß³Ì
+                    rt_sem_release(&cardinal_main_sem);
+                    last_feed_hour = g_cardinal_time.hour;
+                }
+            }
+            // ĞÂÔö£ºÈç¹û·ÖÖÓ²»Îª0£¬ÔÊĞíÏÂÒ»¸öÕûµãÖØĞÂ´¥·¢
+            if (g_cardinal_time.minute != 0)
+            {
+                last_feed_hour = -1;
             }
         }
-        rt_thread_mdelay(500); // æ£€æŸ¥é¢‘ç‡
+        rt_thread_mdelay(6000); // ¼ì²éÆµÂÊ
     }
 }
 
-//ä¸»æ§çº¿ç¨‹å‡½æ•°
+
+//Ö÷¿ØÏß³Ìº¯Êı
 static void cardinal_main_thread(void *parameter)
 {
     while (1)
@@ -70,43 +91,55 @@ static void cardinal_main_thread(void *parameter)
         int amount;
         if (g_cardinal_test_flag)
         {
-            amount = g_cardinal_test_amount; //å–‚é£Ÿæ•°é‡
+            amount = g_cardinal_test_amount; //Î¹Ê³ÊıÁ¿
+            g_light = g_cardinal_test_L;
+            g_water = g_cardinal_test_W;
             g_cardinal_test_flag = RT_FALSE;
-            rt_kprintf("[Cardinal] (æµ‹è¯•) ä¸»æ§çº¿ç¨‹è¢«æ‰‹åŠ¨è§¦å‘, amount=%d\n", amount);
+            rt_kprintf("[Cardinal] (²âÊÔ) Ö÷¿ØÏß³Ì±»ÊÖ¶¯´¥·¢, amount=%d, light=%d, water=%d\n", amount, g_light, g_water);
         }
         else
         {
             amount = g_cardinal_tasks[g_cardinal_time.hour].amount;
+            g_light = g_cardinal_tasks[g_cardinal_time.hour].light_mode;
+            g_water = g_cardinal_tasks[g_cardinal_time.hour].water_duration;
             if (amount <= 0) amount = 1;
-            rt_kprintf("[Cardinal] ä¸»æ§çº¿ç¨‹è¢«å®šæ—¶è§¦å‘: %02d:00, amount=%d\n",
-                g_cardinal_time.hour, amount);
+            rt_kprintf("[Cardinal] Ö÷¿ØÏß³Ì±»¶¨Ê±´¥·¢: %02d:00, amount=%d, light=%d, water=%d\n",
+                g_cardinal_time.hour, amount, g_light, g_water);
         }
+
+        //µÆ¹â
+        if (g_light){        
         rt_sem_release(&breathing_sem);
-        //rt_kprintf("[Cardinal] ç¯å…‰å¯åŠ¨"),
         rt_sem_take(&breathing_done_sem, RT_WAITING_FOREVER);
-        // è®¾ç½®èˆµæœºå‚æ•°
+        }
+
+        // ÉèÖÃ¶æ»ú²ÎÊı
         g_servo_param.speed = 10 * amount;
         g_servo_param.duration_sec = 2;
-        // å”¤é†’èˆµæœºçº¿ç¨‹
+        // »½ĞÑ¶æ»úÏß³Ì
         rt_sem_release(&cardinal_servo_sem);
         rt_sem_take(&cardinal_servo_done_sem, RT_WAITING_FOREVER);
-        // å”¤é†’æ³µçº¿ç¨‹
+
+        // »½ĞÑ±ÃÏß³Ì
+        if (g_water){        
         rt_sem_release(&pump_sem);
         rt_sem_take(&pump_done_sem, RT_WAITING_FOREVER);
+        };
+
     }
 }
 
-//Cardinalæ¨¡å—æ€»åˆå§‹åŒ–
+//CardinalÄ£¿é×Ü³õÊ¼»¯
 void cardinal_module_init(void)
 {
     rt_sem_init(&cardinal_main_sem, "cardsem", 0, RT_IPC_FLAG_FIFO);
     //duoji
     rt_sem_init(&cardinal_servo_sem, "servosem", 0, RT_IPC_FLAG_FIFO);
     rt_sem_init(&cardinal_servo_done_sem, "servodone", 0, RT_IPC_FLAG_FIFO);
-    //åˆå§‹åŒ–ç¯å…‰ä¿¡å·é‡
+    //³õÊ¼»¯µÆ¹âĞÅºÅÁ¿
     rt_sem_init(&breathing_sem, "breathe", 0, RT_IPC_FLAG_FIFO);
     rt_sem_init(&breathing_done_sem, "breathedone", 0, RT_IPC_FLAG_FIFO);
-    //åˆå§‹åŒ–æ³µä¿¡å·é‡
+    //³õÊ¼»¯±ÃĞÅºÅÁ¿
     rt_sem_init(&pump_sem, "pumpsem", 0, RT_IPC_FLAG_FIFO);
     rt_sem_init(&pump_done_sem, "pumpdone", 0, RT_IPC_FLAG_FIFO);
 
@@ -118,37 +151,193 @@ void cardinal_module_init(void)
 }
 
 
-// æ§åˆ¶å°å‘½ä»¤ï¼šæ‰‹åŠ¨è§¦å‘ä¸»æ§çº¿ç¨‹
+// ¿ØÖÆÌ¨ÃüÁî£ºÊÖ¶¯´¥·¢Ö÷¿ØÏß³Ì
 static void cardinal_trigger(int argc, char **argv)
 {
     int amount = 1;
+    int light = 1;
+    int water = 10;
     if (argc == 2)
     {
         amount = atoi(argv[1]);
         if (amount <= 0)
         {
-            rt_kprintf("[Cardinal] é”™è¯¯ï¼šamountå¿…é¡»å¤§äº0ï¼Œå·²è®¾ç½®ä¸ºé»˜è®¤å€¼1\n");
+            rt_kprintf("[Cardinal] ´íÎó£ºamount±ØĞë´óÓÚ0£¬ÒÑÉèÖÃÎªÄ¬ÈÏÖµ1\n");
             amount = 1;
         }
     }
-    else if (argc > 2)
+    else if (argc == 3)
     {
-        rt_kprintf("[Cardinal] é”™è¯¯ï¼šå‚æ•°è¿‡å¤š\n");
-        rt_kprintf("ç”¨æ³•: cardinal_trigger [amount]\n");
+        amount = atoi(argv[1]);
+        light = atoi(argv[2]);
+        if (amount <= 0)
+        {
+            rt_kprintf("[Cardinal] ´íÎó£ºamount±ØĞë´óÓÚ0£¬ÒÑÉèÖÃÎªÄ¬ÈÏÖµ1\n");
+            amount = 1;
+        }
+    }
+    else if (argc == 4)
+    {
+        amount = atoi(argv[1]);
+        light = atoi(argv[2]);
+        water = atoi(argv[3]);
+        if (amount <= 0)
+        {
+            rt_kprintf("[Cardinal] ´íÎó£ºamount±ØĞë´óÓÚ0£¬ÒÑÉèÖÃÎªÄ¬ÈÏÖµ1\n");
+            amount = 1;
+        }
+    }
+    else if (argc > 4)
+    {
+        rt_kprintf("[Cardinal] ´íÎó£º²ÎÊı¹ı¶à\n");
+        rt_kprintf("ÓÃ·¨: cardinal_trigger [amount] [light] [water]\n");
         return;
     }
-    
-    //è®¾ç½®æµ‹è¯•å‚æ•°
-    g_cardinal_test_amount = amount;
-    g_cardinal_test_flag = RT_TRUE;
-    
-    // é‡Šæ”¾ä¿¡å·é‡è§¦å‘ä¸»æ§çº¿ç¨‹
-    rt_sem_release(&cardinal_main_sem);
-    rt_kprintf("[Cardinal] æ§åˆ¶å°æ‰‹åŠ¨è§¦å‘ä¸»æ§çº¿ç¨‹, amount=%d\n", amount);
-}
-MSH_CMD_EXPORT(cardinal_trigger, æ‰‹åŠ¨è§¦å‘ä¸»æ§çº¿ç¨‹: cardinal_trigger [amount]);
 
-// æ§åˆ¶å°å‘½ä»¤ï¼šæ‰“å°å®šæ—¶ä»»åŠ¡è¡¨
+    //ÉèÖÃ²âÊÔ²ÎÊı
+    g_cardinal_test_amount = amount;
+    g_cardinal_test_L = light;
+    g_cardinal_test_W = water;
+    g_cardinal_test_flag = RT_TRUE;
+
+    // ÊÍ·ÅĞÅºÅÁ¿´¥·¢Ö÷¿ØÏß³Ì
+    rt_sem_release(&cardinal_main_sem);
+    rt_kprintf("[Cardinal] ¿ØÖÆÌ¨ÊÖ¶¯´¥·¢Ö÷¿ØÏß³Ì, amount=%d, light=%d, water=%d\n", amount, light, water);
+}
+
+//Ğ£×¼
+
+// ÓÉWIFIµ÷ÓÃ£¬Ğ£×¼Ê±¼ä
+void cardinal_set_time(int hour, int minute)
+{
+    if (g_cardinal_time_stop)
+    {
+        rt_kprintf("[Cardinal] Ê±¼äÒÑËø¶¨£¬ºöÂÔĞ£×¼ÇëÇó\n");
+        return;
+    }
+    g_cardinal_time.hour = hour;
+    g_cardinal_time.minute = minute;
+    rt_kprintf("[Cardinal] Ê±¼äĞ£×¼Îª %02d:%02d\n", hour, minute);
+}
+
+// ÓÉWIFIµ÷ÓÃ£¬¸üĞÂ¶¨Ê±ÈÎÎñ±í
+// json: {"6":{"amount":5},"8":{"amount":1},"16":{"amount":1}}
+// ×Ö·û´®½âÎö¸¡µãÊı£¬²»ÓÃ%f
+static float parse_float(const char *str) {
+    int int_part = 0, frac_part = 0, frac_len = 0;
+    int sign = 1;
+    if (*str == '-') {
+        sign = -1;
+        str++;
+    }
+    while (*str && isdigit(*str)) {
+        int_part = int_part * 10 + (*str - '0');
+        str++;
+    }
+    if (*str == '.') {
+        str++;
+        while (*str && isdigit(*str)) {
+            frac_part = frac_part * 10 + (*str - '0');
+            frac_len++;
+            str++;
+        }
+    }
+    float result = int_part;
+    if (frac_len > 0) {
+        float frac = frac_part;
+        while (frac_len--) frac /= 10.0f;
+        result += frac;
+    }
+    return sign * result;
+}
+
+// ÌáÈ¡¼ü¶ÔÓ¦µÄÕûĞÍÖµ
+static int extract_int(const char *key, const char *json) {
+    char *pos = strstr(json, key);
+    if (!pos) return 0;
+    pos = strchr(pos, ':');
+    if (!pos) return 0;
+    return atoi(pos + 1);
+}
+
+// ÌáÈ¡¼ü¶ÔÓ¦µÄ¸¡µãÖµ£¨ÓÃ×Ö·û´®ÇĞÆ¬ºóÊÖ¶¯½âÎö£©
+static float extract_float(const char *key, const char *json) {
+    char *pos = strstr(json, key);
+    if (!pos) return 0.0f;
+    pos = strchr(pos, ':');
+    if (!pos) return 0.0f;
+    pos++;
+    // ÕÒµ½½áÊø·ûºÅ , »ò }
+    char buf[16] = {0};
+    int i = 0;
+    while (*pos && *pos != ',' && *pos != '}' && i < 15) {
+        if (*pos != ' ' && *pos != '"') {
+            buf[i++] = *pos;
+        }
+        pos++;
+    }
+    return parse_float(buf);
+}
+
+// ÌáÈ¡µÆ¹â×Ö·û´®£¨"0"»ò"1"£©
+static int extract_light(const char *key, const char *json) {
+    char *pos = strstr(json, key);
+    if (!pos) return 0;
+    pos = strchr(pos, ':');
+    if (!pos) return 0;
+    pos++; // skip :
+    while (*pos && (*pos == ' ' || *pos == '"')) pos++; // Ìø¹ı¿Õ¸ñºÍÒıºÅ
+    if (*pos >= '0' && *pos <= '9') // ¼ì²éÊÇ·ñÎªÊı×Ö
+        return *pos - '0';
+    return 0;
+}
+// Ö÷º¯Êı£º½âÎö JSON ²¢¸üĞÂÈÎÎñ±í
+// Ö÷º¯Êı£º½âÎö JSON ²¢¸üĞÂÈÎÎñ±í
+void cardinal_update_tasks(const char *json) {
+    // ÏÈÇå¿ÕËùÓĞÔ­Êı¾İ
+    for (int i = 0; i < 24; i++) {
+        g_cardinal_tasks[i].amount = 0;
+        g_cardinal_tasks[i].light_mode = 0;
+        g_cardinal_tasks[i].water_duration = 0;
+    }
+
+    for (int hour = 0; hour < 24; hour++) {
+        char hour_key[8];
+        snprintf(hour_key, sizeof(hour_key), "\"%d\"", hour);
+        char *entry = strstr(json, hour_key);
+        if (!entry) continue;
+
+        // ¶¨Î»µ±Ç°Ğ¡Ê±¶ÔÓ¦µÄ JSON ×Ó´®
+        char *entry_start = strchr(entry, '{');
+        char *entry_end   = strchr(entry, '}');
+        if (!entry_start || !entry_end || entry_end < entry_start) continue;
+
+        char entry_json[128] = {0};
+        int len = entry_end - entry_start + 1;
+        if (len >= sizeof(entry_json)) len = sizeof(entry_json) - 1;
+        strncpy(entry_json, entry_start, len);
+        entry_json[len] = '\0';
+
+        g_cardinal_tasks[hour].amount         = extract_float("amount", entry_json);
+        g_cardinal_tasks[hour].light_mode     = extract_light("light", entry_json);
+        g_cardinal_tasks[hour].water_duration = extract_int("water", entry_json);
+        rt_kprintf("[Cardinal] Êı¾İ¸üĞÂ");
+    }
+}
+
+// ¿ØÖÆÌ¨ÃüÁî£ºËø¶¨Ê±¼äÎª10:00²¢Í£Ö¹¸üĞÂÊ±¼ä
+static void cardinal_stop_time(int argc, char **argv)
+{
+    g_cardinal_time_stop = RT_TRUE;
+    g_cardinal_time.hour = 10;
+    g_cardinal_time.minute = 0;
+    rt_kprintf("[Cardinal] Ê±¼äÒÑËø¶¨Îª10:00£¬ºóĞø²»ÔÙ¸üĞÂÊ±¼ä\n");
+}
+MSH_CMD_EXPORT(cardinal_stop_time, Ëø¶¨Ê±¼äÎª10:00²¢Í£Ö¹¸üĞÂÊ±¼ä);
+
+MSH_CMD_EXPORT(cardinal_trigger, ÊÖ¶¯´¥·¢Ö÷¿ØÏß³Ì: cardinal_trigger [amount] [light] [water]);
+
+// ¿ØÖÆÌ¨ÃüÁî£º´òÓ¡¶¨Ê±ÈÎÎñ±í
 static void cardinal_print_tasks(int argc, char **argv)
 {
     rt_kprintf("Hour\tAmount(x100)\tLight\tWater\n");
@@ -158,7 +347,7 @@ static void cardinal_print_tasks(int argc, char **argv)
             g_cardinal_tasks[i].light_mode > 0 ||
             g_cardinal_tasks[i].water_duration > 0)
         {
-            // å°†amountä¹˜ä»¥100è½¬ä¸ºæ•´æ•°æ˜¾ç¤ºï¼Œé¿å…%f
+            // ½«amount³ËÒÔ100×ªÎªÕûÊıÏÔÊ¾£¬±ÜÃâ%f
             rt_kprintf("%i\t%d\t\t%i\t%i\n",
                 i,
                 (int)(g_cardinal_tasks[i].amount * 100),
@@ -167,82 +356,4 @@ static void cardinal_print_tasks(int argc, char **argv)
         }
     }
 }
-MSH_CMD_EXPORT(cardinal_print_tasks, æ‰“å°å®šæ—¶ä»»åŠ¡è¡¨);
-
-//æ ¡å‡†
-
-// ç”±WIFIè°ƒç”¨ï¼Œæ ¡å‡†æ—¶é—´
-void cardinal_set_time(int hour, int minute)
-{
-    g_cardinal_time.hour = hour;
-    g_cardinal_time.minute = minute;
-    rt_kprintf("[Cardinal] æ—¶é—´æ ¡å‡†ä¸º %02d:%02d\n", hour, minute);
-}
-
-// ç”±WIFIè°ƒç”¨ï¼Œæ›´æ–°å®šæ—¶ä»»åŠ¡è¡¨
-// json: {"6":{"amount":5},"8":{"amount":1},"16":{"amount":1}}
-void cardinal_update_tasks(const char *json)
-{
-    for (int h = 0; h < 24; h++)
-    {
-        g_cardinal_tasks[h].amount = 0;
-        g_cardinal_tasks[h].light_mode = 0;
-        g_cardinal_tasks[h].water_duration = 0;
-    }
-
-    int hour;
-    const char *p = json;
-    while ((p = strchr(p, '\"')))
-    {
-        hour = atoi(p + 1);
-        char *block_start = strchr(p, '{');
-        char *block_end = strchr(block_start, '}');
-        if (block_start && block_end && block_end > block_start)
-        {
-            float amount = 0;
-            int light = 0;
-            int water = 0;
-            // amount
-            char *q = strstr(block_start, "\"amount\":");
-            if (q && q < block_end)
-            {
-                char buf[16] = {0};
-                q += strlen("\"amount\":");
-                sscanf(q, "%15[^,}]", buf);
-                amount = (float)atof(buf);
-            }
-            // light
-            q = strstr(block_start, "\"light\":");
-            if (q && q < block_end)
-            {
-                char buf[8] = {0};
-                q += strlen("\"light\":");
-                while (*q == ' ' || *q == '\"') q++;
-                sscanf(q, "%7[^\",]", buf); // ä¿®æ­£æ ¼å¼ä¸²
-                light = atoi(buf);
-            }
-            // water
-            q = strstr(block_start, "\"water\":");
-            if (q && q < block_end)
-            {
-                char buf[16] = {0};
-                q += strlen("\"water\":");
-                sscanf(q, "%15[^,}]", buf);
-                water = atoi(buf);
-            }
-            // minute å­—æ®µæš‚ä¸å¤„ç†
-            if (hour >= 0 && hour < 24)
-            {
-                g_cardinal_tasks[hour].amount = amount;
-                g_cardinal_tasks[hour].light_mode = light;
-                g_cardinal_tasks[hour].water_duration = water;
-            }
-            p = block_end + 1;
-        }
-        else
-        {
-            break;
-        }
-    }
-    rt_kprintf("[Cardinal] å®šæ—¶ä»»åŠ¡è¡¨å·²æ›´æ–°\n");
-}
+MSH_CMD_EXPORT(cardinal_print_tasks, ´òÓ¡¶¨Ê±ÈÎÎñ±í);

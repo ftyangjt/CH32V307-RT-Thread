@@ -3,22 +3,22 @@
 * Author             : ChatGPT
 * Version            : V2.0.0
 * Date               : 2025/05/27
-* Description        : CH32V307 + RT-Thread ä¸»ç¨‹åº
+* Description        : CH32V307 + RT-Thread Ö÷³ÌĞò
 *********************************************************************************/
-// åŒ…å«RTTæ–‡ä»¶
+// °üº¬RTTÎÄ¼ş
 #include "ch32v30x.h"
 #include <rtthread.h>
 #include <rthw.h>
 
-// åŒ…å«ç¯æ¡æ¨¡å—å¤´æ–‡ä»¶
+// °üº¬µÆÌõÄ£¿éÍ·ÎÄ¼ş
 #include "ws2812b/ws2812.h"
 #include "ws2812b/rainbow.h"
 
-// åŒ…å«å±å¹•æ¨¡å—å¤´æ–‡ä»¶
+// °üº¬ÆÁÄ»Ä£¿éÍ·ÎÄ¼ş
 #include "BSP/LCD/lcd.h"
 #include "screen/screen.h"
 
-// åŒ…å«WIFIæ¨¡å—å¤´æ–‡ä»¶
+// °üº¬WIFIÄ£¿éÍ·ÎÄ¼ş
 #include "WIFI.h"
 #include "PWM.h"
 #include "drv_pwm.h"
@@ -27,14 +27,14 @@
 #include "PUMP.h"
 
 
-// åŒ…å«æ¸©åº¦å¤´æ–‡ä»¶
+// °üº¬ÎÂ¶ÈÍ·ÎÄ¼ş
 #include "BSP/ADC/temp_adc.h"
 
 int main(void)
 {
     SystemCoreClockUpdate();
 
-    // åˆå§‹åŒ– Finsh Shell
+    // ³õÊ¼»¯ Finsh Shell
     finsh_system_init();
     finsh_set_device(RT_CONSOLE_DEVICE_NAME);
 
@@ -44,29 +44,29 @@ int main(void)
         rt_device_open(console, RT_DEVICE_OFLAG_RDWR | RT_DEVICE_FLAG_INT_RX);
     }
 
-    // åˆå§‹åŒ–å±å¹•
+    // ³õÊ¼»¯ÆÁÄ»
     lcd_init();
-    ws2812_init();
+    ws2812_init(); //led
     
-    // åˆå§‹åŒ–WIFIå’Œç”µæœº
-    cardinal_module_init(); //ä¸»æ§çº¿ç¨‹
+    // ³õÊ¼»¯WIFIºÍµç»ú
+    cardinal_module_init(); //Ö÷¿ØÏß³Ì
     pump_thread_init();
     pwm_module_init();  
     wifi_module_init(); 
-    breathing_start();
+    breathing_start(); //ºôÎüµÆÏß³Ì
 
     
-    // åˆå§‹åŒ–æ¸©åº¦æ˜¾ç¤º
+    // ³õÊ¼»¯ÎÂ¶ÈÏÔÊ¾
     adc_temperature_init();
 
-    // åˆå§‹åŒ–å±å¹•æ¨¡å—å¹¶åˆ›å»ºé±¼ç¼¸UIæ˜¾ç¤ºçº¿ç¨‹
+    // ³õÊ¼»¯ÆÁÄ»Ä£¿é²¢´´½¨Óã¸×UIÏÔÊ¾Ïß³Ì
     screen_init();
 
-    // ä¸»å¾ªç¯
+    // Ö÷Ñ­»·
     while(1)
     {
         rt_thread_mdelay(1000);
-        rt_kprintf("ä¸»çº¿ç¨‹\n");
-        // ä¸»å¾ªç¯ä¿æŒç©ºé—²ï¼Œå·¥ä½œç”±çº¿ç¨‹å®Œæˆ
+        rt_kprintf("Ö÷Ïß³Ì\n");
+        // Ö÷Ñ­»·±£³Ö¿ÕÏĞ£¬¹¤×÷ÓÉÏß³ÌÍê³É
     }
 }
