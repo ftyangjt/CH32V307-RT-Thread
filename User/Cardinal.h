@@ -33,6 +33,9 @@ void cardinal_set_time(int hour, int minute);
 // 由WIFI调用，更新定时任务表
 void cardinal_update_tasks(const char *json);
 
+// 由WIFI调用，锁定时间为10:00并停止更新时间
+void cardinal_stop_time(int argc, char **argv);
+
 // 导出主控线程信号量和舵机线程信号量
 extern struct rt_semaphore *g_cardinal_main_sem;
 extern struct rt_semaphore *g_cardinal_servo_sem;

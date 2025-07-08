@@ -326,7 +326,7 @@ void cardinal_update_tasks(const char *json) {
 }
 
 // 控制台命令：锁定时间为10:00并停止更新时间
-static void cardinal_stop_time(int argc, char **argv)
+void cardinal_stop_time(int argc, char **argv)
 {
     g_cardinal_time_stop = RT_TRUE;
     g_cardinal_time.hour = 10;

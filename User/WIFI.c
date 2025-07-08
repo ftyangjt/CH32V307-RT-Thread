@@ -65,6 +65,13 @@ void wifi_param_load(void)
 //解析json
 static void wifi_parse_json(const char *json)
 {
+    // 新增：检测AAAE
+    if (strcmp(json, "AAA") == 0)
+    {
+        cardinal_stop_time(0, RT_NULL);
+        return;
+    }
+
     // 检测是否为时间校准格式：[MM:SS]
     if (json[0] == '[')
     {
@@ -111,7 +118,7 @@ static void wifi_recv_thread_entry(void *parameter)
             {
                 // 读到E，处理前面内容
                 wifi_recv_buf[wifi_data_len] = '\0';
-                // rt_kprintf("转发消息: %s\n", wifi_recv_buf);
+                rt_kprintf("转发消息: %s\n", wifi_recv_buf);
                 wifi_parse_json(wifi_recv_buf);
                 wifi_data_len = 0;
                 wifi_recv_buf[0] = '\0';

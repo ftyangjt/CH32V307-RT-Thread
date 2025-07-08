@@ -32,19 +32,21 @@ static void breathing_thread_entry()
     while (1) {
         //永远等待主控线程信号量
         rt_sem_take(g_breathing_sem, RT_WAITING_FOREVER);
+        uint32_t run_time = 0;
         if(g_light == 1){
             breathing_config.r = 255;
             breathing_config.g = 255;
             breathing_config.b = 255;
             breathing_config.max_brightness = 100;
             breathing_config.cycle_time_ms = 3000;
+            run_time = - 5000;
         }
         if(g_light == 2){
             breathing_config.r = 255;
             breathing_config.g = 150;
             breathing_config.b = 150;
             breathing_config.max_brightness = 100;
-            breathing_config.cycle_time_ms = 1500;
+            breathing_config.cycle_time_ms = 1350;
         }        
         if(g_light == 3){
             breathing_config.r = 255;
@@ -62,9 +64,9 @@ static void breathing_thread_entry()
         }
         float angle = 0.0f;
         float step = 2 * PI / (breathing_config.cycle_time_ms / 20.0f); // 每20ms更新一次，计算步长
-        uint32_t run_time = 0;
+
         rt_kprintf("灯光线程启动\n");
-        while (run_time < 5000) { // 运行5秒
+        while (run_time < 1000 * 5) { // 运行5秒
             // 使用正弦波计算当前亮度百分比(0-max_brightness)
             brightness_factor = (sinf(angle) + 1.0f) / 2.0f;  // 将-1到1的正弦值映射到0到1
             current_brightness = (uint8_t)(breathing_config.max_brightness * brightness_factor);
