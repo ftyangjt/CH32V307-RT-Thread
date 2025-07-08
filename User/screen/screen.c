@@ -39,76 +39,30 @@ void lcd_draw_gradient_bg(void)
 }
 
 /**
- * @brief       在右下角绘制鱼的轮廓
- * @param       无
+ * @brief       获取指定Y坐标的渐变背景色
+ * @param       y: Y坐标
+ * @retval      该位置的背景色
+ */
+static uint16_t get_gradient_color_at_y(int y)
+{
+    if (y < 0) y = 0;
+    if (y >= 320) y = 319;
+    
+    float t = (float)y / 319.0f;
+    return color_lerp(BG_TOP, BG_BOTTOM, t);
+}
+
+/**
+ * @brief       填充指定区域的渐变背景
+ * @param       x1,y1,x2,y2: 矩形区域坐标
  * @retval      无
  */
-void draw_fish_outline(void)
+static void fill_gradient_rect(int x1, int y1, int x2, int y2)
 {
-    uint32_t fish_color = LIGHT_BG; // 使用浅色作为鱼的颜色
-    
-    // 鱼身体轮廓（椭圆形）
-    // 上半部分轮廓
-    for(int x = 390; x <= 450; x++)
+    for(int y = y1; y <= y2; y++)
     {
-        int y_offset = (int)(15 * sqrt(1 - pow((x - 420.0) / 30.0, 2)));
-        lcd_draw_point(x, 250 - y_offset, fish_color); // 上轮廓
-        lcd_draw_point(x, 250 + y_offset, fish_color); // 下轮廓
-    }
-    
-    // 鱼头部（圆弧）
-    for(int angle = -60; angle <= 60; angle++)
-    {
-        float rad = angle * 3.14159 / 180.0;
-        int x = 450 + (int)(15 * cos(rad));
-        int y = 250 + (int)(15 * sin(rad));
-        if(x >= 380 && x < 480 && y >= 220 && y < 320)
-            lcd_draw_point(x, y, fish_color);
-    }
-    
-    // 鱼尾巴（三角形）
-    // 上尾翼
-    for(int i = 0; i <= 20; i++)
-    {
-        int x = 390 - i;
-        int y = 235 - i;
-        if(x >= 380 && y >= 220)
-            lcd_draw_point(x, y, fish_color);
-    }
-    
-    // 下尾翼
-    for(int i = 0; i <= 20; i++)
-    {
-        int x = 390 - i;
-        int y = 265 + i;
-        if(x >= 380 && y < 320)
-            lcd_draw_point(x, y, fish_color);
-    }
-    
-    // 尾翼连接线
-    for(int x = 370; x <= 390; x++)
-    {
-        if(x >= 380)
-        {
-            lcd_draw_point(x, 235 - (390-x), fish_color); // 上尾翼边
-            lcd_draw_point(x, 265 + (390-x), fish_color); // 下尾翼边
-        }
-    }
-    
-    // 鱼眼睛
-    for(int dx = -2; dx <= 2; dx++)
-    {
-        for(int dy = -2; dy <= 2; dy++)
-        {
-            if(dx*dx + dy*dy <= 4)
-                lcd_draw_point(440 + dx, 245 + dy, BG_TOP); // 用深色画眼睛
-        }
-    }
-    
-    // 鱼鳃（弧线）
-    for(int i = 0; i <= 10; i++)
-    {
-        lcd_draw_point(435, 240 + i, fish_color);
+        uint16_t color = get_gradient_color_at_y(y);
+        lcd_fill(x1, y, x2, y, color); // 填充一行
     }
 }
 
@@ -120,9 +74,6 @@ void draw_fish_outline(void)
 void display_aquarium_ui(void)
 {   
     lcd_draw_gradient_bg();
-
-    // 顶部时间（左上角，大号字体）
-    text_show_string(25, 33, 160, 53, "10:25:00", 32, 1, LIGHT_BG);
 
     // 顶部“AQUARIUM STATUS”（右上角）
     text_show_string(240, 32, 220, 36, "AQUARIUM STATUS", 24, 1, LIGHT_BG);
@@ -139,13 +90,36 @@ void display_aquarium_ui(void)
     // 下次喂食信息（底部居中）
     text_show_string(40, 230, 260, 36, "NEXT FEEDING", 24, 1, LIGHT_BG);
     text_show_string(300, 230, 160, 36, "3:00 PM", 32, 1, LIGHT_BG);
+
 }
 
+
 /**
- * @brief       更新时间显示
+ * @brief       显示鱼缸状态UI界面（中文版）
  * @param       无
  * @retval      无
  */
+void display_aquarium_ui_chi(void)
+{   
+    lcd_draw_gradient_bg();
+
+    // 顶部“AQUARIUM STATUS”（右上角）
+    text_show_string(240, 32, 220, 36, "智能鱼缸监控", 24, 1, LIGHT_BG);
+
+    // 第一条水平分隔线
+    lcd_draw_line(20, 80, 460, 80, LIGHT_BG);
+
+    // 温度大号显示（居中）
+    text_show_string(20, 130, 300, 60, "当前室内温度:", 24, 1, LIGHT_BG);
+
+    // 第二条水平分隔线
+    lcd_draw_line(20, 200, 460, 200, LIGHT_BG);
+
+    // 下次喂食信息（底部居中）
+    text_show_string(40, 230, 260, 36, "下一次喂食时间", 24, 1, LIGHT_BG);
+    text_show_string(300, 230, 160, 36, "3:00 PM", 32, 1, LIGHT_BG);
+
+}
 
 /**
  * @brief       鱼缸状态显示线程入口函数
@@ -157,14 +131,13 @@ void pic_show_thread_entry(void *parameter)
     // 初始化图片库
     piclib_init();
 
+    display_aquarium_ui();
+
     // 初始时间（可根据实际需求修改）
     int hour = 10, min = 25, sec = 0;
 
     while (1)
     {
-        // 刷新UI界面
-        display_aquarium_ui();
-
         // 更新时间显示
         update_time_display(hour, min, sec);
 
@@ -195,8 +168,10 @@ void update_time_display(int hour, int min, int sec)
 {
     char time_str[16];
     rt_snprintf(time_str, sizeof(time_str), "%02d:%02d:%02d", hour, min, sec);
-    // 覆盖原时间区域，先用背景色清除
-    lcd_fill(25, 33, 25+160, 33+33, DARK_BLUE);
+
+    // 先用渐变背景色清除时间显示区域
+    fill_gradient_rect(25, 33, 25+160, 33+33);
+
     text_show_string(25, 33, 160, 53, time_str, 32, 1, LIGHT_BG);
 }
 
@@ -208,8 +183,9 @@ void update_temperature_display(void)
     char temp_str[16];
     rt_snprintf(temp_str, sizeof(temp_str), "%d.%02d°C", temp_int, temp_frac);
 
-    // 覆盖原温度区域，先用背景色清除
-    lcd_fill(300, 125, 200+200, 120+60, DARK_BLUE);
+    // 先用渐变背景色清除温度显示区域
+    fill_gradient_rect(300, 125, 300+200, 125+60);
+    
     text_show_string(300, 125, 200, 60, temp_str, 32, 1, LIGHT_BG);
 }
 
