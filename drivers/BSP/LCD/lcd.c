@@ -507,8 +507,8 @@ void lcd_display_dir(uint8_t dir)
         }
     }
 
-    // 修改成R2L_U2D即可正常使用
-    lcd_scan_dir(L2R_U2D);     /* 默认扫描方向 */
+    // lcd_scan_dir(L2R_U2D); //正常显示
+    lcd_scan_dir(R2L_U2D); //镜像显示
 }
 
 /**
