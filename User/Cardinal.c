@@ -115,7 +115,7 @@ static void cardinal_main_thread(void *parameter)
 
         // 设置舵机参数
         g_servo_param.speed = 10 * amount;
-        g_servo_param.duration_sec = 2;
+        g_servo_param.duration_sec = 3 + (amount + 1) / 2.0;
         // 唤醒舵机线程
         rt_sem_release(&cardinal_servo_sem);
         rt_sem_take(&cardinal_servo_done_sem, RT_WAITING_FOREVER);

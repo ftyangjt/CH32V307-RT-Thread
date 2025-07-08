@@ -39,7 +39,7 @@ static void breathing_thread_entry()
             breathing_config.b = 255;
             breathing_config.max_brightness = 100;
             breathing_config.cycle_time_ms = 3000;
-            run_time = 0;
+            run_time = 2000;
         }
         if(g_light == 2){
             breathing_config.r = 255;
