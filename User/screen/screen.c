@@ -55,6 +55,22 @@ void lcd_draw_feeding_gradient_bg(void)
 }
 
 /**
+ * @brief       显示喂食状态界面
+ * @param       无
+ * @retval      无
+ */
+void display_feeding_ui(void)
+{
+    // 绘制喂食渐变背景
+    lcd_draw_feeding_gradient_bg();
+    
+    // 在屏幕中间显示"FEEDING"
+    // 屏幕尺寸 480x320，文字居中显示
+    text_show_string(170, 140, 140, 40, "FEEDING", 32, 1, LIGHT_BG);
+}
+
+
+/**
  * @brief       获取指定Y坐标的渐变背景色
  * @param       y: Y坐标
  * @retval      该位置的背景色
@@ -164,7 +180,7 @@ void pic_show_thread_entry(void *parameter)
             if (onFeeding)
             {
                 // 切换到红黑渐变背景，不显示其他内容
-                lcd_draw_feeding_gradient_bg();
+                display_feeding_ui();
             }
             else
             {

@@ -13,10 +13,9 @@
 #define LIGHT_BG 0xFFBE   // #F9F5F0 的RGB565表示
 #define BG_TOP    0x21CA   // 深蓝
 #define BG_BOTTOM 0x4F7D   // 浅蓝
-// 添加红黑渐变色定义
-#define FEEDING_TOP    0xF800   // 红色
-#define FEEDING_BOTTOM 0x0000   // 黑色
 
+#define FEEDING_TOP    0x5EF7   // 浅青色 (RGB: 96, 184, 120) #60B878
+#define FEEDING_BOTTOM 0x3E9F   // 浅绿蓝色 (RGB: 56, 168, 120) #38A878
 
 // 提取RGB565分量
 #define RGB565_R(c) (((c) >> 11) & 0x1F)
