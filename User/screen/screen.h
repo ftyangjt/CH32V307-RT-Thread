@@ -13,8 +13,9 @@
 #define LIGHT_BG 0xFFBE   // #F9F5F0 的RGB565表示
 #define BG_TOP    0x21CA   // 深蓝
 #define BG_BOTTOM 0x4F7D   // 浅蓝
-#define FEEDING_TOP    0x1965   // 深海蓝 #1B4B73 
-#define FEEDING_BOTTOM 0x0821   // 海底蓝 #082142
+// 喂食状态使用调亮的深海蓝色渐变
+#define FEEDING_TOP    0x2D8B   // 亮深海蓝 #2E6DB5 
+#define FEEDING_BOTTOM 0x1244   // 亮海底蓝 #124A8C
 
 
 // 提取RGB565分量
