@@ -53,7 +53,8 @@ User/screen/screen.o: ../User/screen/screen.c ../User/screen/screen.h \
  c:\users\wydnm\desktop\git\new\ch32v307-rt-thread\middlewares\picture\tjpgd.h \
  c:\users\wydnm\desktop\git\new\ch32v307-rt-thread\middlewares\picture\tjpgdcnf.h \
  c:\users\wydnm\desktop\git\new\ch32v307-rt-thread\drivers\bsp\led\led.h \
- c:\users\wydnm\desktop\git\new\ch32v307-rt-thread\drivers\bsp\adc\temp_adc.h
+ c:\users\wydnm\desktop\git\new\ch32v307-rt-thread\drivers\bsp\adc\temp_adc.h \
+ ../User/screen/../Cardinal.h
 
 ../User/screen/screen.h:
 
@@ -166,3 +167,5 @@ c:\users\wydnm\desktop\git\new\ch32v307-rt-thread\middlewares\picture\tjpgdcnf.h
 c:\users\wydnm\desktop\git\new\ch32v307-rt-thread\drivers\bsp\led\led.h:
 
 c:\users\wydnm\desktop\git\new\ch32v307-rt-thread\drivers\bsp\adc\temp_adc.h:
+
+../User/screen/../Cardinal.h:

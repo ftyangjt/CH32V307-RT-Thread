@@ -40,12 +40,15 @@ void cardinal_stop_time(int argc, char **argv);
 extern struct rt_semaphore *g_cardinal_main_sem;
 extern struct rt_semaphore *g_cardinal_servo_sem;
 
-// 新增：导出灯光线程信号量
+// 导出灯光线程信号量
 extern struct rt_semaphore *g_breathing_sem;
 extern struct rt_semaphore *g_breathing_done_sem;
 
-// 新增：导出泵线程信号量
+// 导出泵线程信号量
 extern struct rt_semaphore *g_pump_sem;
 extern struct rt_semaphore *g_pump_done_sem;
+
+// 正在喂食？
+extern rt_bool_t onFeeding;
 
 #endif // __CARDINAL_H__

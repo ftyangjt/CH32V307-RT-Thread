@@ -17,9 +17,9 @@ servo_param_t g_servo_param = {10, 3600}; // 测试：不要停下来
 // 查FS90R参数，得到：
 // FS90R是360度连续旋转舵机，通过占空比控制旋转速度和方向
 #define SERVO_PERIOD      20000  // 20ms周期，单位us
-#define SERVO_MIN_PULSE    900   // 0.9ms，最大逆时针旋转
+#define SERVO_MIN_PULSE    700   // 0.9ms，最大逆时针旋转
 #define SERVO_STOP_PULSE  1500   // 1.5ms，停止
-#define SERVO_MAX_PULSE   2100   // 2.1ms，最大顺时针旋转
+#define SERVO_MAX_PULSE   2300   // 2.1ms，最大顺时针旋转
 
 // 死区与最小速度定义
 #define SERVO_DEADZONE      10    // 死区阈值（FS90R死区较小）

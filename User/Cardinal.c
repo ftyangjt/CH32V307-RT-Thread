@@ -19,7 +19,6 @@ int g_water = 10;
 
 //主控线程启动信号量
 static struct rt_semaphore cardinal_main_sem;
-//导出给外部（如main.c）使用
 struct rt_semaphore *g_cardinal_main_sem = &cardinal_main_sem;
 
 //其它信号量
@@ -44,8 +43,10 @@ static int g_cardinal_test_L = 1;
 static int g_cardinal_test_W = 10;
 static rt_bool_t g_cardinal_test_flag = RT_FALSE;
 
-// 增加全局变量，控制时间是否可被更新
+// 增加变量，控制时间是否可被更新
 static rt_bool_t g_cardinal_time_stop = RT_FALSE;
+// 全局变量
+rt_bool_t onFeeding = RT_FALSE;
 
 //它，仅检测时间是否到达任务点，不流逝时间
 static void cardinal_time_thread(void *parameter)
@@ -89,6 +90,7 @@ static void cardinal_main_thread(void *parameter)
     {
         rt_sem_take(&cardinal_main_sem, RT_WAITING_FOREVER);
         int amount;
+        onFeeding = RT_TRUE;
         if (g_cardinal_test_flag)
         {
             amount = g_cardinal_test_amount; //喂食数量
@@ -125,7 +127,7 @@ static void cardinal_main_thread(void *parameter)
         rt_sem_release(&pump_sem);
         rt_sem_take(&pump_done_sem, RT_WAITING_FOREVER);
         };
-
+        onFeeding = RT_FALSE;
     }
 }
 

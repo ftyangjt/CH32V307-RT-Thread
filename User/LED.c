@@ -32,6 +32,7 @@ static void breathing_thread_entry()
     while (1) {
         //永远等待主控线程信号量
         rt_sem_take(g_breathing_sem, RT_WAITING_FOREVER);
+        rainbow_stop();
         uint32_t run_time = 0;
         if(g_light == 1){
             breathing_config.r = 255;
@@ -102,6 +103,7 @@ static void breathing_thread_entry()
         ws2812_update(color_data);
 
         // 通知主控线程灯光已完成
+        rainbow_start(1);
         rt_sem_release(g_breathing_done_sem);
     }
 }

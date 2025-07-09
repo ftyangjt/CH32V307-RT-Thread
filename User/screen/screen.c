@@ -7,6 +7,7 @@
 *********************************************************************************/
 
 #include "screen.h"
+#include "../Cardinal.h"
 
 // 提取RGB565分量
 #define RGB565_R(c) (((c) >> 11) & 0x1F)
@@ -75,8 +76,13 @@ void display_aquarium_ui(void)
 {   
     lcd_draw_gradient_bg();
 
+    if (onFeeding){
+        text_show_string(240, 32, 220, 36, "Feeding", 24, 1, LIGHT_BG);
+    }else{
+        text_show_string(240, 32, 220, 36, "AQUARIUM STATUS", 24, 1, LIGHT_BG);
+    }
     // 顶部“AQUARIUM STATUS”（右上角）
-    text_show_string(240, 32, 220, 36, "AQUARIUM STATUS", 24, 1, LIGHT_BG);
+
 
     // 第一条水平分隔线
     lcd_draw_line(20, 80, 460, 80, LIGHT_BG);
@@ -89,7 +95,7 @@ void display_aquarium_ui(void)
 
     // 下次喂食信息（底部居中）
     text_show_string(40, 230, 260, 36, "NEXT FEEDING", 24, 1, LIGHT_BG);
-    text_show_string(300, 230, 160, 36, "3:00 PM", 32, 1, LIGHT_BG);
+    text_show_string(300, 230, 160, 36, "10:26 PM", 32, 1, LIGHT_BG);
 
 }
 
@@ -117,7 +123,7 @@ void display_aquarium_ui_chi(void)
 
     // 下次喂食信息（底部居中）
     text_show_string(40, 230, 260, 36, "下一次喂食时间", 24, 1, LIGHT_BG);
-    text_show_string(300, 230, 160, 36, "3:00 PM", 32, 1, LIGHT_BG);
+    text_show_string(300, 230, 160, 36, "10:26 AM", 32, 1, LIGHT_BG);
 
 }
 

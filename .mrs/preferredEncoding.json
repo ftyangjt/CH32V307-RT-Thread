@@ -1,12 +1,12 @@
 {
 	"details": [
 		{
-			"file": "User/main.c",
-<<<<<<< HEAD
-			"encoding": "gb2312"
-=======
-			"encoding": "utf8"
->>>>>>> e485937f7bf42716dc2e812a8863660428734b1c
+			"file": "User/PUMP.c",
+			"encoding": "gb18030"
+		},
+		{
+			"file": "User/PWM.c",
+			"encoding": "gbk"
 		}
 	]
 }

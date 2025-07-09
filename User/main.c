@@ -54,6 +54,8 @@ int main(void)
     pwm_module_init();  
     wifi_module_init(); 
     breathing_start(); //呼吸灯线程
+    rainbow_init();
+    rainbow_start(1);
 
     
     // 初始化温度显示
