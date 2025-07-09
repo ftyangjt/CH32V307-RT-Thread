@@ -40,6 +40,21 @@ void lcd_draw_gradient_bg(void)
 }
 
 /**
+ * @brief       绘制红黑渐变背景（喂食状态）
+ * @param       无
+ * @retval      无
+ */
+void lcd_draw_feeding_gradient_bg(void)
+{
+    for(int y=0; y<320; y++)
+    {
+        float t = (float)y / 319.0f;
+        uint16_t color = color_lerp(FEEDING_TOP, FEEDING_BOTTOM, t);
+        lcd_fill(0, y, 479, y, color); // 填充一行
+    }
+}
+
+/**
  * @brief       获取指定Y坐标的渐变背景色
  * @param       y: Y坐标
  * @retval      该位置的背景色
@@ -76,13 +91,7 @@ void display_aquarium_ui(void)
 {   
     lcd_draw_gradient_bg();
 
-    if (onFeeding){
-        text_show_string(240, 32, 220, 36, "Feeding", 24, 1, LIGHT_BG);
-    }else{
-        text_show_string(240, 32, 220, 36, "AQUARIUM STATUS", 24, 1, LIGHT_BG);
-    }
-    // 顶部“AQUARIUM STATUS”（右上角）
-
+    text_show_string(240, 32, 220, 36, "AQUARIUM STATUS", 24, 1, LIGHT_BG);
 
     // 第一条水平分隔线
     lcd_draw_line(20, 80, 460, 80, LIGHT_BG);
@@ -141,33 +150,61 @@ void pic_show_thread_entry(void *parameter)
 
     // 初始时间（可根据实际需求修改）
     int hour = 10, min = 25, sec = 0;
+    
+    // 记录上一次的喂食状态
+    int last_feeding_state = 0;
 
     while (1)
-    {
-        // 更新时间显示
-        update_time_display(hour, min, sec);
-
-        // 动态温度显示
-        update_temperature_display();
-
-        // 时间递增
-        sec++;
-        if (sec >= 60)
+    {   
+        // 检查喂食状态是否发生变化
+        if (onFeeding != last_feeding_state)
         {
-            sec = 0;
-            min++;
-            if (min >= 60)
+            last_feeding_state = onFeeding;
+            
+            if (onFeeding)
             {
-                min = 0;
-                hour++;
-                if (hour >= 24)
-                    hour = 0;
+                // 切换到红黑渐变背景，不显示其他内容
+                lcd_draw_feeding_gradient_bg();
+            }
+            else
+            {
+                // 恢复正常界面
+                display_aquarium_ui();
             }
         }
+        
+        if (onFeeding)
+        {
+            // 喂食状态下只保持红黑渐变背景，不做其他更新
+        }
+        else
+        {
+            // 更新时间显示
+            update_time_display(hour, min, sec);
 
+            // 动态温度显示
+            update_temperature_display();
+
+            // 时间递增
+            sec++;
+            if (sec >= 60)
+            {
+                sec = 0;
+                min++;
+                if (min >= 60)
+                {
+                    min = 0;
+                    hour++;
+                    if (hour >= 24)
+                        hour = 0;
+                }
+            }
+        }
+        
         rt_thread_mdelay(1000);
     }
 }
+
 
 
 void update_time_display(int hour, int min, int sec)
