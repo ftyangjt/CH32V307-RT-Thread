@@ -29,8 +29,6 @@ servo_param_t g_servo_param = {10, 3600}; // 测试：不要停下来
 static uint16_t servo_speed_to_pulse(int speed)
 {
     // 死区处理
-    if (speed > -SERVO_DEADZONE && speed < SERVO_DEADZONE)
-        return SERVO_STOP_PULSE;
     // 最小速度限制
     if (speed > 0 && speed < SERVO_MIN_RUN_SPEED)
         speed = SERVO_MIN_RUN_SPEED;
@@ -64,7 +62,7 @@ static void servo_thread_entry(void *parameter)
             uint16_t pulse = servo_speed_to_pulse(speed);
             rt_kprintf("舵机启动，速度: %d，持续: %d 秒，脉宽: %d us\n", speed, duration, pulse);
             speed = g_servo_param.speed;
-            pulse = servo_speed_to_pulse(speed);
+            pulse = servo_speed_to_pulse((-1) * speed - 25);
             TIM_SetCompare1(TIM10, pulse);
 
             for (int i = 0; i < 100 ; i++)

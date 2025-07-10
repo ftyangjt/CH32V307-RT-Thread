@@ -5,12 +5,12 @@
 			"type": "mrs-debugger",
 			"request": "launch",
 			"name": "CH32V307-RT-Thread",
-			"cwd": "c:\\Users\\lhxsy\\mounriver-studio-projects\\WIFI模块\\CH32V307-RT-Thread",
+			"cwd": "c:\\Users\\wydnm\\Desktop\\GIT\\NEW\\CH32V307-RT-Thread",
 			"openOCDCfg": {
 				"useLocalOpenOCD": true,
-				"executable": "c:/MounRiver/MounRiver_Studio2/resources/app/resources/win32/components/WCH/OpenOCD/OpenOCD/bin/openocd.exe",
+				"executable": "d:/MounRiver/MounRiver_Studio2/resources/app/resources/win32/components/WCH/OpenOCD/OpenOCD/bin/openocd.exe",
 				"configOptions": [
-					"-f \"c:/MounRiver/MounRiver_Studio2/resources/app/resources/win32/components/WCH/OpenOCD/OpenOCD/bin/wch-riscv.cfg\" -c \"chip_id CH32V30x\""
+					"-f \"d:/MounRiver/MounRiver_Studio2/resources/app/resources/win32/components/WCH/OpenOCD/OpenOCD/bin/wch-riscv.cfg\" -c \"chip_id CH32V30x\""
 				],
 				"gdbport": 3333,
 				"telnetport": 4444,
@@ -22,7 +22,7 @@
 				"enableNoZeroWaitingAreaFlash": false
 			},
 			"gdbCfg": {
-				"executable": "c:/MounRiver/MounRiver_Studio2/resources/app/resources/win32/components/WCH/Toolchain/RISC-V Embedded GCC/bin/riscv-none-embed-gdb.exe",
+				"executable": "d:/MounRiver/MounRiver_Studio2/resources/app/resources/win32/components/WCH/Toolchain/RISC-V Embedded GCC/bin/riscv-none-embed-gdb.exe",
 				"commands": [
 					"set mem inaccessible-by-default off",
 					"set architecture riscv:rv32",
@@ -39,8 +39,8 @@
 					"additionalCommands": []
 				},
 				"loadedFiles": {
-					"executableFile": "c:\\Users\\lhxsy\\mounriver-studio-projects\\WIFI模块\\CH32V307-RT-Thread\\obj\\CH32V307-RT-Thread.elf",
-					"symbolFile": "c:\\Users\\lhxsy\\mounriver-studio-projects\\WIFI模块\\CH32V307-RT-Thread\\obj\\CH32V307-RT-Thread.elf",
+					"executableFile": "c:\\Users\\wydnm\\Desktop\\GIT\\NEW\\CH32V307-RT-Thread\\obj\\CH32V307-RT-Thread.elf",
+					"symbolFile": "c:\\Users\\wydnm\\Desktop\\GIT\\NEW\\CH32V307-RT-Thread\\obj\\CH32V307-RT-Thread.elf",
 					"executableFileOffset": 0,
 					"symbolFileOffset": 0
 				},
@@ -54,7 +54,7 @@
 				},
 				"debugInRAM": false
 			},
-			"svdpath": "c:\\MounRiver\\MounRiver_Studio2\\resources\\app\\resources\\win32\\components\\WCH\\SDK\\default/RISC-V/CH32V307/NoneOS/CH32V307xx.svd",
+			"svdpath": "d:\\MounRiver\\MounRiver_Studio2\\resources\\app\\resources\\win32\\components\\WCH\\SDK\\default/RISC-V/CH32V307/NoneOS/CH32V307xx.svd",
 			"output": {
 				"showDebugGDBTrace": true,
 				"saveDebugOutputToFile": false,

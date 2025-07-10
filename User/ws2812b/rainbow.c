@@ -68,55 +68,122 @@ void rainbow_init(void)
 }
 
 /* 彩虹效果线程 */
+
 static void rainbow_thread_entry(void* parameter)
 {
     ws2812_hsv_t hsv;
     hsv.s = 1.0f;
     float hue = 0.0f;
     float angle = 0.0f;  // 呼吸效果的角度
-    
-    while(1) {
-        // 计算呼吸效果的亮度调制因子(0.0-1.0)
-        float breathing_factor = 1.0f;
+    int AAAAA = 1;
+        while(1) {
+        // 检查是否启用红黄效果
+        if (AAAAA == 1) {
+            //在HSV色环中，0°代表红色，30°是橙色，60°是黄色，120°是绿色，180°是青色，240°是蓝色，300°是紫色，360°又回到红色。
+            // 红-橙-橙-黄-橙-橙-红的黄昏渐变，橙色更宽
+            // 设定色相范围：红(0°)→橙(30°)→橙(30°)→黄(50°)→橙(30°)→橙(30°)→红(0°)
+            static float dusk_offset = 0.0f;
+            float dusk_hue_range[] = {0.0f, 13.0f, 20.0f, 25.0f, 20.0f, 13.0f, 0.0f}; // 橙色区间加宽
+            int dusk_steps = 6; // 区间数
+
+            for (int i = 0; i < WS2812_LED_NUM; i++) {
+                // 计算每个LED在渐变带中的位置
+                float t = ((float)i / WS2812_LED_NUM + dusk_offset);
+                if (t > 1.0f) t -= 1.0f;
+                t *= dusk_steps; // 映射到区间
+                int idx = (int)t;
+                float frac = t - idx; // 区间内插值因子
+
+                // 线性插值色相
+                float hue = dusk_hue_range[idx] + frac * (dusk_hue_range[idx + 1] - dusk_hue_range[idx]);
+                ws2812_hsv_t hsv;
+                hsv.h = hue;
+                hsv.s = 1.0f;
+                hsv.v = (float)rainbow_ctrl.brightness / 100.0f;
+
+                ws2812_hsv_to_rgb(hsv,
+                    &led_data[i * 3 + 0],
+                    &led_data[i * 3 + 1],
+                    &led_data[i * 3 + 2]);
+            }
+            dusk_offset += 0.006f; // 控制流动速度
+            if (dusk_offset > 1.0f) dusk_offset -= 1.0f;
+ } 
         
-        if (rainbow_ctrl.breathing_enabled) {
-            // 使用正弦波产生呼吸效果
-            breathing_factor = (sinf(angle) + 1.0f) / 2.0f;  // 将-1到1映射到0到1
+        
+        else if(AAAAA == 2){
+            // 蓝-青-绿-青-蓝的蓝绿渐变，蓝色和绿色区间加宽
+            // 设定色相范围：蓝(200°)→青(170°)→绿(140°)→青(170°)→蓝(200°)
+            static float ocean_offset = 0.0f;
+            float ocean_hue_range[] = {240.0f, 170.0f, 130.0f, 170.0f, 240.0f}; // 色相节点
+            int ocean_steps = 4; // 区间数
+
+            for (int i = 0; i < WS2812_LED_NUM; i++) {
+                // 计算每个LED在渐变带中的位置
+                float t = ((float)i / WS2812_LED_NUM + ocean_offset);
+                if (t > 1.0f) t -= 1.0f;
+                t *= ocean_steps; // 映射到区间
+                int idx = (int)t;
+                float frac = t - idx; // 区间内插值因子
+
+                // 线性插值色相
+                float hue = ocean_hue_range[idx] + frac * (ocean_hue_range[idx + 1] - ocean_hue_range[idx]);
+                ws2812_hsv_t hsv;
+                hsv.h = hue;
+                hsv.s = 1.0f;
+                hsv.v = (float)rainbow_ctrl.brightness / 100.0f;
+
+                ws2812_hsv_to_rgb(hsv,
+                    &led_data[i * 3 + 0],
+                    &led_data[i * 3 + 1],
+                    &led_data[i * 3 + 2]);
+            }
+            ocean_offset += 0.007f; // 控制流动速度
+            if (ocean_offset > 1.0f) ocean_offset -= 1.0f;
+        }
+        else {
+            float breathing_factor = 1.0f;
             
-            // 如果配置了最小亮度，则将呼吸范围设为最小亮度到最大亮度
-            if (rainbow_ctrl.min_brightness > 0) {
-                float min_factor = (float)rainbow_ctrl.min_brightness / 100.0f;
-                breathing_factor = min_factor + breathing_factor * (1.0f - min_factor);
+            if (rainbow_ctrl.breathing_enabled) {
+                // 使用正弦波产生呼吸效果
+                breathing_factor = (sinf(angle) + 1.0f) / 2.0f;  // 将-1到1映射到0到1
+                
+                // 如果配置了最小亮度，则将呼吸范围设为最小亮度到最大亮度
+                if (rainbow_ctrl.min_brightness > 0) {
+                    float min_factor = (float)rainbow_ctrl.min_brightness / 100.0f;
+                    breathing_factor = min_factor + breathing_factor * (1.0f - min_factor);
+                }
+                
+                // 更新角度
+                angle += 2 * PI / (rainbow_ctrl.breathing_cycle_ms / rainbow_ctrl.delay_ms);
+                if (angle >= 2 * PI) angle -= 2 * PI;
             }
             
-            // 更新角度
-            angle += 2 * PI / (rainbow_ctrl.breathing_cycle_ms / rainbow_ctrl.delay_ms);
-            if (angle >= 2 * PI) angle -= 2 * PI;
-        }
-        
-        // 设置亮度(0-100转换为0.0-1.0)，加入呼吸调制
-        hsv.v = (float)rainbow_ctrl.brightness / 100.0f * breathing_factor;
-        
-        // 更新所有LED颜色
-        for(int i = 0; i < WS2812_LED_NUM; i++) {
-            hsv.h = fmodf(hue + (float)i * (360.0f / WS2812_LED_NUM), 360.0f);
+            // 设置亮度(0-100转换为0.0-1.0)，加入呼吸调制
+            hsv.v = (float)rainbow_ctrl.brightness / 100.0f * breathing_factor;
             
-            ws2812_hsv_to_rgb(hsv, 
-                &led_data[i * 3 + 0],
-                &led_data[i * 3 + 1],
-                &led_data[i * 3 + 2]);
+            // 更新所有LED颜色
+            for(int i = 0; i < WS2812_LED_NUM; i++) {
+                hsv.h = fmodf(hue + (float)i * (360.0f / WS2812_LED_NUM), 360.0f);
+                
+                ws2812_hsv_to_rgb(hsv, 
+                    &led_data[i * 3 + 0],
+                    &led_data[i * 3 + 1],
+                    &led_data[i * 3 + 2]);
+            }
+            
+            // 更新色相
+            hue += rainbow_ctrl.hue_step;
+            if(hue >= 360.0f) hue -= 360.0f;
         }
         
         // 更新WS2812
         ws2812_update(led_data);
-        
-        // 更新色相
-        hue += rainbow_ctrl.hue_step;
-        if(hue >= 360.0f) hue -= 360.0f;
 
         // 根据当前设定的延时参数延时
         rt_thread_mdelay(rainbow_ctrl.delay_ms);
     }
+
 }
 
 /* 启动彩虹效果 */
