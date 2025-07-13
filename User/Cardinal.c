@@ -52,7 +52,7 @@ rt_bool_t onFeeding = RT_FALSE;
 static void cardinal_time_thread(void *parameter)
 {
     int last_hour = -1, last_minute = -1;
-    int last_feed_hour = -1; // 新增变量，记录上次喂食的小时
+    int last_feed_hour = -1; //记录上次喂食的小时
     while (1)
     {
         
@@ -61,24 +61,19 @@ static void cardinal_time_thread(void *parameter)
         {
             last_hour = g_cardinal_time.hour;
             last_minute = g_cardinal_time.minute;
-            // 整点触发
-            if (g_cardinal_time.minute == 0 && g_cardinal_tasks[g_cardinal_time.hour].amount > 0)
+            //标准时间触发
+            if (g_cardinal_time.minute == g_cardinal_tasks[g_cardinal_time.hour].min && g_cardinal_tasks[g_cardinal_time.hour].amount > 0)
             {
-                // 新增：避免同一小时重复喂食
+                //避免同一小时重复喂食
                 if (last_feed_hour != g_cardinal_time.hour)
                 {
-                    // 启动主控线程
+                    //启动主控线程
                     rt_sem_release(&cardinal_main_sem);
                     last_feed_hour = g_cardinal_time.hour;
                 }
             }
-            // 新增：如果分钟不为0，允许下一个整点重新触发
-            if (g_cardinal_time.minute != 0)
-            {
-                last_feed_hour = -1;
-            }
         }
-        rt_thread_mdelay(6000); // 检查频率
+        rt_thread_mdelay(6000); // 检查频率 6秒
     }
 }
 
@@ -117,7 +112,7 @@ static void cardinal_main_thread(void *parameter)
 
         // 设置舵机参数
         g_servo_param.speed = 10 * amount;
-        g_servo_param.duration_sec = 2 + (amount + 1) / 2.0;
+        g_servo_param.duration_sec = 2 + (amount + 0.5) / 2.0;
         // 唤醒舵机线程
         rt_sem_release(&cardinal_servo_sem);
         rt_sem_take(&cardinal_servo_done_sem, RT_WAITING_FOREVER);
@@ -253,7 +248,7 @@ static float parse_float(const char *str) {
     return sign * result;
 }
 
-// 提取键对应的整型值
+//键对应的整型值
 static int extract_int(const char *key, const char *json) {
     char *pos = strstr(json, key);
     if (!pos) return 0;
@@ -262,7 +257,7 @@ static int extract_int(const char *key, const char *json) {
     return atoi(pos + 1);
 }
 
-// 提取键对应的浮点值（用字符串切片后手动解析）
+//键对应的浮点值（用字符串切片后手动解析）
 static float extract_float(const char *key, const char *json) {
     char *pos = strstr(json, key);
     if (!pos) return 0.0f;
@@ -281,7 +276,7 @@ static float extract_float(const char *key, const char *json) {
     return parse_float(buf);
 }
 
-// 提取灯光字符串（"0"或"1"）
+//提取灯光字符串（！历史遗留问题，其实字符串内容仅仅为“0”之类的）
 static int extract_light(const char *key, const char *json) {
     char *pos = strstr(json, key);
     if (!pos) return 0;
@@ -293,8 +288,8 @@ static int extract_light(const char *key, const char *json) {
         return *pos - '0';
     return 0;
 }
-// 主函数：解析 JSON 并更新任务表
-// 主函数：解析 JSON 并更新任务表
+
+//主函数：解析 JSON 并更新任务表
 void cardinal_update_tasks(const char *json) {
     // 先清空所有原数据
     for (int i = 0; i < 24; i++) {
@@ -323,9 +318,12 @@ void cardinal_update_tasks(const char *json) {
         g_cardinal_tasks[hour].amount         = extract_float("amount", entry_json);
         g_cardinal_tasks[hour].light_mode     = extract_light("light", entry_json);
         g_cardinal_tasks[hour].water_duration = extract_int("water", entry_json);
-        rt_kprintf("[Cardinal] 数据更新");
+        g_cardinal_tasks[hour].min = extract_int("minute", entry_json);
     }
+    rt_kprintf("[Cardinal] 数据更新");
 }
+
+
 
 // 控制台命令：锁定时间为10:00并停止更新时间
 void cardinal_stop_time(int argc, char **argv)

@@ -1,6 +1,6 @@
 /********************************** (C) COPYRIGHT *******************************
 * File Name          : main.c
-* Author             : ChatGPT
+* Author             : ChatGPT 4o, Gemini 2.0, Claude 4
 * Version            : V2.0.0
 * Date               : 2025/05/27
 * Description        : CH32V307 + RT-Thread Ö÷³ÌÐò

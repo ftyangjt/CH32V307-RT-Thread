@@ -7,7 +7,8 @@
 #include <stdio.h>
 #include <finsh.h>
 #include "drivers/pin.h"
-#include "Cardinal.h" // 新增
+#include "Cardinal.h"
+#include "ws2812b/rainbow.h"
 
 #define WIFI_UART_NAME "uart2"
 #define WIFI_RECV_BUF_SIZE 1024
@@ -80,6 +81,17 @@ static void wifi_parse_json(const char *json)
         {
             // 调用 cardinal_set_time 进行时间解析和校准
             cardinal_set_time(mm, ss);
+            return;
+        }
+    }
+
+    // 检测是否为时间校准格式：[MM:SS]
+    if (json[0] == 'L')
+    {
+        int n;
+        if (sscanf(json, "L%d", &n) == 1)
+        {
+            rainBowType = n;
             return;
         }
     }

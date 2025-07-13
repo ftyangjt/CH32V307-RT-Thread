@@ -16,6 +16,7 @@ typedef struct {
     float amount;           // 任务参数（支持小数）
     int light_mode;         // 灯光模式
     int water_duration;     // 水流时间
+    int min;
 } cardinal_task_t;
 
 extern int g_light;

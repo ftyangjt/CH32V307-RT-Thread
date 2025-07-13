@@ -3,35 +3,36 @@
 * Author             : ChatGPT
 * Version            : V1.0.0
 * Date               : 2025/05/27
-* Description        : WS2812å½©è™¹ç¯å…‰æ•ˆæœ
+* Description        : WS2812²ÊºçµÆ¹âĞ§¹û
 *********************************************************************************/
 
 #include "rainbow.h"
 #include "ws2812.h"
 #include <math.h>
 
-// å…¨å±€å˜é‡
+// È«¾Ö±äÁ¿
 static rainbow_ctrl_t rainbow_ctrl;
 static rt_thread_t rainbow_thread = RT_NULL;
 static uint8_t led_data[WS2812_LED_NUM * 3];
-static rt_thread_t solid_color_thread = RT_NULL;  // é‡å‘½åä¸ºsolid_color_thread
+static rt_thread_t solid_color_thread = RT_NULL;  // ÖØÃüÃûÎªsolid_color_thread
+int rainBowType = 1;
 
-// å…¨å±€é¢œè‰²å‚æ•°ï¼Œç”¨äºå­˜å‚¨å½“å‰çº¯è‰²æ¨¡å¼çš„RGBå€¼
+// È«¾ÖÑÕÉ«²ÎÊı£¬ÓÃÓÚ´æ´¢µ±Ç°´¿É«Ä£Ê½µÄRGBÖµ
 static struct {
     uint8_t r;
     uint8_t g; 
     uint8_t b;
-    uint8_t brightness;  // äº®åº¦ç™¾åˆ†æ¯”(0-100)
-} solid_color = {255, 255, 255, 100};  // é»˜è®¤ä¸ºç™½è‰²ï¼Œ100%äº®åº¦
+    uint8_t brightness;  // ÁÁ¶È°Ù·Ö±È(0-100)
+} solid_color = {255, 255, 255, 100};  // Ä¬ÈÏÎª°×É«£¬100%ÁÁ¶È
 
 
-// è‡ªå®šä¹‰å­—ç¬¦ä¸²è½¬æ•´æ•°å‡½æ•°
+//×Ô¶¨Òå×Ö·û´®×ªÕûÊıº¯Êı
 int str_to_int(const char* str)
 {
     int result = 0;
     int sign = 1;
     
-    // å¤„ç†ç¬¦å·
+    // ´¦Àí·ûºÅ
     if(*str == '-') {
         sign = -1;
         str++;
@@ -39,7 +40,7 @@ int str_to_int(const char* str)
         str++;
     }
     
-    // å¤„ç†æ•°å­—
+    // ´¦ÀíÊı×Ö
     while(*str >= '0' && *str <= '9') {
         result = result * 10 + (*str - '0');
         str++;
@@ -49,52 +50,51 @@ int str_to_int(const char* str)
 }
 
 
-/* åˆå§‹åŒ–å½©è™¹æ•ˆæœ */
+/* ³õÊ¼»¯²ÊºçĞ§¹û */
 void rainbow_init(void)
 {
-    // åˆå§‹åŒ–æ§åˆ¶å‚æ•°
+    // ³õÊ¼»¯¿ØÖÆ²ÎÊı
     rainbow_ctrl.hue = 0.0f;
     rainbow_ctrl.hue_step = 5.0f;
     rainbow_ctrl.delay_ms = 25;
     rainbow_ctrl.brightness = 30;
     rainbow_ctrl.mode = 1;
     
-    // åˆå§‹åŒ–å‘¼å¸æ•ˆæœå‚æ•°
-    rainbow_ctrl.breathing_enabled = 0;  // é»˜è®¤å…³é—­å‘¼å¸æ•ˆæœ
-    rainbow_ctrl.breathing_cycle_ms = 3000;  // é»˜è®¤3ç§’ä¸€ä¸ªå‘¨æœŸ
-    rainbow_ctrl.min_brightness = 5;  // æœ€å°äº®åº¦ä¸º5%
+    // ³õÊ¼»¯ºôÎüĞ§¹û²ÎÊı
+    rainbow_ctrl.breathing_enabled = 0;  // Ä¬ÈÏ¹Ø±ÕºôÎüĞ§¹û
+    rainbow_ctrl.breathing_cycle_ms = 3000;  // Ä¬ÈÏ3ÃëÒ»¸öÖÜÆÚ
+    rainbow_ctrl.min_brightness = 5;  // ×îĞ¡ÁÁ¶ÈÎª5%
     
-    rt_kprintf("å½©è™¹æ•ˆæœå·²åˆå§‹åŒ–\n");
+    rt_kprintf("²ÊºçĞ§¹ûÒÑ³õÊ¼»¯\n");
 }
 
-/* å½©è™¹æ•ˆæœçº¿ç¨‹ */
+/* ²ÊºçĞ§¹ûÏß³Ì */
 
 static void rainbow_thread_entry(void* parameter)
 {
     ws2812_hsv_t hsv;
     hsv.s = 1.0f;
     float hue = 0.0f;
-    float angle = 0.0f;  // å‘¼å¸æ•ˆæœçš„è§’åº¦
-    int AAAAA = 1;
+    float angle = 0.0f;  // ºôÎüĞ§¹ûµÄ½Ç¶È
         while(1) {
-        // æ£€æŸ¥æ˜¯å¦å¯ç”¨çº¢é»„æ•ˆæœ
-        if (AAAAA == 1) {
-            //åœ¨HSVè‰²ç¯ä¸­ï¼Œ0Â°ä»£è¡¨çº¢è‰²ï¼Œ30Â°æ˜¯æ©™è‰²ï¼Œ60Â°æ˜¯é»„è‰²ï¼Œ120Â°æ˜¯ç»¿è‰²ï¼Œ180Â°æ˜¯é’è‰²ï¼Œ240Â°æ˜¯è“è‰²ï¼Œ300Â°æ˜¯ç´«è‰²ï¼Œ360Â°åˆå›åˆ°çº¢è‰²ã€‚
-            // çº¢-æ©™-æ©™-é»„-æ©™-æ©™-çº¢çš„é»„æ˜æ¸å˜ï¼Œæ©™è‰²æ›´å®½
-            // è®¾å®šè‰²ç›¸èŒƒå›´ï¼šçº¢(0Â°)â†’æ©™(30Â°)â†’æ©™(30Â°)â†’é»„(50Â°)â†’æ©™(30Â°)â†’æ©™(30Â°)â†’çº¢(0Â°)
+        // ¼ì²éÊÇ·ñÆôÓÃºì»ÆĞ§¹û
+        if (rainBowType == 1) {
+            //ÔÚHSVÉ«»·ÖĞ£¬0¡ã´ú±íºìÉ«£¬30¡ãÊÇ³ÈÉ«£¬60¡ãÊÇ»ÆÉ«£¬120¡ãÊÇÂÌÉ«£¬180¡ãÊÇÇàÉ«£¬240¡ãÊÇÀ¶É«£¬300¡ãÊÇ×ÏÉ«£¬360¡ãÓÖ»Øµ½ºìÉ«¡£
+            // ºì-³È-³È-»Æ-³È-³È-ºìµÄ»Æ»è½¥±ä£¬³ÈÉ«¸ü¿í
+            // Éè¶¨É«Ïà·¶Î§£ººì(0¡ã)¡ú³È(30¡ã)¡ú³È(30¡ã)¡ú»Æ(50¡ã)¡ú³È(30¡ã)¡ú³È(30¡ã)¡úºì(0¡ã)
             static float dusk_offset = 0.0f;
-            float dusk_hue_range[] = {0.0f, 13.0f, 20.0f, 25.0f, 20.0f, 13.0f, 0.0f}; // æ©™è‰²åŒºé—´åŠ å®½
-            int dusk_steps = 6; // åŒºé—´æ•°
+            float dusk_hue_range[] = {0.0f, 13.0f, 20.0f, 25.0f, 20.0f, 13.0f, 0.0f}; // ³ÈÉ«Çø¼ä¼Ó¿í
+            int dusk_steps = 6; // Çø¼äÊı
 
             for (int i = 0; i < WS2812_LED_NUM; i++) {
-                // è®¡ç®—æ¯ä¸ªLEDåœ¨æ¸å˜å¸¦ä¸­çš„ä½ç½®
+                // ¼ÆËãÃ¿¸öLEDÔÚ½¥±ä´øÖĞµÄÎ»ÖÃ
                 float t = ((float)i / WS2812_LED_NUM + dusk_offset);
                 if (t > 1.0f) t -= 1.0f;
-                t *= dusk_steps; // æ˜ å°„åˆ°åŒºé—´
+                t *= dusk_steps; // Ó³Éäµ½Çø¼ä
                 int idx = (int)t;
-                float frac = t - idx; // åŒºé—´å†…æ’å€¼å› å­
+                float frac = t - idx; // Çø¼äÄÚ²åÖµÒò×Ó
 
-                // çº¿æ€§æ’å€¼è‰²ç›¸
+                // ÏßĞÔ²åÖµÉ«Ïà
                 float hue = dusk_hue_range[idx] + frac * (dusk_hue_range[idx + 1] - dusk_hue_range[idx]);
                 ws2812_hsv_t hsv;
                 hsv.h = hue;
@@ -106,27 +106,27 @@ static void rainbow_thread_entry(void* parameter)
                     &led_data[i * 3 + 1],
                     &led_data[i * 3 + 2]);
             }
-            dusk_offset += 0.006f; // æ§åˆ¶æµåŠ¨é€Ÿåº¦
+            dusk_offset += 0.006f; // ¿ØÖÆÁ÷¶¯ËÙ¶È
             if (dusk_offset > 1.0f) dusk_offset -= 1.0f;
  } 
         
         
-        else if(AAAAA == 2){
-            // è“-é’-ç»¿-é’-è“çš„è“ç»¿æ¸å˜ï¼Œè“è‰²å’Œç»¿è‰²åŒºé—´åŠ å®½
-            // è®¾å®šè‰²ç›¸èŒƒå›´ï¼šè“(200Â°)â†’é’(170Â°)â†’ç»¿(140Â°)â†’é’(170Â°)â†’è“(200Â°)
+        else if(rainBowType == 2){
+            // À¶-Çà-ÂÌ-Çà-À¶µÄÀ¶ÂÌ½¥±ä£¬À¶É«ºÍÂÌÉ«Çø¼ä¼Ó¿í
+            // Éè¶¨É«Ïà·¶Î§£ºÀ¶(200¡ã)¡úÇà(170¡ã)¡úÂÌ(140¡ã)¡úÇà(170¡ã)¡úÀ¶(200¡ã)
             static float ocean_offset = 0.0f;
-            float ocean_hue_range[] = {240.0f, 170.0f, 130.0f, 170.0f, 240.0f}; // è‰²ç›¸èŠ‚ç‚¹
-            int ocean_steps = 4; // åŒºé—´æ•°
+            float ocean_hue_range[] = {240.0f, 170.0f, 130.0f, 170.0f, 240.0f}; // É«Ïà½Úµã
+            int ocean_steps = 4; // Çø¼äÊı
 
             for (int i = 0; i < WS2812_LED_NUM; i++) {
-                // è®¡ç®—æ¯ä¸ªLEDåœ¨æ¸å˜å¸¦ä¸­çš„ä½ç½®
+                // ¼ÆËãÃ¿¸öLEDÔÚ½¥±ä´øÖĞµÄÎ»ÖÃ
                 float t = ((float)i / WS2812_LED_NUM + ocean_offset);
                 if (t > 1.0f) t -= 1.0f;
-                t *= ocean_steps; // æ˜ å°„åˆ°åŒºé—´
+                t *= ocean_steps; // Ó³Éäµ½Çø¼ä
                 int idx = (int)t;
-                float frac = t - idx; // åŒºé—´å†…æ’å€¼å› å­
+                float frac = t - idx; // Çø¼äÄÚ²åÖµÒò×Ó
 
-                // çº¿æ€§æ’å€¼è‰²ç›¸
+                // ÏßĞÔ²åÖµÉ«Ïà
                 float hue = ocean_hue_range[idx] + frac * (ocean_hue_range[idx + 1] - ocean_hue_range[idx]);
                 ws2812_hsv_t hsv;
                 hsv.h = hue;
@@ -138,31 +138,39 @@ static void rainbow_thread_entry(void* parameter)
                     &led_data[i * 3 + 1],
                     &led_data[i * 3 + 2]);
             }
-            ocean_offset += 0.007f; // æ§åˆ¶æµåŠ¨é€Ÿåº¦
+            ocean_offset += 0.007f; // ¿ØÖÆÁ÷¶¯ËÙ¶È
             if (ocean_offset > 1.0f) ocean_offset -= 1.0f;
+        }
+        else if(rainBowType == 3){
+            // AAAAA==3 Ê±£¬ËùÓĞLED°×É«³£ÁÁ
+            for (int i = 0; i < WS2812_LED_NUM; i++) {
+                led_data[i * 3 + 0] = 200; // R
+                led_data[i * 3 + 1] = 200; // G
+                led_data[i * 3 + 2] = 200; // B
+            }
         }
         else {
             float breathing_factor = 1.0f;
             
             if (rainbow_ctrl.breathing_enabled) {
-                // ä½¿ç”¨æ­£å¼¦æ³¢äº§ç”Ÿå‘¼å¸æ•ˆæœ
-                breathing_factor = (sinf(angle) + 1.0f) / 2.0f;  // å°†-1åˆ°1æ˜ å°„åˆ°0åˆ°1
+                // Ê¹ÓÃÕıÏÒ²¨²úÉúºôÎüĞ§¹û
+                breathing_factor = (sinf(angle) + 1.0f) / 2.0f;  // ½«-1µ½1Ó³Éäµ½0µ½1
                 
-                // å¦‚æœé…ç½®äº†æœ€å°äº®åº¦ï¼Œåˆ™å°†å‘¼å¸èŒƒå›´è®¾ä¸ºæœ€å°äº®åº¦åˆ°æœ€å¤§äº®åº¦
+                // Èç¹ûÅäÖÃÁË×îĞ¡ÁÁ¶È£¬Ôò½«ºôÎü·¶Î§ÉèÎª×îĞ¡ÁÁ¶Èµ½×î´óÁÁ¶È
                 if (rainbow_ctrl.min_brightness > 0) {
                     float min_factor = (float)rainbow_ctrl.min_brightness / 100.0f;
                     breathing_factor = min_factor + breathing_factor * (1.0f - min_factor);
                 }
                 
-                // æ›´æ–°è§’åº¦
+                // ¸üĞÂ½Ç¶È
                 angle += 2 * PI / (rainbow_ctrl.breathing_cycle_ms / rainbow_ctrl.delay_ms);
                 if (angle >= 2 * PI) angle -= 2 * PI;
             }
             
-            // è®¾ç½®äº®åº¦(0-100è½¬æ¢ä¸º0.0-1.0)ï¼ŒåŠ å…¥å‘¼å¸è°ƒåˆ¶
+            // ÉèÖÃÁÁ¶È(0-100×ª»»Îª0.0-1.0)£¬¼ÓÈëºôÎüµ÷ÖÆ
             hsv.v = (float)rainbow_ctrl.brightness / 100.0f * breathing_factor;
             
-            // æ›´æ–°æ‰€æœ‰LEDé¢œè‰²
+            // ¸üĞÂËùÓĞLEDÑÕÉ«
             for(int i = 0; i < WS2812_LED_NUM; i++) {
                 hsv.h = fmodf(hue + (float)i * (360.0f / WS2812_LED_NUM), 360.0f);
                 
@@ -172,27 +180,24 @@ static void rainbow_thread_entry(void* parameter)
                     &led_data[i * 3 + 2]);
             }
             
-            // æ›´æ–°è‰²ç›¸
+            // ¸üĞÂÉ«Ïà
             hue += rainbow_ctrl.hue_step;
             if(hue >= 360.0f) hue -= 360.0f;
         }
         
-        // æ›´æ–°WS2812
+        // ¸üĞÂWS2812
         ws2812_update(led_data);
 
-        // æ ¹æ®å½“å‰è®¾å®šçš„å»¶æ—¶å‚æ•°å»¶æ—¶
+        // ¸ù¾İµ±Ç°Éè¶¨µÄÑÓÊ±²ÎÊıÑÓÊ±
         rt_thread_mdelay(rainbow_ctrl.delay_ms);
     }
 
 }
 
-/* å¯åŠ¨å½©è™¹æ•ˆæœ */
+/* Æô¶¯²ÊºçĞ§¹û */
 void rainbow_start(uint8_t speed_level)
-{
-    // å…ˆåœæ­¢çº¯è‰²æ¨¡å¼
-    solid_color_stop();
-    
-    // å¦‚æœå½©è™¹çº¿ç¨‹å·²å­˜åœ¨ï¼Œå…ˆåˆ é™¤å®ƒ
+{    
+    // Èç¹û²ÊºçÏß³ÌÒÑ´æÔÚ£¬ÏÈÉ¾³ıËü
     if (rainbow_thread != RT_NULL)
     {
         rt_thread_delete(rainbow_thread);
@@ -205,7 +210,7 @@ void rainbow_start(uint8_t speed_level)
     rainbow_ctrl.hue_step = 2.0f * speed_level;
     rainbow_ctrl.delay_ms = 50 / speed_level;
     
-    // åˆ›å»ºå½©è™¹æ•ˆæœçº¿ç¨‹
+    // ´´½¨²ÊºçĞ§¹ûÏß³Ì
     rainbow_thread = rt_thread_create("rainbow", 
                                       rainbow_thread_entry, 
                                       RT_NULL, 
@@ -214,13 +219,13 @@ void rainbow_start(uint8_t speed_level)
                                       10);
     if(rainbow_thread != RT_NULL) {
         rt_thread_startup(rainbow_thread);
-        rt_kprintf("å½©è™¹æ•ˆæœå·²å¯åŠ¨ï¼Œé€Ÿåº¦çº§åˆ«=%d\n", speed_level);
+        rt_kprintf("²ÊºçĞ§¹ûÒÑÆô¶¯£¬ËÙ¶È¼¶±ğ=%d\n", speed_level);
     } else {
-        rt_kprintf("å½©è™¹æ•ˆæœçº¿ç¨‹åˆ›å»ºå¤±è´¥ï¼\n");
+        rt_kprintf("²ÊºçĞ§¹ûÏß³Ì´´½¨Ê§°Ü£¡\n");
     }
 }
 
-/* åœæ­¢å½©è™¹æ•ˆæœ */
+/* Í£Ö¹²ÊºçĞ§¹û */
 void rainbow_stop(void)
 {
     if (rainbow_thread != RT_NULL)
@@ -228,18 +233,18 @@ void rainbow_stop(void)
         rt_thread_delete(rainbow_thread);
         rainbow_thread = RT_NULL;
         
-        // å…³é—­æ‰€æœ‰LED
+        // ¹Ø±ÕËùÓĞLED
         for (int i = 0; i < WS2812_LED_NUM * 3; i++)
         {
             led_data[i] = 0;
         }
         ws2812_update(led_data);
         
-        rt_kprintf("å½©è™¹æ¨¡å¼å·²åœæ­¢\n");
+        rt_kprintf("²ÊºçÄ£Ê½ÒÑÍ£Ö¹\n");
     }
 }
 
-/* è®¾ç½®å½©è™¹æ•ˆæœé€Ÿåº¦ */
+/* ÉèÖÃ²ÊºçĞ§¹ûËÙ¶È */
 void rainbow_set_speed(uint8_t speed_level)
 {
     if(speed_level < 1) speed_level = 1;
@@ -248,22 +253,22 @@ void rainbow_set_speed(uint8_t speed_level)
     rainbow_ctrl.hue_step = 2.0f * speed_level;
     rainbow_ctrl.delay_ms = 50 / speed_level;
     
-    rt_kprintf("å½©è™¹æ•ˆæœé€Ÿåº¦å·²è®¾ç½®ä¸ºçº§åˆ«%d\n", speed_level);
+    rt_kprintf("²ÊºçĞ§¹ûËÙ¶ÈÒÑÉèÖÃÎª¼¶±ğ%d\n", speed_level);
 }
 
-/* è®¾ç½®å½©è™¹æ•ˆæœäº®åº¦ */
+/* ÉèÖÃ²ÊºçĞ§¹ûÁÁ¶È */
 void rainbow_set_brightness(uint8_t brightness)
 {
     if(brightness > 100) brightness = 100;
     rainbow_ctrl.brightness = brightness;
     
-    rt_kprintf("å½©è™¹æ•ˆæœäº®åº¦å·²è®¾ç½®ä¸º%d%%\n", brightness);
+    rt_kprintf("²ÊºçĞ§¹ûÁÁ¶ÈÒÑÉèÖÃÎª%d%%\n", brightness);
 }
 
-// MSHå‘½ä»¤ï¼šå¯åŠ¨å½©è™¹æ•ˆæœ
+// MSHÃüÁî£ºÆô¶¯²ÊºçĞ§¹û
 static int cmd_rainbow(int argc, char **argv)
 {
-    int speed = 3;  // é»˜è®¤é€Ÿåº¦çº§åˆ«
+    int speed = 3;  // Ä¬ÈÏËÙ¶È¼¶±ğ
     
     if(argc > 1) {
         speed = str_to_int(argv[1]);
@@ -274,7 +279,7 @@ static int cmd_rainbow(int argc, char **argv)
 }
 MSH_CMD_EXPORT(cmd_rainbow, start rainbow effect [speed 1-5]);
 
-// MSHå‘½ä»¤ï¼šåœæ­¢å½©è™¹æ•ˆæœ
+// MSHÃüÁî£ºÍ£Ö¹²ÊºçĞ§¹û
 static int cmd_rainbow_stop(int argc, char **argv)
 {
     rainbow_stop();
@@ -282,10 +287,10 @@ static int cmd_rainbow_stop(int argc, char **argv)
 }
 MSH_CMD_EXPORT(cmd_rainbow_stop, stop rainbow effect);
 
-// MSHå‘½ä»¤ï¼šè®¾ç½®å½©è™¹æ•ˆæœäº®åº¦
+// MSHÃüÁî£ºÉèÖÃ²ÊºçĞ§¹ûÁÁ¶È
 static int cmd_brightness(int argc, char **argv)
 {
-    int brightness = 30;  // é»˜è®¤äº®åº¦30%
+    int brightness = 30;  // Ä¬ÈÏÁÁ¶È30%
     
     if(argc > 1) {
         brightness = str_to_int(argv[1]);
@@ -298,210 +303,44 @@ static int cmd_brightness(int argc, char **argv)
 }
 MSH_CMD_EXPORT(cmd_brightness, set rainbow brightness [0-100]);
 
-/* çº¯è‰²æ¨¡å¼çº¿ç¨‹ */
-static void solid_color_thread_entry(void* parameter)
-{
-    uint8_t color_data[WS2812_LED_NUM * 3];
 
-    while (1)
-    {
-        // æ ¹æ®äº®åº¦è°ƒæ•´RGBå€¼
-        uint8_t r = (uint8_t)((solid_color.r * solid_color.brightness) / 100);
-        uint8_t g = (uint8_t)((solid_color.g * solid_color.brightness) / 100);
-        uint8_t b = (uint8_t)((solid_color.b * solid_color.brightness) / 100);
-        
-        // å¡«å……æ‰€æœ‰LEDä¸ºè®¾å®šçš„çº¯è‰²
-        for (int i = 0; i < WS2812_LED_NUM; i++)
-        {
-            color_data[i * 3 + 0] = r; // R
-            color_data[i * 3 + 1] = g; // G
-            color_data[i * 3 + 2] = b; // B
-        }
-        ws2812_update(color_data);
-        rt_thread_mdelay(100); // ä¿æŒåˆ·æ–°
-    }
-}
-
-/* å¯åŠ¨çº¯è‰²æ¨¡å¼ */
-void solid_color_start(void)
-{
-    rainbow_stop(); // å…ˆåœæ­¢å½©è™¹æ•ˆæœçº¿ç¨‹
-
-    if (solid_color_thread == RT_NULL)
-    {
-        solid_color_thread = rt_thread_create("solid_color",
-                                        solid_color_thread_entry,
-                                        RT_NULL,
-                                        512,
-                                        9,
-                                        10);
-        if (solid_color_thread != RT_NULL)
-        {
-            rt_thread_startup(solid_color_thread);
-            rt_kprintf("çº¯è‰²æ¨¡å¼å·²å¯åŠ¨ï¼ŒRGB:(%d,%d,%d)ï¼Œäº®åº¦:%d%%\n", 
-                      solid_color.r, solid_color.g, solid_color.b, solid_color.brightness);
-        }
-        else
-        {
-            rt_kprintf("çº¯è‰²æ¨¡å¼çº¿ç¨‹åˆ›å»ºå¤±è´¥ï¼\n");
-        }
-    }
-    else
-    {
-        rt_kprintf("çº¯è‰²æ¨¡å¼å·²åœ¨è¿è¡Œ\n");
-    }
-}
-
-/* åœæ­¢çº¯è‰²æ¨¡å¼ */
-void solid_color_stop(void)
-{
-    if (solid_color_thread != RT_NULL)
-    {
-        rt_thread_delete(solid_color_thread);
-        solid_color_thread = RT_NULL;
-        rt_kprintf("çº¯è‰²æ¨¡å¼å·²åœæ­¢\n");
-    }
-}
-
-/* è®¾ç½®çº¯è‰²æ¨¡å¼çš„RGBå€¼ */
-void solid_color_set_rgb(uint8_t r, uint8_t g, uint8_t b)
-{
-    solid_color.r = r;
-    solid_color.g = g;
-    solid_color.b = b;
-    
-    rt_kprintf("çº¯è‰²æ¨¡å¼é¢œè‰²å·²è®¾ç½®ä¸ºRGB:(%d,%d,%d)\n", r, g, b);
-    
-    // å¦‚æœçº¯è‰²æ¨¡å¼æ­£åœ¨è¿è¡Œï¼Œæ›´æ–°é¢œè‰²
-    if (solid_color_thread != RT_NULL) {
-        // æ— éœ€é‡å¯çº¿ç¨‹ï¼Œçº¿ç¨‹å†…éƒ¨ä¼šä½¿ç”¨æœ€æ–°çš„é¢œè‰²å€¼
-    }
-}
-
-/* è®¾ç½®çº¯è‰²æ¨¡å¼çš„äº®åº¦ */
-void solid_color_set_brightness(uint8_t brightness)
-{
-    if(brightness > 100) brightness = 100;
-    solid_color.brightness = brightness;
-    
-    rt_kprintf("çº¯è‰²æ¨¡å¼äº®åº¦å·²è®¾ç½®ä¸º%d%%\n", brightness);
-}
-
-/* ä¸ºäº†å‘åå…¼å®¹ï¼Œä¿ç•™ç™½å…‰æ¨¡å¼å‡½æ•°å */
-void white_mode_start(void)
-{
-    solid_color_set_rgb(255, 255, 255); // è®¾ä¸ºç™½è‰²
-    solid_color_start();
-}
-
-void white_mode_stop(void)
-{
-    solid_color_stop();
-}
-
-/* MSHå‘½ä»¤ï¼šå¯åŠ¨ç™½å…‰æ¨¡å¼ */
-static int cmd_white(int argc, char **argv)
-{
-    white_mode_start();
-    return RT_EOK;
-}
-MSH_CMD_EXPORT(cmd_white, keep ws2812 led white);
-
-/* MSHå‘½ä»¤ï¼šåœæ­¢çº¯è‰²æ¨¡å¼ */
-static int cmd_white_stop(int argc, char **argv)
-{
-    solid_color_stop();
-    return RT_EOK;
-}
-MSH_CMD_EXPORT(cmd_white_stop, stop ws2812 white mode);
-
-/* MSHå‘½ä»¤ï¼šè®¾ç½®çº¯è‰²æ¨¡å¼ */
-static int cmd_color(int argc, char **argv)
-{
-    if (argc < 4) {
-        rt_kprintf("ç”¨æ³•: color r g b [brightness]\n");
-        rt_kprintf("ç¤ºä¾‹: color 255 0 0 50  è®¾ç½®ä¸ºçº¢è‰²ï¼Œäº®åº¦50%%\n");
-        return -RT_ERROR;
-    }
-    
-    int r = str_to_int(argv[1]);
-    int g = str_to_int(argv[2]);
-    int b = str_to_int(argv[3]);
-    
-    // æ£€æŸ¥RGBèŒƒå›´
-    if (r < 0) r = 0; if (r > 255) r = 255;
-    if (g < 0) g = 0; if (g > 255) g = 255;
-    if (b < 0) b = 0; if (b > 255) b = 255;
-    
-    solid_color_set_rgb(r, g, b);
-    
-    // è®¾ç½®äº®åº¦ï¼ˆå¯é€‰å‚æ•°ï¼‰
-    if (argc > 4) {
-        int brightness = str_to_int(argv[4]);
-        solid_color_set_brightness(brightness);
-    }
-    
-    // å¯åŠ¨çº¯è‰²æ¨¡å¼
-    solid_color_start();
-    return RT_EOK;
-}
-MSH_CMD_EXPORT(cmd_color, set ws2812 led color: color r g b [brightness]);
-
-/* MSHå‘½ä»¤ï¼šè®¾ç½®çº¯è‰²äº®åº¦ */
-static int cmd_color_brightness(int argc, char **argv)
-{
-    int brightness = 100;  // é»˜è®¤äº®åº¦100%
-    
-    if(argc > 1) {
-        brightness = str_to_int(argv[1]);
-        if(brightness < 0) brightness = 0;
-        if(brightness > 100) brightness = 100;
-    }
-    
-    solid_color_set_brightness(brightness);
-    return RT_EOK;
-}
-MSH_CMD_EXPORT(cmd_color_brightness, set solid color brightness [0-100]);
-
-
-/* å¯åŠ¨å¸¦å‘¼å¸æ•ˆæœçš„å½©è™¹æ•ˆæœ */
+/* Æô¶¯´øºôÎüĞ§¹ûµÄ²ÊºçĞ§¹û */
 void rainbow_breathing_start(uint8_t speed_level, uint32_t breathing_cycle_s)
 {
-    // åœæ­¢å…¶ä»–æ¨¡å¼
-    solid_color_stop();
+    // Í£Ö¹ÆäËûÄ£Ê½
     rainbow_stop();
     
-    // è®¾ç½®å‘¼å¸å‘¨æœŸ
+    // ÉèÖÃºôÎüÖÜÆÚ
     if (breathing_cycle_s < 1) breathing_cycle_s = 1;
     if (breathing_cycle_s > 60) breathing_cycle_s = 60;
     rainbow_ctrl.breathing_cycle_ms = breathing_cycle_s * 1000;
     
-    // å¼€å¯å‘¼å¸æ•ˆæœ
+    // ¿ªÆôºôÎüĞ§¹û
     rainbow_ctrl.breathing_enabled = 1;
     
-    // å¯åŠ¨å½©è™¹æ•ˆæœ
+    // Æô¶¯²ÊºçĞ§¹û
     rainbow_start(speed_level);
     
-    rt_kprintf("å½©è™¹å‘¼å¸æ•ˆæœå·²å¯åŠ¨ï¼Œé€Ÿåº¦çº§åˆ«=%dï¼Œå‘¼å¸å‘¨æœŸ=%dç§’\n", 
+    rt_kprintf("²ÊºçºôÎüĞ§¹ûÒÑÆô¶¯£¬ËÙ¶È¼¶±ğ=%d£¬ºôÎüÖÜÆÚ=%dÃë\n", 
                speed_level, breathing_cycle_s);
 }
 
-/* è®¾ç½®å½©è™¹å‘¼å¸æ•ˆæœçš„æœ€å°äº®åº¦ */
+/* ÉèÖÃ²ÊºçºôÎüĞ§¹ûµÄ×îĞ¡ÁÁ¶È */
 void rainbow_set_min_brightness(uint8_t min_brightness)
 {
     if (min_brightness >= rainbow_ctrl.brightness) {
-        min_brightness = rainbow_ctrl.brightness / 2;  // é˜²æ­¢æœ€å°äº®åº¦å¤§äºç­‰äºæœ€å¤§äº®åº¦
+        min_brightness = rainbow_ctrl.brightness / 2;  // ·ÀÖ¹×îĞ¡ÁÁ¶È´óÓÚµÈÓÚ×î´óÁÁ¶È
     }
     
     rainbow_ctrl.min_brightness = min_brightness;
-    rt_kprintf("å½©è™¹å‘¼å¸æ•ˆæœæœ€å°äº®åº¦å·²è®¾ç½®ä¸º%d%%\n", min_brightness);
+    rt_kprintf("²ÊºçºôÎüĞ§¹û×îĞ¡ÁÁ¶ÈÒÑÉèÖÃÎª%d%%\n", min_brightness);
 }
 
-/* MSHå‘½ä»¤ï¼šå¯åŠ¨å½©è™¹å‘¼å¸æ•ˆæœ */
+/* MSHÃüÁî£ºÆô¶¯²ÊºçºôÎüĞ§¹û */
 static int cmd_rainbow_breathing(int argc, char **argv)
 {
-    int speed = 3;  // é»˜è®¤é€Ÿåº¦çº§åˆ«
-    int cycle = 3;  // é»˜è®¤3ç§’å‘¼å¸å‘¨æœŸ
+    int speed = 3;  // Ä¬ÈÏËÙ¶È¼¶±ğ
+    int cycle = 3;  // Ä¬ÈÏ3ÃëºôÎüÖÜÆÚ
     
     if (argc > 1) {
         speed = str_to_int(argv[1]);
@@ -516,15 +355,15 @@ static int cmd_rainbow_breathing(int argc, char **argv)
 }
 MSH_CMD_EXPORT(cmd_rainbow_breathing, start rainbow breathing effect [speed 1-5] [cycle_seconds]);
 
-/* MSHå‘½ä»¤ï¼šè®¾ç½®å½©è™¹å‘¼å¸æ•ˆæœæœ€å°äº®åº¦ */
+/* MSHÃüÁî£ºÉèÖÃ²ÊºçºôÎüĞ§¹û×îĞ¡ÁÁ¶È */
 static int cmd_rainbow_min_brightness(int argc, char **argv)
 {
-    int min_brightness = 10;  // é»˜è®¤æœ€å°äº®åº¦10%
+    int min_brightness = 10;  // Ä¬ÈÏ×îĞ¡ÁÁ¶È10%
     
     if (argc > 1) {
         min_brightness = str_to_int(argv[1]);
         if (min_brightness < 0) min_brightness = 0;
-        if (min_brightness > 50) min_brightness = 50;  // æœ€å¤§ä¸è¶…è¿‡50%
+        if (min_brightness > 50) min_brightness = 50;  // ×î´ó²»³¬¹ı50%
     }
     
     rainbow_set_min_brightness(min_brightness);

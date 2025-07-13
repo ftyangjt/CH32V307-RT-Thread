@@ -10,6 +10,7 @@
 #include <stdint.h>
 
 int str_to_int(const char* str);
+extern int rainBowType;
 
 // 彩虹灯效果控制结构体
 typedef struct {
