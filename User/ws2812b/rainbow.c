@@ -76,6 +76,7 @@ void rainbow_thread_entry(void* parameter)
     hsv.s = 1.0f;
     float hue = 0.0f;
     float angle = 0.0f;  // 呼吸效果的角度
+    int rainBowType = 1;
         while(1) {
         // 检查是否启用红黄效果
         if (rainBowType == 1) {
@@ -370,3 +371,169 @@ static int cmd_rainbow_min_brightness(int argc, char **argv)
     return RT_EOK;
 }
 MSH_CMD_EXPORT(cmd_rainbow_min_brightness, set rainbow breathing min brightness [0-50]);
+
+
+/* 纯色模式线程 */
+static void solid_color_thread_entry(void* parameter)
+{
+    uint8_t color_data[WS2812_LED_NUM * 3];
+
+    while (1)
+    {
+        // 根据亮度调整RGB值
+        uint8_t r = (uint8_t)((solid_color.r * solid_color.brightness) / 100);
+        uint8_t g = (uint8_t)((solid_color.g * solid_color.brightness) / 100);
+        uint8_t b = (uint8_t)((solid_color.b * solid_color.brightness) / 100);
+        
+        // 填充所有LED为设定的纯色
+        for (int i = 0; i < WS2812_LED_NUM; i++)
+        {
+            color_data[i * 3 + 0] = r; // R
+            color_data[i * 3 + 1] = g; // G
+            color_data[i * 3 + 2] = b; // B
+        }
+        ws2812_update(color_data);
+        rt_thread_mdelay(100); // 保持刷新
+    }
+}
+
+/* 启动纯色模式 */
+void solid_color_start(void)
+{
+    rainbow_stop(); // 先停止彩虹效果线程
+
+    if (solid_color_thread == RT_NULL)
+    {
+        solid_color_thread = rt_thread_create("solid_color",
+                                        solid_color_thread_entry,
+                                        RT_NULL,
+                                        512,
+                                        9,
+                                        10);
+        if (solid_color_thread != RT_NULL)
+        {
+            rt_thread_startup(solid_color_thread);
+            rt_kprintf("纯色模式已启动，RGB:(%d,%d,%d)，亮度:%d%%\n", 
+                      solid_color.r, solid_color.g, solid_color.b, solid_color.brightness);
+        }
+        else
+        {
+            rt_kprintf("纯色模式线程创建失败！\n");
+        }
+    }
+    else
+    {
+        rt_kprintf("纯色模式已在运行\n");
+    }
+}
+
+/* 停止纯色模式 */
+void solid_color_stop(void)
+{
+    if (solid_color_thread != RT_NULL)
+    {
+        rt_thread_delete(solid_color_thread);
+        solid_color_thread = RT_NULL;
+        rt_kprintf("纯色模式已停止\n");
+    }
+}
+
+/* 设置纯色模式的RGB值 */
+void solid_color_set_rgb(uint8_t r, uint8_t g, uint8_t b)
+{
+    solid_color.r = r;
+    solid_color.g = g;
+    solid_color.b = b;
+    
+    rt_kprintf("纯色模式颜色已设置为RGB:(%d,%d,%d)\n", r, g, b);
+    
+    // 如果纯色模式正在运行，更新颜色
+    if (solid_color_thread != RT_NULL) {
+        // 无需重启线程，线程内部会使用最新的颜色值
+    }
+}
+
+/* 设置纯色模式的亮度 */
+void solid_color_set_brightness(uint8_t brightness)
+{
+    if(brightness > 100) brightness = 100;
+    solid_color.brightness = brightness;
+    
+    rt_kprintf("纯色模式亮度已设置为%d%%\n", brightness);
+}
+
+/* 为了向后兼容，保留白光模式函数名 */
+void white_mode_start(void)
+{
+    solid_color_set_rgb(255, 255, 255); // 设为白色
+    solid_color_start();
+}
+
+void white_mode_stop(void)
+{
+    solid_color_stop();
+}
+
+/* MSH命令：启动白光模式 */
+static int cmd_white(int argc, char **argv)
+{
+    white_mode_start();
+    return RT_EOK;
+}
+MSH_CMD_EXPORT(cmd_white, keep ws2812 led white);
+
+/* MSH命令：停止纯色模式 */
+static int cmd_white_stop(int argc, char **argv)
+{
+    solid_color_stop();
+    return RT_EOK;
+}
+MSH_CMD_EXPORT(cmd_white_stop, stop ws2812 white mode);
+
+/* MSH命令：设置纯色模式 */
+static int cmd_color(int argc, char **argv)
+{
+    if (argc < 4) {
+        rt_kprintf("用法: color r g b [brightness]\n");
+        rt_kprintf("示例: color 255 0 0 50  设置为红色，亮度50%%\n");
+        return -RT_ERROR;
+    }
+    
+    int r = str_to_int(argv[1]);
+    int g = str_to_int(argv[2]);
+    int b = str_to_int(argv[3]);
+    
+    // 检查RGB范围
+    if (r < 0) r = 0; if (r > 255) r = 255;
+    if (g < 0) g = 0; if (g > 255) g = 255;
+    if (b < 0) b = 0; if (b > 255) b = 255;
+    
+    solid_color_set_rgb(r, g, b);
+    
+    // 设置亮度（可选参数）
+    if (argc > 4) {
+        int brightness = str_to_int(argv[4]);
+        solid_color_set_brightness(brightness);
+    }
+    
+    // 启动纯色模式
+    solid_color_start();
+    return RT_EOK;
+}
+MSH_CMD_EXPORT(cmd_color, set ws2812 led color: color r g b [brightness]);
+
+/* MSH命令：设置纯色亮度 */
+static int cmd_color_brightness(int argc, char **argv)
+{
+    int brightness = 100;  // 默认亮度100%
+    
+    if(argc > 1) {
+        brightness = str_to_int(argv[1]);
+        if(brightness < 0) brightness = 0;
+        if(brightness > 100) brightness = 100;
+    }
+    
+    solid_color_set_brightness(brightness);
+    return RT_EOK;
+}
+MSH_CMD_EXPORT(cmd_color_brightness, set solid color brightness [0-100]);
