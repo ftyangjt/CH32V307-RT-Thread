@@ -48,7 +48,7 @@ int main(void)
     lcd_init();
     ws2812_init(); //led
     
-    // 初始化WIFI和电机
+    // 初始化   WIFI和电机
     cardinal_module_init(); //主控线程
     pump_thread_init();
     pwm_module_init();  

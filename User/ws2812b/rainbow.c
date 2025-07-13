@@ -70,7 +70,7 @@ void rainbow_init(void)
 
 /* 彩虹效果线程 */
 
-static void rainbow_thread_entry(void* parameter)
+void rainbow_thread_entry(void* parameter)
 {
     ws2812_hsv_t hsv;
     hsv.s = 1.0f;

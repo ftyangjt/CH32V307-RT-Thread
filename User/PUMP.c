@@ -4,7 +4,7 @@
 #include <drv_gpio.h> // 添加此行
 #include "Cardinal.h"
 
-// 直接使用引脚编号，需根据实际硬件修改
+//需根据实际硬件修改
 #define RELAY_PIN    87
 
 void pump_on(void)

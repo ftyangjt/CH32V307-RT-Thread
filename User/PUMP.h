@@ -4,9 +4,9 @@
 #include <rtdevice.h>
 #include <board.h>
 #include <rtthread.h>
-#include <drv_gpio.h> // 添加此行
+#include <drv_gpio.h>
 
-// 直接使用引脚编号，需根据实际硬件修改
+//直接使用引脚编号
 #define RELAY_PIN    87
 
 void pump_on(void);
