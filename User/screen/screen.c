@@ -9,51 +9,6 @@
 #include "screen.h"
 #include "../Cardinal.h"
 
-// 提取RGB565分量
-#define RGB565_R(c) (((c) >> 11) & 0x1F)
-#define RGB565_G(c) (((c) >> 5) & 0x3F)
-#define RGB565_B(c) ((c) & 0x1F)
-
-// 合成RGB565
-#define RGB565(r,g,b) (((r)<<11)|((g)<<5)|(b))
-
-// 线性插值
-static uint16_t color_lerp(uint16_t c1, uint16_t c2, float t)
-{
-    int r = RGB565_R(c1) + (RGB565_R(c2) - RGB565_R(c1)) * t;
-    int g = RGB565_G(c1) + (RGB565_G(c2) - RGB565_G(c1)) * t;
-    int b = RGB565_B(c1) + (RGB565_B(c2) - RGB565_B(c1)) * t;
-    return RGB565(r, g, b);
-}
-
-#define BG_TOP    0x21CA   // 深蓝
-#define BG_BOTTOM 0x4F7D   // 浅蓝
-
-void lcd_draw_gradient_bg(void)
-{
-    for(int y=0; y<320; y++)
-    {
-        float t = (float)y / 319.0f;
-        uint16_t color = color_lerp(BG_TOP, BG_BOTTOM, t);
-        lcd_fill(0, y, 479, y, color); // 填充一行
-    }
-}
-
-/**
- * @brief       绘制红黑渐变背景（喂食状态）
- * @param       无
- * @retval      无
- */
-void lcd_draw_feeding_gradient_bg(void)
-{
-    for(int y=0; y<320; y++)
-    {
-        float t = (float)y / 319.0f;
-        uint16_t color = color_lerp(FEEDING_TOP, FEEDING_BOTTOM, t);
-        lcd_fill(0, y, 479, y, color); // 填充一行
-    }
-}
-
 /**
  * @brief       显示喂食状态界面
  * @param       无
@@ -61,41 +16,9 @@ void lcd_draw_feeding_gradient_bg(void)
  */
 void display_feeding_ui(void)
 {
-    // 绘制喂食渐变背景
-    lcd_draw_feeding_gradient_bg();
-    
-    // 在屏幕中间显示"FEEDING"
-    // 屏幕尺寸 480x320，文字居中显示
+    // 屏幕中间显示"FEEDING"
+    // 屏幕尺寸 480x320，居中显示
     text_show_string(170, 140, 140, 40, "FEEDING", 32, 1, LIGHT_BG);
-}
-
-
-/**
- * @brief       获取指定Y坐标的渐变背景色
- * @param       y: Y坐标
- * @retval      该位置的背景色
- */
-static uint16_t get_gradient_color_at_y(int y)
-{
-    if (y < 0) y = 0;
-    if (y >= 320) y = 319;
-    
-    float t = (float)y / 319.0f;
-    return color_lerp(BG_TOP, BG_BOTTOM, t);
-}
-
-/**
- * @brief       填充指定区域的渐变背景
- * @param       x1,y1,x2,y2: 矩形区域坐标
- * @retval      无
- */
-static void fill_gradient_rect(int x1, int y1, int x2, int y2)
-{
-    for(int y = y1; y <= y2; y++)
-    {
-        uint16_t color = get_gradient_color_at_y(y);
-        lcd_fill(x1, y, x2, y, color); // 填充一行
-    }
 }
 
 /**
@@ -105,50 +28,30 @@ static void fill_gradient_rect(int x1, int y1, int x2, int y2)
  */
 void display_aquarium_ui(void)
 {   
-    lcd_draw_gradient_bg();
+    // 清空屏幕
+    lcd_clear(BLACK);
+    
+    // 加载背景显示背景图片
+    char bg_path[] = "0:/PICTURE/background.bmp";
+    uint8_t res = piclib_ai_load_picfile(bg_path, 0, 0, lcddev.width, lcddev.height, 1);
+    
+    if (res != 0) 
+    {
+        // 显示错误显示背景选项
+        text_show_string(10, 10, 200, 16, "背景图片加载失败", 16, 1, RED);
+    }
 
-    text_show_string(240, 32, 220, 36, "AQUARIUM STATUS", 24, 1, LIGHT_BG);
+    text_show_string(10, 10, 100, 32, "当前时间", 24, 1, BLACK);
 
-    // 第一条水平分隔线
-    lcd_draw_line(20, 80, 460, 80, LIGHT_BG);
+    text_show_string(80, 40, 100, 32, "10:32", 32, 1, BLACK);
 
-    // 温度大号显示（居中）
-    text_show_string(20, 130, 300, 60, "Current Temperature:", 24, 1, LIGHT_BG);
+    text_show_string(290, 10, 100, 32, "当前温度", 24, 1, BLACK);
 
-    // 第二条水平分隔线
-    lcd_draw_line(20, 200, 460, 200, LIGHT_BG);
+    text_show_string(380, 40, 100, 32, "66.66", 32, 1, BLACK);
 
-    // 下次喂食信息（底部居中）
-    text_show_string(40, 230, 260, 36, "NEXT FEEDING", 24, 1, LIGHT_BG);
-    text_show_string(300, 230, 160, 36, "10:26 PM", 32, 1, LIGHT_BG);
+    text_show_string(200, 70, 100, 32, "下次喂食时间", 24, 1, BLACK);
 
-}
-
-
-/**
- * @brief       显示鱼缸状态UI界面（中文版）
- * @param       无
- * @retval      无
- */
-void display_aquarium_ui_chi(void)
-{   
-    lcd_draw_gradient_bg();
-
-    // 顶部“AQUARIUM STATUS”（右上角）
-    text_show_string(240, 32, 220, 36, "智能鱼缸监控", 24, 1, LIGHT_BG);
-
-    // 第一条水平分隔线
-    lcd_draw_line(20, 80, 460, 80, LIGHT_BG);
-
-    // 温度大号显示（居中）
-    text_show_string(20, 130, 300, 60, "当前室内温度:", 24, 1, LIGHT_BG);
-
-    // 第二条水平分隔线
-    lcd_draw_line(20, 200, 460, 200, LIGHT_BG);
-
-    // 下次喂食信息（底部居中）
-    text_show_string(40, 230, 260, 36, "下一次喂食时间", 24, 1, LIGHT_BG);
-    text_show_string(300, 230, 160, 36, "10:26 AM", 32, 1, LIGHT_BG);
+    text_show_string(220, 100, 100, 32, "3:00", 32, 1, BLACK);
 
 }
 
@@ -157,79 +60,85 @@ void display_aquarium_ui_chi(void)
  * @param       parameter : 线程参数
  * @retval      无
  */
+// void pic_show_thread_entry(void *parameter)
+// {
+//     // 初始化图片库
+//     piclib_init();
+
+//     display_aquarium_ui();
+
+//     // 初始时间（可根据实际情况修改）
+//     int hour = 10, min = 25, sec = 0;
+    
+//     // 记录上一次的喂食状态
+//     int last_feeding_state = 0;
+
+//     while (1)
+//     {   
+//         // 检测喂食状态是否发生变化
+//         if (onFeeding != last_feeding_state)
+//         {
+//             last_feeding_state = onFeeding;
+            
+//             if (onFeeding)
+//             {
+//                 // 切换到黑色渐变背景并显示喂食界面
+//                 display_feeding_ui();
+//             }
+//             else
+//             {
+//                 // 恢复鱼缸界面
+//                 display_aquarium_ui();
+//             }
+//         }
+        
+//         if (onFeeding)
+//         {
+//             // 喂食状态下只保持黑色渐变背景，不更新其他信息
+//         }
+//         else
+//         {
+//             // 动态时间显示
+//             update_time_display(hour, min, sec);
+
+//             // 动态温度显示
+//             update_temperature_display();
+
+//             // 时间递增
+//             sec++;
+//             if (sec >= 60)
+//             {
+//                 sec = 0;
+//                 min++;
+//                 if (min >= 60)
+//                 {
+//                     min = 0;
+//                     hour++;
+//                     if (hour >= 24)
+//                         hour = 0;
+//                 }
+//             }
+//         }
+        
+//         rt_thread_mdelay(1000);
+//     }
+// }
+
 void pic_show_thread_entry(void *parameter)
 {
     // 初始化图片库
     piclib_init();
 
     display_aquarium_ui();
-
-    // 初始时间（可根据实际需求修改）
-    int hour = 10, min = 25, sec = 0;
-    
-    // 记录上一次的喂食状态
-    int last_feeding_state = 0;
-
-    while (1)
-    {   
-        // 检查喂食状态是否发生变化
-        if (onFeeding != last_feeding_state)
-        {
-            last_feeding_state = onFeeding;
-            
-            if (onFeeding)
-            {
-                // 切换到红黑渐变背景，不显示其他内容
-                display_feeding_ui();
-            }
-            else
-            {
-                // 恢复正常界面
-                display_aquarium_ui();
-            }
-        }
-        
-        if (onFeeding)
-        {
-            // 喂食状态下只保持红黑渐变背景，不做其他更新
-        }
-        else
-        {
-            // 更新时间显示
-            update_time_display(hour, min, sec);
-
-            // 动态温度显示
-            update_temperature_display();
-
-            // 时间递增
-            sec++;
-            if (sec >= 60)
-            {
-                sec = 0;
-                min++;
-                if (min >= 60)
-                {
-                    min = 0;
-                    hour++;
-                    if (hour >= 24)
-                        hour = 0;
-                }
-            }
-        }
-        
-        rt_thread_mdelay(1000);
-    }
 }
-
-
 
 void update_time_display(int hour, int min, int sec)
 {
     char time_str[16];
     rt_snprintf(time_str, sizeof(time_str), "%02d:%02d:%02d", hour, min, sec);
 
-    // 先用渐变背景色清除时间显示区域
-    fill_gradient_rect(25, 33, 25+160, 33+33);
+    // 设置渐变背景色清除时间显示区域
+    // fill_gradient_rect(25, 33, 25+160, 33+33);
 
     text_show_string(25, 33, 160, 53, time_str, 32, 1, LIGHT_BG);
 }
@@ -242,8 +151,8 @@ void update_temperature_display(void)
     char temp_str[16];
     rt_snprintf(temp_str, sizeof(temp_str), "%d.%02d°C", temp_int, temp_frac);
 
-    // 先用渐变背景色清除温度显示区域
-    fill_gradient_rect(300, 125, 300+200, 125+60);
+    // 设置渐变背景色清除温度显示区域
+    // fill_gradient_rect(300, 125, 300+200, 125+60);
     
     text_show_string(300, 125, 200, 60, temp_str, 32, 1, LIGHT_BG);
 }
@@ -256,7 +165,7 @@ void update_temperature_display(void)
 rt_thread_t screen_init(void)
 {
     my_mem_init(SRAMIN);                                /* 初始化内部SRAM内存池 */
-    exfuns_init();                                      /* 为fatfs相关变量申请内存 */
+    exfuns_init();                                      /* 为fatfs相关申请内存 */
     f_mount(fs[0], "0:", 1);                            /* 挂载SD卡 */
     f_mount(fs[1], "1:", 1);                            /* 挂载FLASH */
 
@@ -271,7 +180,7 @@ rt_thread_t screen_init(void)
     rt_thread_t ui_tid = rt_thread_create("aquarium_ui",
                                           pic_show_thread_entry,
                                           RT_NULL,
-                                          2048,
+                                          1024,
                                           15,
                                           10);
     if (ui_tid != RT_NULL)
