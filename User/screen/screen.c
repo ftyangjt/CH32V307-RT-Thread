@@ -3,108 +3,108 @@
 * Author             : ChatGPT
 * Version            : V1.0.0
 * Date               : 2025/06/27
-* Description        : å±å¹•æ˜¾ç¤ºæ¨¡å—å®ç°æ–‡ä»¶
+* Description        : ÆÁÄ»ÏÔÊ¾Ä£¿éÊµÏÖÎÄ¼ş
 *********************************************************************************/
 
 #include "screen.h"
 #include "../Cardinal.h"
 
 /**
- * @brief       æ˜¾ç¤ºå–‚é£ŸçŠ¶æ€ç•Œé¢
- * @param       æ— 
- * @retval      æ— 
+ * @brief       ÏÔÊ¾Î¹Ê³×´Ì¬½çÃæ
+ * @param       ÎŞ
+ * @retval      ÎŞ
  */
 void display_feeding_ui(void)
 {
-    // å±å¹•ä¸­é—´æ˜¾ç¤º"FEEDING"
-    // å±å¹•å°ºå¯¸ 480x320ï¼Œå±…ä¸­æ˜¾ç¤º
+    // ÆÁÄ»ÖĞ¼äÏÔÊ¾"FEEDING"
+    // ÆÁÄ»³ß´ç 480x320£¬¾ÓÖĞÏÔÊ¾
     text_show_string(170, 140, 140, 40, "FEEDING", 32, 1, LIGHT_BG);
 }
 
 /**
- * @brief       æ˜¾ç¤ºé±¼ç¼¸çŠ¶æ€UIç•Œé¢
- * @param       æ— 
- * @retval      æ— 
+ * @brief       ÏÔÊ¾Óã¸××´Ì¬UI½çÃæ
+ * @param       ÎŞ
+ * @retval      ÎŞ
  */
 void display_aquarium_ui(void)
 {   
-    // æ¸…ç©ºå±å¹•
+    // Çå¿ÕÆÁÄ»
     lcd_clear(BLACK);
     
-    // åŠ è½½èƒŒæ™¯æ˜¾ç¤ºèƒŒæ™¯å›¾ç‰‡
+    // ¼ÓÔØ±³¾°ÏÔÊ¾±³¾°Í¼Æ¬
     char bg_path[] = "0:/PICTURE/background.bmp";
     uint8_t res = piclib_ai_load_picfile(bg_path, 0, 0, lcddev.width, lcddev.height, 1);
     
     if (res != 0) 
     {
-        // æ˜¾ç¤ºé”™è¯¯æ˜¾ç¤ºèƒŒæ™¯é€‰é¡¹
-        text_show_string(10, 10, 200, 16, "èƒŒæ™¯å›¾ç‰‡åŠ è½½å¤±è´¥", 16, 1, RED);
+        // ÏÔÊ¾´íÎóÏÔÊ¾±³¾°Ñ¡Ïî
+        text_show_string(10, 10, 200, 16, "±³¾°Í¼Æ¬¼ÓÔØÊ§°Ü", 16, 1, RED);
     }
 
-    text_show_string(10, 10, 100, 32, "å½“å‰æ—¶é—´", 24, 1, BLACK);
+    text_show_string(10, 10, 100, 32, "µ±Ç°Ê±¼ä", 24, 1, BLACK);
 
     text_show_string(80, 40, 100, 32, "10:32", 32, 1, BLACK);
 
-    text_show_string(290, 10, 100, 32, "å½“å‰æ¸©åº¦", 24, 1, BLACK);
+    text_show_string(290, 10, 100, 32, "µ±Ç°ÎÂ¶È", 24, 1, BLACK);
 
     text_show_string(380, 40, 100, 32, "66.66", 32, 1, BLACK);
 
-    text_show_string(200, 70, 100, 32, "ä¸‹æ¬¡å–‚é£Ÿæ—¶é—´", 24, 1, BLACK);
+    text_show_string(200, 70, 100, 32, "ÏÂ´ÎÎ¹Ê³Ê±¼ä", 24, 1, BLACK);
 
     text_show_string(220, 100, 100, 32, "3:00", 32, 1, BLACK);
 
 }
 
 /**
- * @brief       é±¼ç¼¸çŠ¶æ€æ˜¾ç¤ºçº¿ç¨‹å…¥å£å‡½æ•°
- * @param       parameter : çº¿ç¨‹å‚æ•°
- * @retval      æ— 
+ * @brief       Óã¸××´Ì¬ÏÔÊ¾Ïß³ÌÈë¿Úº¯Êı
+ * @param       parameter : Ïß³Ì²ÎÊı
+ * @retval      ÎŞ
  */
 // void pic_show_thread_entry(void *parameter)
 // {
-//     // åˆå§‹åŒ–å›¾ç‰‡åº“
+//     // ³õÊ¼»¯Í¼Æ¬¿â
 //     piclib_init();
 
 //     display_aquarium_ui();
 
-//     // åˆå§‹æ—¶é—´ï¼ˆå¯æ ¹æ®å®é™…æƒ…å†µä¿®æ”¹ï¼‰
+//     // ³õÊ¼Ê±¼ä£¨¿É¸ù¾İÊµ¼ÊÇé¿öĞŞ¸Ä£©
 //     int hour = 10, min = 25, sec = 0;
     
-//     // è®°å½•ä¸Šä¸€æ¬¡çš„å–‚é£ŸçŠ¶æ€
+//     // ¼ÇÂ¼ÉÏÒ»´ÎµÄÎ¹Ê³×´Ì¬
 //     int last_feeding_state = 0;
 
 //     while (1)
 //     {   
-//         // æ£€æµ‹å–‚é£ŸçŠ¶æ€æ˜¯å¦å‘ç”Ÿå˜åŒ–
+//         // ¼ì²âÎ¹Ê³×´Ì¬ÊÇ·ñ·¢Éú±ä»¯
 //         if (onFeeding != last_feeding_state)
 //         {
 //             last_feeding_state = onFeeding;
             
 //             if (onFeeding)
 //             {
-//                 // åˆ‡æ¢åˆ°é»‘è‰²æ¸å˜èƒŒæ™¯å¹¶æ˜¾ç¤ºå–‚é£Ÿç•Œé¢
+//                 // ÇĞ»»µ½ºÚÉ«½¥±ä±³¾°²¢ÏÔÊ¾Î¹Ê³½çÃæ
 //                 display_feeding_ui();
 //             }
 //             else
 //             {
-//                 // æ¢å¤é±¼ç¼¸ç•Œé¢
+//                 // »Ö¸´Óã¸×½çÃæ
 //                 display_aquarium_ui();
 //             }
 //         }
         
 //         if (onFeeding)
 //         {
-//             // å–‚é£ŸçŠ¶æ€ä¸‹åªä¿æŒé»‘è‰²æ¸å˜èƒŒæ™¯ï¼Œä¸æ›´æ–°å…¶ä»–ä¿¡æ¯
+//             // Î¹Ê³×´Ì¬ÏÂÖ»±£³ÖºÚÉ«½¥±ä±³¾°£¬²»¸üĞÂÆäËûĞÅÏ¢
 //         }
 //         else
 //         {
-//             // åŠ¨æ€æ—¶é—´æ˜¾ç¤º
+//             // ¶¯Ì¬Ê±¼äÏÔÊ¾
 //             update_time_display(hour, min, sec);
 
-//             // åŠ¨æ€æ¸©åº¦æ˜¾ç¤º
+//             // ¶¯Ì¬ÎÂ¶ÈÏÔÊ¾
 //             update_temperature_display();
 
-//             // æ—¶é—´é€’å¢
+//             // Ê±¼äµİÔö
 //             sec++;
 //             if (sec >= 60)
 //             {
@@ -126,7 +126,7 @@ void display_aquarium_ui(void)
 
 void pic_show_thread_entry(void *parameter)
 {
-    // åˆå§‹åŒ–å›¾ç‰‡åº“
+    // ³õÊ¼»¯Í¼Æ¬¿â
     piclib_init();
 
     display_aquarium_ui();
@@ -137,7 +137,7 @@ void update_time_display(int hour, int min, int sec)
     char time_str[16];
     rt_snprintf(time_str, sizeof(time_str), "%02d:%02d:%02d", hour, min, sec);
 
-    // è®¾ç½®æ¸å˜èƒŒæ™¯è‰²æ¸…é™¤æ—¶é—´æ˜¾ç¤ºåŒºåŸŸ
+    // ÉèÖÃ½¥±ä±³¾°É«Çå³ıÊ±¼äÏÔÊ¾ÇøÓò
     // fill_gradient_rect(25, 33, 25+160, 33+33);
 
     text_show_string(25, 33, 160, 53, time_str, 32, 1, LIGHT_BG);
@@ -145,35 +145,35 @@ void update_time_display(int hour, int min, int sec)
 
 void update_temperature_display(void)
 {
-    int temp_raw = adc_get_temperature(); // ä¾‹å¦‚ 2534 è¡¨ç¤º 25.34Â°C
+    int temp_raw = adc_get_temperature(); // ÀıÈç 2534 ±íÊ¾ 25.34¡ãC
     int temp_int = temp_raw / 100;
     int temp_frac = temp_raw % 100;
     char temp_str[16];
-    rt_snprintf(temp_str, sizeof(temp_str), "%d.%02dÂ°C", temp_int, temp_frac);
+    rt_snprintf(temp_str, sizeof(temp_str), "%d.%02d¡ãC", temp_int, temp_frac);
 
-    // è®¾ç½®æ¸å˜èƒŒæ™¯è‰²æ¸…é™¤æ¸©åº¦æ˜¾ç¤ºåŒºåŸŸ
+    // ÉèÖÃ½¥±ä±³¾°É«Çå³ıÎÂ¶ÈÏÔÊ¾ÇøÓò
     // fill_gradient_rect(300, 125, 300+200, 125+60);
     
     text_show_string(300, 125, 200, 60, temp_str, 32, 1, LIGHT_BG);
 }
 
 /**
- * @brief       åˆå§‹åŒ–å±å¹•æ¨¡å—å¹¶åˆ›å»ºUIæ˜¾ç¤ºçº¿ç¨‹
- * @param       æ— 
- * @retval      çº¿ç¨‹å¥æŸ„
+ * @brief       ³õÊ¼»¯ÆÁÄ»Ä£¿é²¢´´½¨UIÏÔÊ¾Ïß³Ì
+ * @param       ÎŞ
+ * @retval      Ïß³Ì¾ä±ú
  */
 rt_thread_t screen_init(void)
 {
-    my_mem_init(SRAMIN);                                /* åˆå§‹åŒ–å†…éƒ¨SRAMå†…å­˜æ±  */
-    exfuns_init();                                      /* ä¸ºfatfsç›¸å…³ç”³è¯·å†…å­˜ */
-    f_mount(fs[0], "0:", 1);                            /* æŒ‚è½½SDå¡ */
-    f_mount(fs[1], "1:", 1);                            /* æŒ‚è½½FLASH */
+    my_mem_init(SRAMIN);                                /* ³õÊ¼»¯ÄÚ²¿SRAMÄÚ´æ³Ø */
+    exfuns_init();                                      /* ÎªfatfsÏà¹ØÉêÇëÄÚ´æ */
+    f_mount(fs[0], "0:", 1);                            /* ¹ÒÔØSD¿¨ */
+    f_mount(fs[1], "1:", 1);                            /* ¹ÒÔØFLASH */
 
-    while (fonts_init())                                /* æ£€æŸ¥å­—åº“ */
+    while (fonts_init())                                /* ¼ì²é×Ö¿â */
     {
         lcd_show_string(30, 50, 200, 16, 16, "Font Error!", RED);
         rt_thread_mdelay(200);
-        lcd_fill(30, 50, 240, 66, WHITE);               /* æ¸…é™¤æ˜¾ç¤º */
+        lcd_fill(30, 50, 240, 66, WHITE);               /* Çå³ıÏÔÊ¾ */
         rt_thread_mdelay(200);
     }
     
