@@ -18,7 +18,7 @@ void display_feeding_ui(void)
 {
     // 屏幕中间显示"FEEDING"
     // 屏幕尺寸 480x320，居中显示
-    text_show_string(170, 140, 140, 40, "FEEDING", 32, 1, LIGHT_BG);
+    text_show_string(170, 140, 140, 48, "FEEDING", 48, 1, LIGHT_BG);
 }
 
 /**
@@ -58,87 +58,87 @@ void display_aquarium_ui(void)
  * @param       parameter : 线程参数
  * @retval      无
  */
-// void pic_show_thread_entry(void *parameter)
-// {
-//     // 初始化图片库
-//     piclib_init();
-
-//     display_aquarium_ui();
-
-//     // 初始时间（可根据实际情况修改）
-//     int hour = 10, min = 25, sec = 0;
-    
-//     // 记录上一次的喂食状态
-//     int last_feeding_state = 0;
-
-//     while (1)
-//     {   
-//         // 检测喂食状态是否发生变化
-//         if (onFeeding != last_feeding_state)
-//         {
-//             last_feeding_state = onFeeding;
-            
-//             if (onFeeding)
-//             {
-//                 // 切换到黑色渐变背景并显示喂食界面
-//                 display_feeding_ui();
-//             }
-//             else
-//             {
-//                 // 恢复鱼缸界面
-//                 display_aquarium_ui();
-//             }
-//         }
-        
-//         if (onFeeding)
-//         {
-//             // 喂食状态下只保持黑色渐变背景，不更新其他信息
-//         }
-//         else
-//         {
-//             // 动态时间显示
-//             update_time_display(hour, min, sec);
-
-//             // 动态温度显示
-//             update_temperature_display();
-
-//             // 时间递增
-//             sec++;
-//             if (sec >= 60)
-//             {
-//                 sec = 0;
-//                 min++;
-//                 if (min >= 60)
-//                 {
-//                     min = 0;
-//                     hour++;
-//                     if (hour >= 24)
-//                         hour = 0;
-//                 }
-//             }
-//         }
-        
-//         rt_thread_mdelay(1000);
-//     }
-// }
-
 void pic_show_thread_entry(void *parameter)
 {
     // 初始化图片库
     piclib_init();
 
     display_aquarium_ui();
+
+    // 初始时间（可根据实际情况修改）
+    int hour = 10, min = 25, sec = 0;
+    
+    // 记录上一次的喂食状态
+    int last_feeding_state = 0;
+
+    while (1)
+    {   
+        // 检测喂食状态是否发生变化
+        if (onFeeding != last_feeding_state)
+        {
+            last_feeding_state = onFeeding;
+            
+            if (onFeeding)
+            {
+                // 切换到黑色渐变背景并显示喂食界面
+                display_feeding_ui();
+            }
+            else
+            {
+                // 恢复鱼缸界面
+                display_aquarium_ui();
+            }
+        }
+        
+        if (onFeeding)
+        {
+            // 喂食状态下只保持黑色渐变背景，不更新其他信息
+        }
+        else
+        {
+            // 动态时间显示
+            update_time_display(hour, min, sec);
+
+            // 动态温度显示
+            update_temperature_display();
+
+            // 时间递增
+            sec++;
+            if (sec >= 60)
+            {
+                sec = 0;
+                min++;
+                if (min >= 60)
+                {
+                    min = 0;
+                    hour++;
+                    if (hour >= 24)
+                        hour = 0;
+                }
+            }
+        }
+        
+        rt_thread_mdelay(1000);
+    }
 }
+
+// void pic_show_thread_entry(void *parameter)
+// {
+//     // 初始化图片库
+//     piclib_init();
+
+//     display_aquarium_ui();
+// }
 
 void update_time_display(int hour, int min, int sec)
 {
     char time_str[16];
     rt_snprintf(time_str, sizeof(time_str), "%02d:%02d:%02d", hour, min, sec);
 
-    // 设置渐变背景色清除时间显示区域
-    // fill_gradient_rect(25, 33, 25+160, 33+33);
+    // 设置背景色清除时间显示区域
+    lcd_fill(10, 10, 10+150, 10+48, BG_TOP);
+    text_show_string(10, 10, 150, 48, time_str, 48, 1, BLACK);
 
-    text_show_string(25, 33, 160, 53, time_str, 32, 1, LIGHT_BG);
 }
 
 void update_temperature_display(void)
@@ -149,10 +149,10 @@ void update_temperature_display(void)
     char temp_str[16];
     rt_snprintf(temp_str, sizeof(temp_str), "%d.%02d°C", temp_int, temp_frac);
 
-    // 设置渐变背景色清除温度显示区域
-    // fill_gradient_rect(300, 125, 300+200, 125+60);
+    // 设置背景色清除温度显示区域
+    lcd_fill(350, 10, 350+150, 10+48, BG_BOTTOM);
     
-    text_show_string(300, 125, 200, 60, temp_str, 32, 1, LIGHT_BG);
+    text_show_string(350, 10, 150, 48, temp_str, 48, 1, BLACK);
 }
 
 /**
