@@ -507,8 +507,8 @@ void lcd_display_dir(uint8_t dir)
         }
     }
 
-    // lcd_scan_dir(L2R_U2D); //正常显示
-    lcd_scan_dir(R2L_U2D); //镜像显示
+    lcd_scan_dir(L2R_U2D); //正常显示
+    // lcd_scan_dir(R2L_U2D); //镜像显示
 }
 
 /**
@@ -1098,6 +1098,10 @@ void lcd_show_char(uint16_t x, uint16_t y, char chr, uint8_t size, uint8_t mode,
             pfont = (uint8_t *)asc2_3216[chr];  /* 调用3216字体 */
             break;
 
+        case 48:
+            pfont = (uint8_t *)asc2_4824[chr];  /* 调用4824字体 */
+            break;
+            
         default:
             return ;
     }

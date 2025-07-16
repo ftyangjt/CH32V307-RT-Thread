@@ -41,17 +41,15 @@ void display_aquarium_ui(void)
         text_show_string(10, 10, 200, 16, "背景图片加载失败", 16, 1, RED);
     }
 
-    text_show_string(10, 10, 100, 32, "当前时间", 24, 1, BLACK);
+    text_show_string(10, 10, 150, 48, "10:32", 48, 1, BLACK);
 
-    text_show_string(80, 40, 100, 32, "10:32", 32, 1, BLACK);
+    text_show_string(240, 10, 150, 24, "当前温度: ", 24, 1, BLACK);
 
-    text_show_string(290, 10, 100, 32, "当前温度", 24, 1, BLACK);
+    text_show_string(350, 10, 150, 48, "66.66", 48, 1, BLACK);
 
-    text_show_string(380, 40, 100, 32, "66.66", 32, 1, BLACK);
+    text_show_string(190, 70, 100, 32, "下次喂食时间", 24, 1, BLACK);
 
-    text_show_string(200, 70, 100, 32, "下次喂食时间", 24, 1, BLACK);
-
-    text_show_string(220, 100, 100, 32, "3:00", 32, 1, BLACK);
+    text_show_string(200, 100, 100, 48, "3:00", 32, 1, BLACK);
 
 }
 
