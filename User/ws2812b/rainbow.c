@@ -76,7 +76,6 @@ void rainbow_thread_entry(void* parameter)
     hsv.s = 1.0f;
     float hue = 0.0f;
     float angle = 0.0f;  // 呼吸效果的角度
-    int rainBowType = 1;
         while(1) {
         // 检查是否启用红黄效果
         if (rainBowType == 1) {

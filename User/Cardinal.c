@@ -51,26 +51,20 @@ rt_bool_t onFeeding = RT_FALSE;
 //它，仅检测时间是否到达任务点，不流逝时间
 static void cardinal_time_thread(void *parameter)
 {
-    int last_hour = -1, last_minute = -1;
-    int last_feed_hour = -1; //记录上次喂食的小时
+    int last_feed_hour = -1;
+    int last_feed_minute = -1;
     while (1)
     {
-        
-        //时间是否变化
-        if (g_cardinal_time.hour != last_hour || g_cardinal_time.minute != last_minute)
+        // 到达任务点且有喂食任务
+        if (g_cardinal_tasks[g_cardinal_time.hour].amount > 0 &&
+            g_cardinal_time.minute == g_cardinal_tasks[g_cardinal_time.hour].min)
         {
-            last_hour = g_cardinal_time.hour;
-            last_minute = g_cardinal_time.minute;
-            //标准时间触发
-            if (g_cardinal_time.minute == g_cardinal_tasks[g_cardinal_time.hour].min && g_cardinal_tasks[g_cardinal_time.hour].amount > 0)
+            // 避免同一分钟重复喂食
+            if (last_feed_hour != g_cardinal_time.hour || last_feed_minute != g_cardinal_time.minute)
             {
-                //避免同一小时重复喂食
-                if (last_feed_hour != g_cardinal_time.hour)
-                {
-                    //启动主控线程
-                    rt_sem_release(&cardinal_main_sem);
-                    last_feed_hour = g_cardinal_time.hour;
-                }
+                rt_sem_release(&cardinal_main_sem);
+                last_feed_hour = g_cardinal_time.hour;
+                last_feed_minute = g_cardinal_time.minute;
             }
         }
         rt_thread_mdelay(6000); // 检查频率 6秒
@@ -291,7 +285,7 @@ static int extract_light(const char *key, const char *json) {
 
 //主函数：解析 JSON 并更新任务表
 void cardinal_update_tasks(const char *json) {
-    // 先清空所有原数据
+    //先清空所有原数据
     for (int i = 0; i < 24; i++) {
         g_cardinal_tasks[i].amount = 0;
         g_cardinal_tasks[i].light_mode = 0;
@@ -304,7 +298,7 @@ void cardinal_update_tasks(const char *json) {
         char *entry = strstr(json, hour_key);
         if (!entry) continue;
 
-        // 定位当前小时对应的 JSON 子串
+        //定位当前小时对应的 JSON 子串
         char *entry_start = strchr(entry, '{');
         char *entry_end   = strchr(entry, '}');
         if (!entry_start || !entry_end || entry_end < entry_start) continue;
@@ -316,7 +310,7 @@ void cardinal_update_tasks(const char *json) {
         entry_json[len] = '\0';
 
         g_cardinal_tasks[hour].amount         = extract_float("amount", entry_json);
-        g_cardinal_tasks[hour].light_mode     = extract_light("light", entry_json);
+        g_cardinal_tasks[hour].light_mode     = extract_int("light", entry_json);
         g_cardinal_tasks[hour].water_duration = extract_int("water", entry_json);
         g_cardinal_tasks[hour].min = extract_int("minute", entry_json);
     }

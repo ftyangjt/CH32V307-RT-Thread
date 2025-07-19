@@ -5,7 +5,7 @@
 #include <rtthread.h>
 
 // 配置参数
-#define WS2812_LED_NUM       30      // LED灯数量
+#define WS2812_LED_NUM       60      // LED灯数量
 #define WS2812_PWM_FREQ      800000  // PWM频率800KHz
 #define WS2812_BIT_0_DUTY    33      // 0码占空比33%
 #define WS2812_BIT_1_DUTY    66      // 1码占空比66%

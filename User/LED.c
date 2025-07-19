@@ -59,8 +59,8 @@ static void breathing_thread_entry()
         }        
         if(g_light == 4){
             breathing_config.r = 255;
-            breathing_config.g = 255;
-            breathing_config.b = 255;
+            breathing_config.g = 0;
+            breathing_config.b = 0;
             breathing_config.max_brightness = 100;
             breathing_config.cycle_time_ms = 3000;
         }

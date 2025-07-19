@@ -62,7 +62,7 @@ static void servo_thread_entry(void *parameter)
             uint16_t pulse = servo_speed_to_pulse(speed);
             rt_kprintf("舵机启动，速度: %d，持续: %d 秒，脉宽: %d us\n", speed, duration, pulse);
             speed = g_servo_param.speed;
-            pulse = servo_speed_to_pulse((-1) * speed - 25);
+            pulse = servo_speed_to_pulse((-1) * speed - 20);
             TIM_SetCompare1(TIM10, pulse);
 
             for (int i = 0; i < 100 ; i++)
