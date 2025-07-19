@@ -11,20 +11,8 @@
 
 #define DARK_BLUE 0x21CA   // #233851 的RGB565表示
 #define LIGHT_BG 0xFFBE   // #F9F5F0 的RGB565表示
-#define BG_TOP    0x21CA   // 深蓝
-#define BG_BOTTOM 0x4F7D   // 浅蓝
-// 喂食状态使用调亮的深海蓝色渐变
-#define FEEDING_TOP    0x2D8B   // 亮深海蓝 #2E6DB5 
-#define FEEDING_BOTTOM 0x1244   // 亮海底蓝 #124A8C
-
-
-// 提取RGB565分量
-#define RGB565_R(c) (((c) >> 11) & 0x1F)
-#define RGB565_G(c) (((c) >> 5) & 0x3F)
-#define RGB565_B(c) ((c) & 0x1F)
-
-// 合成RGB565
-#define RGB565(r,g,b) (((r)<<11)|((g)<<5)|(b))
+#define BG_TOP    0x4E7F
+#define BG_BOTTOM 0x2D3B
 
 #include "ch32v30x.h"
 #include <rtthread.h>

@@ -3,205 +3,106 @@
 * Author             : ChatGPT
 * Version            : V1.0.0
 * Date               : 2025/06/27
-* Description        : å±å¹•æ˜¾ç¤ºæ¨¡å—å®ç°æ–‡ä»¶
+* Description        : ÆÁÄ»ÏÔÊ¾Ä£¿éÊµÏÖÎÄ¼ş
 *********************************************************************************/
 
 #include "screen.h"
 #include "../Cardinal.h"
 
-// æå–RGB565åˆ†é‡
-#define RGB565_R(c) (((c) >> 11) & 0x1F)
-#define RGB565_G(c) (((c) >> 5) & 0x3F)
-#define RGB565_B(c) ((c) & 0x1F)
-
-// åˆæˆRGB565
-#define RGB565(r,g,b) (((r)<<11)|((g)<<5)|(b))
-
-// çº¿æ€§æ’å€¼
-static uint16_t color_lerp(uint16_t c1, uint16_t c2, float t)
-{
-    int r = RGB565_R(c1) + (RGB565_R(c2) - RGB565_R(c1)) * t;
-    int g = RGB565_G(c1) + (RGB565_G(c2) - RGB565_G(c1)) * t;
-    int b = RGB565_B(c1) + (RGB565_B(c2) - RGB565_B(c1)) * t;
-    return RGB565(r, g, b);
-}
-
-#define BG_TOP    0x21CA   // æ·±è“
-#define BG_BOTTOM 0x4F7D   // æµ…è“
-
-void lcd_draw_gradient_bg(void)
-{
-    for(int y=0; y<320; y++)
-    {
-        float t = (float)y / 319.0f;
-        uint16_t color = color_lerp(BG_TOP, BG_BOTTOM, t);
-        lcd_fill(0, y, 479, y, color); // å¡«å……ä¸€è¡Œ
-    }
-}
-
 /**
- * @brief       ç»˜åˆ¶çº¢é»‘æ¸å˜èƒŒæ™¯ï¼ˆå–‚é£ŸçŠ¶æ€ï¼‰
- * @param       æ— 
- * @retval      æ— 
- */
-void lcd_draw_feeding_gradient_bg(void)
-{
-    for(int y=0; y<320; y++)
-    {
-        float t = (float)y / 319.0f;
-        uint16_t color = color_lerp(FEEDING_TOP, FEEDING_BOTTOM, t);
-        lcd_fill(0, y, 479, y, color); // å¡«å……ä¸€è¡Œ
-    }
-}
-
-/**
- * @brief       æ˜¾ç¤ºå–‚é£ŸçŠ¶æ€ç•Œé¢
- * @param       æ— 
- * @retval      æ— 
+ * @brief       ÏÔÊ¾Î¹Ê³×´Ì¬½çÃæ
+ * @param       ÎŞ
+ * @retval      ÎŞ
  */
 void display_feeding_ui(void)
 {
-    // ç»˜åˆ¶å–‚é£Ÿæ¸å˜èƒŒæ™¯
-    lcd_draw_feeding_gradient_bg();
-    
-    // åœ¨å±å¹•ä¸­é—´æ˜¾ç¤º"FEEDING"
-    // å±å¹•å°ºå¯¸ 480x320ï¼Œæ–‡å­—å±…ä¸­æ˜¾ç¤º
-    text_show_string(170, 140, 140, 40, "FEEDING", 32, 1, LIGHT_BG);
-}
-
-
-/**
- * @brief       è·å–æŒ‡å®šYåæ ‡çš„æ¸å˜èƒŒæ™¯è‰²
- * @param       y: Yåæ ‡
- * @retval      è¯¥ä½ç½®çš„èƒŒæ™¯è‰²
- */
-static uint16_t get_gradient_color_at_y(int y)
-{
-    if (y < 0) y = 0;
-    if (y >= 320) y = 319;
-    
-    float t = (float)y / 319.0f;
-    return color_lerp(BG_TOP, BG_BOTTOM, t);
+    // ÆÁÄ»ÖĞ¼äÏÔÊ¾"FEEDING"
+    // ÆÁÄ»³ß´ç 480x320£¬¾ÓÖĞÏÔÊ¾
+    text_show_string(170, 140, 140, 48, "FEEDING", 48, 1, LIGHT_BG);
 }
 
 /**
- * @brief       å¡«å……æŒ‡å®šåŒºåŸŸçš„æ¸å˜èƒŒæ™¯
- * @param       x1,y1,x2,y2: çŸ©å½¢åŒºåŸŸåæ ‡
- * @retval      æ— 
- */
-static void fill_gradient_rect(int x1, int y1, int x2, int y2)
-{
-    for(int y = y1; y <= y2; y++)
-    {
-        uint16_t color = get_gradient_color_at_y(y);
-        lcd_fill(x1, y, x2, y, color); // å¡«å……ä¸€è¡Œ
-    }
-}
-
-/**
- * @brief       æ˜¾ç¤ºé±¼ç¼¸çŠ¶æ€UIç•Œé¢
- * @param       æ— 
- * @retval      æ— 
+ * @brief       ÏÔÊ¾Óã¸××´Ì¬UI½çÃæ
+ * @param       ÎŞ
+ * @retval      ÎŞ
  */
 void display_aquarium_ui(void)
 {   
-    lcd_draw_gradient_bg();
+    // Çå¿ÕÆÁÄ»
+    lcd_clear(BLACK);
+    
+    // ¼ÓÔØ±³¾°ÏÔÊ¾±³¾°Í¼Æ¬
+    char bg_path[] = "0:/PICTURE/background.bmp";
+    uint8_t res = piclib_ai_load_picfile(bg_path, 0, 0, lcddev.width, lcddev.height, 1);
+    
+    if (res != 0) 
+    {
+        // ÏÔÊ¾´íÎóÏÔÊ¾±³¾°Ñ¡Ïî
+        text_show_string(10, 10, 200, 16, "±³¾°Í¼Æ¬¼ÓÔØÊ§°Ü", 16, 1, RED);
+    }
 
-    text_show_string(240, 32, 220, 36, "AQUARIUM STATUS", 24, 1, LIGHT_BG);
+    text_show_string(10, 10, 150, 48, "10:32", 48, 1, BLACK);
 
-    // ç¬¬ä¸€æ¡æ°´å¹³åˆ†éš”çº¿
-    lcd_draw_line(20, 80, 460, 80, LIGHT_BG);
+    text_show_string(240, 10, 150, 24, "µ±Ç°ÎÂ¶È: ", 24, 1, BLACK);
 
-    // æ¸©åº¦å¤§å·æ˜¾ç¤ºï¼ˆå±…ä¸­ï¼‰
-    text_show_string(20, 130, 300, 60, "Current Temperature:", 24, 1, LIGHT_BG);
+    text_show_string(350, 10, 150, 48, "66.66", 48, 1, BLACK);
 
-    // ç¬¬äºŒæ¡æ°´å¹³åˆ†éš”çº¿
-    lcd_draw_line(20, 200, 460, 200, LIGHT_BG);
+    text_show_string(190, 70, 100, 32, "ÏÂ´ÎÎ¹Ê³Ê±¼ä", 24, 1, BLACK);
 
-    // ä¸‹æ¬¡å–‚é£Ÿä¿¡æ¯ï¼ˆåº•éƒ¨å±…ä¸­ï¼‰
-    text_show_string(40, 230, 260, 36, "NEXT FEEDING", 24, 1, LIGHT_BG);
-    text_show_string(300, 230, 160, 36, "10:26 PM", 32, 1, LIGHT_BG);
-
-}
-
-
-/**
- * @brief       æ˜¾ç¤ºé±¼ç¼¸çŠ¶æ€UIç•Œé¢ï¼ˆä¸­æ–‡ç‰ˆï¼‰
- * @param       æ— 
- * @retval      æ— 
- */
-void display_aquarium_ui_chi(void)
-{   
-    lcd_draw_gradient_bg();
-
-    // é¡¶éƒ¨â€œAQUARIUM STATUSâ€ï¼ˆå³ä¸Šè§’ï¼‰
-    text_show_string(240, 32, 220, 36, "æ™ºèƒ½é±¼ç¼¸ç›‘æ§", 24, 1, LIGHT_BG);
-
-    // ç¬¬ä¸€æ¡æ°´å¹³åˆ†éš”çº¿
-    lcd_draw_line(20, 80, 460, 80, LIGHT_BG);
-
-    // æ¸©åº¦å¤§å·æ˜¾ç¤ºï¼ˆå±…ä¸­ï¼‰
-    text_show_string(20, 130, 300, 60, "å½“å‰å®¤å†…æ¸©åº¦:", 24, 1, LIGHT_BG);
-
-    // ç¬¬äºŒæ¡æ°´å¹³åˆ†éš”çº¿
-    lcd_draw_line(20, 200, 460, 200, LIGHT_BG);
-
-    // ä¸‹æ¬¡å–‚é£Ÿä¿¡æ¯ï¼ˆåº•éƒ¨å±…ä¸­ï¼‰
-    text_show_string(40, 230, 260, 36, "ä¸‹ä¸€æ¬¡å–‚é£Ÿæ—¶é—´", 24, 1, LIGHT_BG);
-    text_show_string(300, 230, 160, 36, "10:26 AM", 32, 1, LIGHT_BG);
+    text_show_string(200, 100, 100, 48, "3:00", 32, 1, BLACK);
 
 }
 
 /**
- * @brief       é±¼ç¼¸çŠ¶æ€æ˜¾ç¤ºçº¿ç¨‹å…¥å£å‡½æ•°
- * @param       parameter : çº¿ç¨‹å‚æ•°
- * @retval      æ— 
+ * @brief       Óã¸××´Ì¬ÏÔÊ¾Ïß³ÌÈë¿Úº¯Êı
+ * @param       parameter : Ïß³Ì²ÎÊı
+ * @retval      ÎŞ
  */
 void pic_show_thread_entry(void *parameter)
 {
-    // åˆå§‹åŒ–å›¾ç‰‡åº“
+    // ³õÊ¼»¯Í¼Æ¬¿â
     piclib_init();
 
     display_aquarium_ui();
 
-    // åˆå§‹æ—¶é—´ï¼ˆå¯æ ¹æ®å®é™…éœ€æ±‚ä¿®æ”¹ï¼‰
+    // ³õÊ¼Ê±¼ä£¨¿É¸ù¾İÊµ¼ÊÇé¿öĞŞ¸Ä£©
     int hour = 10, min = 25, sec = 0;
     
-    // è®°å½•ä¸Šä¸€æ¬¡çš„å–‚é£ŸçŠ¶æ€
+    // ¼ÇÂ¼ÉÏÒ»´ÎµÄÎ¹Ê³×´Ì¬
     int last_feeding_state = 0;
 
     while (1)
     {   
-        // æ£€æŸ¥å–‚é£ŸçŠ¶æ€æ˜¯å¦å‘ç”Ÿå˜åŒ–
+        // ¼ì²âÎ¹Ê³×´Ì¬ÊÇ·ñ·¢Éú±ä»¯
         if (onFeeding != last_feeding_state)
         {
             last_feeding_state = onFeeding;
             
             if (onFeeding)
             {
-                // åˆ‡æ¢åˆ°çº¢é»‘æ¸å˜èƒŒæ™¯ï¼Œä¸æ˜¾ç¤ºå…¶ä»–å†…å®¹
+                // ÇĞ»»µ½ºÚÉ«½¥±ä±³¾°²¢ÏÔÊ¾Î¹Ê³½çÃæ
                 display_feeding_ui();
             }
             else
             {
-                // æ¢å¤æ­£å¸¸ç•Œé¢
+                // »Ö¸´Óã¸×½çÃæ
                 display_aquarium_ui();
             }
         }
         
         if (onFeeding)
         {
-            // å–‚é£ŸçŠ¶æ€ä¸‹åªä¿æŒçº¢é»‘æ¸å˜èƒŒæ™¯ï¼Œä¸åšå…¶ä»–æ›´æ–°
+            // Î¹Ê³×´Ì¬ÏÂÖ»±£³ÖºÚÉ«½¥±ä±³¾°£¬²»¸üĞÂÆäËûĞÅÏ¢
         }
         else
         {
-            // æ›´æ–°æ—¶é—´æ˜¾ç¤º
+            // ¶¯Ì¬Ê±¼äÏÔÊ¾
             update_time_display(hour, min, sec);
 
-            // åŠ¨æ€æ¸©åº¦æ˜¾ç¤º
+            // ¶¯Ì¬ÎÂ¶ÈÏÔÊ¾
             update_temperature_display();
 
-            // æ—¶é—´é€’å¢
+            // Ê±¼äµİÔö
             sec++;
             if (sec >= 60)
             {
@@ -221,57 +122,63 @@ void pic_show_thread_entry(void *parameter)
     }
 }
 
+// void pic_show_thread_entry(void *parameter)
+// {
+//     // ³õÊ¼»¯Í¼Æ¬¿â
+//     piclib_init();
 
+//     display_aquarium_ui();
+// }
 
 void update_time_display(int hour, int min, int sec)
 {
     char time_str[16];
     rt_snprintf(time_str, sizeof(time_str), "%02d:%02d:%02d", hour, min, sec);
 
-    // å…ˆç”¨æ¸å˜èƒŒæ™¯è‰²æ¸…é™¤æ—¶é—´æ˜¾ç¤ºåŒºåŸŸ
-    fill_gradient_rect(25, 33, 25+160, 33+33);
+    // ÉèÖÃ±³¾°É«Çå³ıÊ±¼äÏÔÊ¾ÇøÓò
+    lcd_fill(10, 10, 10+150, 10+48, BG_TOP);
+    text_show_string(10, 10, 150, 48, time_str, 48, 1, BLACK);
 
-    text_show_string(25, 33, 160, 53, time_str, 32, 1, LIGHT_BG);
 }
 
 void update_temperature_display(void)
 {
-    int temp_raw = adc_get_temperature(); // ä¾‹å¦‚ 2534 è¡¨ç¤º 25.34Â°C
+    int temp_raw = adc_get_temperature(); // ÀıÈç 2534 ±íÊ¾ 25.34¡ãC
     int temp_int = temp_raw / 100;
     int temp_frac = temp_raw % 100;
     char temp_str[16];
-    rt_snprintf(temp_str, sizeof(temp_str), "%d.%02dÂ°C", temp_int, temp_frac);
+    rt_snprintf(temp_str, sizeof(temp_str), "%d.%02d¡ãC", temp_int, temp_frac);
 
-    // å…ˆç”¨æ¸å˜èƒŒæ™¯è‰²æ¸…é™¤æ¸©åº¦æ˜¾ç¤ºåŒºåŸŸ
-    fill_gradient_rect(300, 125, 300+200, 125+60);
+    // ÉèÖÃ±³¾°É«Çå³ıÎÂ¶ÈÏÔÊ¾ÇøÓò
+    lcd_fill(350, 10, 350+150, 10+48, BG_BOTTOM);
     
-    text_show_string(300, 125, 200, 60, temp_str, 32, 1, LIGHT_BG);
+    text_show_string(350, 10, 150, 48, temp_str, 48, 1, BLACK);
 }
 
 /**
- * @brief       åˆå§‹åŒ–å±å¹•æ¨¡å—å¹¶åˆ›å»ºUIæ˜¾ç¤ºçº¿ç¨‹
- * @param       æ— 
- * @retval      çº¿ç¨‹å¥æŸ„
+ * @brief       ³õÊ¼»¯ÆÁÄ»Ä£¿é²¢´´½¨UIÏÔÊ¾Ïß³Ì
+ * @param       ÎŞ
+ * @retval      Ïß³Ì¾ä±ú
  */
 rt_thread_t screen_init(void)
 {
-    my_mem_init(SRAMIN);                                /* åˆå§‹åŒ–å†…éƒ¨SRAMå†…å­˜æ±  */
-    exfuns_init();                                      /* ä¸ºfatfsç›¸å…³å˜é‡ç”³è¯·å†…å­˜ */
-    f_mount(fs[0], "0:", 1);                            /* æŒ‚è½½SDå¡ */
-    f_mount(fs[1], "1:", 1);                            /* æŒ‚è½½FLASH */
+    my_mem_init(SRAMIN);                                /* ³õÊ¼»¯ÄÚ²¿SRAMÄÚ´æ³Ø */
+    exfuns_init();                                      /* ÎªfatfsÏà¹ØÉêÇëÄÚ´æ */
+    f_mount(fs[0], "0:", 1);                            /* ¹ÒÔØSD¿¨ */
+    f_mount(fs[1], "1:", 1);                            /* ¹ÒÔØFLASH */
 
-    while (fonts_init())                                /* æ£€æŸ¥å­—åº“ */
+    while (fonts_init())                                /* ¼ì²é×Ö¿â */
     {
         lcd_show_string(30, 50, 200, 16, 16, "Font Error!", RED);
         rt_thread_mdelay(200);
-        lcd_fill(30, 50, 240, 66, WHITE);               /* æ¸…é™¤æ˜¾ç¤º */
+        lcd_fill(30, 50, 240, 66, WHITE);               /* Çå³ıÏÔÊ¾ */
         rt_thread_mdelay(200);
     }
     
     rt_thread_t ui_tid = rt_thread_create("aquarium_ui",
                                           pic_show_thread_entry,
                                           RT_NULL,
-                                          2048,
+                                          1024,
                                           15,
                                           10);
     if (ui_tid != RT_NULL)
